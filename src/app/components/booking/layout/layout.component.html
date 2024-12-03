@@ -1,0 +1,45 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+            <li>
+                <a routerLink="/home">
+                    <p>Home</p>
+                </a>
+            </li>
+            <li>
+                <a routerLink="/booking">
+                    <p>Booking</p>
+                </a>
+            </li>
+        </ul>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <mat-toolbar color="primary">
+            <div fxHide.gt-xs>
+                <button mat-icon-button (click)="sidenav.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </div>
+            <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs>
+                <ul fxLayout fxLayoutGap="15px" class="navigation-items">
+                    <li>
+                        <a routerLink="/home">
+                            <p>Home</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a routerLink="/booking">
+                            <p>Booking</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div fxFlex fxLayout fxLayoutAlign="end">
+                <div class="logo-container"><img class="user-logo" src="/assets/images/UserIcon.png" alt="a"></div>
+            </div>
+        </mat-toolbar>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>
