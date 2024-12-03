@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, RouterLinkWithHref, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkWithHref, RouterOutlet } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
+import { BlobService } from '../../../services/shared/blob.service';
 
 @Component({
   selector: 'app-layout',
@@ -21,7 +22,6 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
     CommonModule,
     FlexLayoutModule,
     RouterLink,
-    RouterLinkActive,
     RouterLinkWithHref
   ],
   templateUrl: './layout.component.html',
@@ -29,10 +29,12 @@ import { FlexLayoutModule } from '@ngbracket/ngx-layout';
 })
 export class LayoutComponent {
   imagePath:string = '';
-  constructor(){
-
-  }
+  constructor(
+    private blobService : BlobService
+  ){}
 
   ngOnInit(){
+    this.imagePath = this.blobService.getImageUrl('UserIcon.png');
+    console.log(this.imagePath); 
   }
 }
