@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 mat-sidenav-container, mat-sidenav-content, mat-sidenav {
     height: 100%;
 }
@@ -12,12 +14,12 @@ main {
 
 a {
     text-decoration: none;
-    color: white;
+    color: var(--main-text-color);
     height: 100%;
 }
 
 a:hover, a:active{
-    color: lightgray;
+    color: var(--main-text-hover-color);
 }
 
 .navigation-items{
@@ -30,11 +32,6 @@ mat-toolbar{
     border-radius: 3px;
 }
 
-@media(max-width: 959px){
-    mat-toolbar{
-        border-radius: 0px;
-    }
-}
 .user-logo{
     border-radius: 50%;
     width: 50px;
@@ -43,4 +40,39 @@ mat-toolbar{
 .logo-container{
     width: 50px;
     height: 50px;
+}
+.black-line{
+    width: 2px;
+    background-color: black;
+}
+.phone-icon-container{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: grid;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: var(--main-ctrl-color);
+    .phone-icon{
+        margin-right: auto;
+        margin-left: auto;
+        height: 25px;
+        width: 25px;
+    }
+}
+@media (max-width: 500px) {
+    .phone-number-container {
+        display: none !important;
+    }
+    .phone-icon-container{
+        display: none !important;
+    }
+}
+.phone-number-container{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    height: 30px;
 }

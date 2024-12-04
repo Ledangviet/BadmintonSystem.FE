@@ -1,45 +1,73 @@
-<mat-sidenav-container>
-    <mat-sidenav #sidenav role="navigation">
-        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-            <li>
-                <a routerLink="/home">
-                    <p>Home</p>
-                </a>
-            </li>
-            <li>
-                <a routerLink="/booking">
-                    <p>Booking</p>
-                </a>
-            </li>
-        </ul>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <mat-toolbar color="primary">
-            <div fxHide.gt-xs>
-                <button mat-icon-button (click)="sidenav.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
+<div class="booking-layout-container">
+
+    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+        <li>
+            <div class="phone-icon-container">
+                <img class="phone-icon" [src]="this.phoneImagePath" alt="Phone">
             </div>
-            <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs>
-                <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-                    <li>
-                        <a routerLink="/home">
-                            <p>Home</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a routerLink="/booking">
-                            <p>Booking</p>
-                        </a>
-                    </li>
-                </ul>
+        </li>
+        <li class="phone-number-container">
+            <div>0353921582</div>
+        </li>
+        <li>
+            <div class="phone-icon-container">
+                <img class="phone-icon" [src]="this.adressImagePath" alt="Phone">
             </div>
-            <div fxFlex fxLayout fxLayoutAlign="end">
-                <div class="logo-container"><img class="user-logo" [src]="this.imagePath" alt="a"></div>
-            </div>
-        </mat-toolbar>
-        <main>
-            <router-outlet></router-outlet>
-        </main>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        </li>
+        <li class="phone-number-container">
+            <div>Trường đại học Công Nghệ Đồng Nai</div>
+        </li>
+    </ul>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav role="navigation">
+            <ul fxLayout fxLayoutGap="25px" class="navigation-items">
+                <li>
+                    <a routerLink="/home">
+                        <p>Home</p>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="/booking">
+                        <p>Booking</p>
+                    </a>
+                </li>
+            </ul>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <mat-toolbar color="primary">
+                <div fxHide.gt-xs>
+                    <button mat-icon-button (click)="sidenav.toggle()">
+                        <mat-icon>menu</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs>
+                    <ul fxLayout fxLayoutGap="25px" class="navigation-items">
+                        <li>
+                            <a routerLink="/home">
+                                <p>Home</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/booking">
+                                <p>Booking</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a routerLink="/booking">
+                                <p>Shop Now</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div fxFlex fxLayout fxLayoutAlign="end">
+                    <div *ngIf="!this.isAuthenticated" class="default-button"><button mat-button (click)="onClickLogin()">Login</button></div>
+                    <div *ngIf="this.isAuthenticated" class="logo-container"><img class="user-logo"
+                            [src]="this.userImagePath" alt="User"></div>
+                </div>
+            </mat-toolbar>
+            <main>
+                <router-outlet></router-outlet>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>
