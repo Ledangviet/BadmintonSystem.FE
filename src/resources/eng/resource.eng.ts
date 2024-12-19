@@ -1,6 +1,14 @@
 export default{
-    home_Title : 'Home',
-    book_Title: 'Book',
-    shop_Title : "Shop",
-    adress_Info: "Dong Nai University"
+    //Booking Layout Component
+    homeTitle : 'Home',
+    bookTitle: 'Book',
+    shopTitle : "Shop",
+    adressInfo: "Dong Nai University",
+    phoneNumber: "0353921582",
+    profileMenu: "Profile",
+    settingMenu: "Settings",
+    logoutMenu: "Logout",
+    loginMenu: "Login"
+
+    //Auth component
 }

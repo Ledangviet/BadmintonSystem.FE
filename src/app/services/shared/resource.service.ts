@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import EngResource from '../../../resources/eng/resource.eng';
-import ViResource from '../../../resources/eng/resource.eng';
+import ViResource from '../../../resources/vi/resource.vi';
 
 
 
@@ -33,9 +33,11 @@ export class ResourceService {
   reloadResource() {
     let lang = localStorage.getItem("language");
     if (lang == null || lang == "eng") {
+      this.lang = 'eng';
       this.resource = EngResource;
     }
     else {
+      this.lang = 'vi';
       this.resource = ViResource;
     }
   }

@@ -9,7 +9,6 @@ html, body {
 
 .mat-toolbar.mat-primary{
     background-color: whitesmoke;
-    color: var(--main-text-color);
 }
 
 :root {
@@ -21,7 +20,7 @@ html, body {
   }
 
 .default-button{
-    border-radius: 10%;
+    border-radius: 5%;
     color: var(--main-text-color);
     height: 100%;
     background-color: var(--main-ctrl-color);
