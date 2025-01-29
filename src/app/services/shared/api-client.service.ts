@@ -10,8 +10,9 @@ export class ApiClientService {
 
   baseUrl = environment.apiUrl;
   public get header(){
-    let token = localStorage.getItem("token")?.toString();
+    let token = localStorage.getItem("accessToken")?.toString();
     return new HttpHeaders({
+      'accept': '*/*',
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });

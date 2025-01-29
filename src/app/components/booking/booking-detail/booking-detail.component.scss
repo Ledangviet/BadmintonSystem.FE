@@ -1,0 +1,63 @@
+.example-card {
+    min-width: 250px;
+    height: 250px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 16px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.date,
+.time,
+.schedule,
+.price {
+    margin-bottom: 2px;
+}
+
+.bin-icon {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+
+}
+
+.schedule {
+    max-height: 100px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+}
+
+.schedule ul {
+    padding-left: 20px;
+}
+
+.selected-price {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+}
+
+.price {
+    position: absolute;
+    bottom: 8px;
+}
+
+.booking-detail-container {
+    min-height: 350px;
+}
+
+.remove-time-slot{
+    padding: 0px 3px 1px 3px;
+    margin-bottom: 2px;
+}
+
+.total-price{
+    text-align: center;
+}

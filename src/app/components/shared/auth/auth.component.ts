@@ -10,6 +10,12 @@ import { AuthService } from '../../../services/shared/auth.service';
 import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import RegisterModel from '../../../model/register.model';
+import RegisterResponseModel from '../../../model/register.response.model';
+import { ToastrService } from 'ngx-toastr';
+import LoginResponseModel from '../../../model/login.response.model';
 
 @Component({
   selector: 'app-auth',
@@ -22,7 +28,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss'
@@ -35,7 +43,8 @@ export class AuthComponent {
 
   public UIResource = {
     passwordPlh: 'Password',
-    userNamePlh: 'Email',
+    emailPlh: 'Email',
+    userNamePlh: 'User name',
     loginTitle: "LOGIN",
     register: "Register",
     registerTitle: "REGISTER",
@@ -46,42 +55,91 @@ export class AuthComponent {
     dontHaveAccount: "If you don't have an account, please ",
     haveAccount: "If you already have an account, please",
     loginHere: "Login here",
-    registerHere: "Register here!"
+    registerHere: "Register here!",
+    firstNamePlh: "First Name",
+    lastNamePlh: "Last Name",
+    adressLine1Plh: "Adress Line 1",
+    adressLine2Plh: "Adress Line 2",
+    streetPlh: "Street",
+    cityPlh: "City",
+    provincePlh: "Province",
+    phoneNumberPlh: "Phone Number",
+    genderPlh: "Gender",
+    dateOfBirthPlh: "Date of Birth",
+    registerSuccess: "Register Success!",
+    passWordCondition: "Your password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character from @$!%*?&."
   }
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private resource: ResourceService
+    private resource: ResourceService,
+    private toaster: ToastrService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      rememberme: ['', Validators.required],
+      rememberme: [false, Validators.required],
     });
 
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      correctpassword: ['', Validators.required]
+      password: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
+      ]],
+      correctpassword: ['', [
+        Validators.required,
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
+      ]],
+      unit: [''],
+      street: [''],
+      adreessLine1: [''],
+      adreessLine2: [''],
+      email: ['', [Validators.required, Validators.email]],
+      firstName: [''],
+      lastName: [''],
+      phoneNumber: ['', [Validators.required]],
+      gender: [0],
+      dateOfBirth: [''],
+      avatarUrl: ['']
     });
   }
-  onSubmit() {
+  onSubmitLogin() {
     if (this.loginForm.valid) {
-      let email = this.loginForm.get('username')?.value;
+      let email = this.loginForm.get('email')?.value;
       let passWord = this.loginForm.get('password')?.value;
-      if(email != null && passWord != null){
-        this.authService.login(email,passWord);
-        this.router.navigate(['/home']);
+      if (email != null && passWord != null) {
+        this.authService.login(email, passWord).subscribe((result: LoginResponseModel) =>{
+          if(result.isSuccess){
+            localStorage.setItem("accessToken",result.value.accessToken);
+            this.router.navigate(['/home']);
+            this.authService.loginStateChangeEmitter.emit(true);
+          }    
+        })
+        
       }
     }
   }
 
-  register(){
+  onSubmitRegister() {
+    let email = this.registerForm.get("email")?.value;
+    let password = this.registerForm.get("password")?.value;
+    let phoneNumber = this.registerForm.get("phoneNumber")?.value;
+    let dateOfBirth = this.registerForm.get("dateOfBirth")?.value;
+    let registerModel = new RegisterModel(email, password, phoneNumber, dateOfBirth,0);
+    this.authService.register(registerModel).subscribe((response: RegisterResponseModel) => {
+      if (response.isSuccess) {
+        this.toaster.success(this.UIResource.registerSuccess);
+      }
+    })
+  }
+
+  registerHere(){
     this.state = "register";
   }
-  loginHere(){
+  loginHere() {
     this.state = "login";
   }
 }

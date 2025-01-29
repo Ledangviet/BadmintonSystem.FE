@@ -130,3 +130,11 @@ mat-toolbar {
     height: 24px;
     margin-right: 10px;
 }
+
+.header-layout{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensures the header stays on top of other elements */
+}

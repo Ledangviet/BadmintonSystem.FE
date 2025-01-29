@@ -1,0 +1,32 @@
+<div class="checkout-container">
+    <app-booking-detail [selectedDate]="this.selectedDate"></app-booking-detail>
+    <div class="card-container">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title class="signin-title"> Enter Information</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form [formGroup]="checkoutForm" (ngSubmit)="onSubmitCheckout()">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput formControlName="phone" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Percent Prepay</mat-label>
+                        <input matInput formControlName="prepay" required>
+                    </mat-form-field>                  
+                    <mat-form-field appearance="outline">
+                        <mat-label>Discount code</mat-label>
+                        <input matInput formControlName="discount">
+                    </mat-form-field>
+                    <button class="login-button " mat-raised-button type="submit">Check Out</button>
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+    
+</div>

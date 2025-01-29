@@ -2,6 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { ApiClientService } from './api-client.service';
 import LoginResponseModel from '../../model/login.response.model';
 import { Observable } from 'rxjs';
+import RegisterModel from '../../model/register.model';
+import RegisterResponseModel from '../../model/register.response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,18 +27,16 @@ export class AuthService {
   }
 
   login(email: string, passWord: string) {
-    this.apiClient.post<LoginResponseModel>("users/login", { email: email, password: passWord }).subscribe((response) => {
-      if (response) {
-        if (response.isSuccess) {
-          localStorage.setItem("isAuthenticated", "true");
-          this.loginStateChangeEmitter.emit(true);
-        }
-      }
-    });
+    return this.apiClient.post<LoginResponseModel>("users/login", { email: email, password: passWord });
   }
 
   logout() {
+    localStorage.setItem("accessToken","");
     localStorage.setItem("isAuthenticated", "false");
     this.loginStateChangeEmitter.emit(false);
+  }
+
+  register(registerModel: RegisterModel): Observable<RegisterResponseModel>{
+    return this.apiClient.post<RegisterResponseModel>('users/register',registerModel);
   }
 }

@@ -1,23 +1,4 @@
 <div class="booking-layout-container">
-
-    <ul fxLayout fxLayoutGap="10px" class="navigation-items">
-        <li>
-            <div class="phone-icon-container">
-                <img class="phone-icon" [src]="this.phoneImagePath" alt="Phone">
-            </div>
-        </li>
-        <li class="phone-number-container">
-            <div>{{this.UIResource.phoneNumber}}</div>
-        </li>
-        <li>
-            <div class="phone-icon-container">
-                <img class="phone-icon" [src]="this.adressImagePath" alt="Phone">
-            </div>
-        </li>
-        <li class="phone-number-container">
-            <div>{{this.UIResource.adressInfo}}</div>
-        </li>
-    </ul>
     <mat-sidenav-container>
         <mat-sidenav #sidenav role="navigation">
             <ul fxLayout fxLayoutGap="25px" class="navigation-items">
@@ -33,49 +14,51 @@
                 </li>
             </ul>
         </mat-sidenav>
-        <mat-sidenav-content>
-            <mat-toolbar color="primary">
-                <div fxHide.gt-xs>
-                    <button mat-icon-button (click)="sidenav.toggle()">
-                        <mat-icon>menu</mat-icon>
-                    </button>
-                </div>
-                <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs>
-                    <ul fxLayout fxLayoutGap="25px" class="navigation-items">
-                        <li>
-                            <a routerLink="/home">
-                                <p>{{this.UIResource.homeTitle}}</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/booking">
-                                <p>{{this.UIResource.bookTitle}}</p>
-                            </a>
-                        </li>
-                        <li>
-                            <a routerLink="/booking">
-                                <p>{{this.UIResource.shopTitle}}</p>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div fxFlex fxLayout fxLayoutAlign="end">
-                    <div class="lang-button" (click)="onChangeLanguage()"><p>{{this.lang}}</p></div>
-                    @if (!this.isAuthenticated) {
-                    <div class="default-button"><button mat-button (click)="onClickLogin()">{{this.UIResource.loginMenu}}</button></div>
-                    } @else {
-                    <div class="logo-container" [matMenuTriggerFor]="userMenu">
-                        <img class="user-logo" [src]="this.userImagePath" alt="User">
-                        <mat-menu #userMenu="matMenu">
-                            <button mat-menu-item>{{this.UIResource.profileMenu}}</button>
-                            <button mat-menu-item>{{this.UIResource.settingMenu}}</button>
-                            <button mat-menu-item (click)="onLogout()">{{this.UIResource.logoutMenu}}</button>
-                        </mat-menu>
+        <mat-sidenav-content >
+            <div class="header-layout">
+                <mat-toolbar color="primary">
+                    <div fxHide.gt-xs>
+                        <button mat-icon-button (click)="sidenav.toggle()">
+                            <mat-icon>menu</mat-icon>
+                        </button>
                     </div>
-
-                    }
-                </div>
-            </mat-toolbar>
+                    <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs >
+                        <ul fxLayout fxLayoutGap="25px" class="navigation-items">
+                            <li>
+                                <a routerLink="/home">
+                                    <p>{{this.UIResource.homeTitle}}</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a routerLink="/booking">
+                                    <p>{{this.UIResource.bookTitle}}</p>
+                                </a>
+                            </li>
+                            <li>
+                                <a routerLink="/booking">
+                                    <p>{{this.UIResource.shopTitle}}</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div fxFlex fxLayout fxLayoutAlign="end">
+                        <div class="lang-button" (click)="onChangeLanguage()"><p>{{this.lang}}</p></div>
+                        @if (!this.isAuthenticated) {
+                        <div class="default-button"><button mat-button (click)="onClickLogin()">{{this.UIResource.loginMenu}}</button></div>
+                        } @else {
+                        <div class="logo-container" [matMenuTriggerFor]="userMenu">
+                            <img class="user-logo" [src]="this.userImagePath" alt="User">
+                            <mat-menu #userMenu="matMenu">
+                                <button mat-menu-item>{{this.UIResource.profileMenu}}</button>
+                                <button mat-menu-item>{{this.UIResource.settingMenu}}</button>
+                                <button mat-menu-item (click)="onLogout()">{{this.UIResource.logoutMenu}}</button>
+                            </mat-menu>
+                        </div>
+    
+                        }
+                    </div>
+                </mat-toolbar>
+            </div>
             <main>
                 <router-outlet></router-outlet>
             </main>

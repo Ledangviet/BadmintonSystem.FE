@@ -6,10 +6,10 @@
         <mat-card-title class="signin-title">{{UIResource.loginTitle}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
           <mat-form-field appearance="outline">
-            <mat-label>{{UIResource.userNamePlh}}</mat-label>
-            <input matInput formControlName="username" required>
+            <mat-label>{{UIResource.emailPlh}}</mat-label>
+            <input matInput formControlName="email" required>
           </mat-form-field >
           <mat-form-field appearance="outline">
             <mat-label>{{UIResource.passwordPlh}}</mat-label>
@@ -26,7 +26,7 @@
           <button class="login-button" mat-raised-button type="submit">{{UIResource.loginMenu}}</button>
           <div class="register-link-container">
             <div class="dont-have-account">{{UIResource.dontHaveAccount}}&nbsp;</div>          
-            <a class="register-link" (click)="register()">{{UIResource.registerHere}}</a>
+            <a class="register-link" (click)="registerHere()">{{UIResource.registerHere}}</a>
           </div>
         </form>
       </mat-card-content>
@@ -39,10 +39,10 @@
         <mat-card-title class="signin-title">{{UIResource.registerTitle}}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegister()">
           <mat-form-field appearance="outline">
-            <mat-label>{{UIResource.userNamePlh}}</mat-label>
-            <input matInput formControlName="username" required>
+            <mat-label>{{UIResource.emailPlh}}</mat-label>
+            <input matInput formControlName="email" required>
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>{{UIResource.passwordPlh}}</mat-label>
@@ -59,8 +59,21 @@
               [attr.aria-pressed]="hide">
               <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <!-- <mat-error class="password-error" *ngIf="this.registerForm.get('correctpassword')?.invalid && (this.registerForm.get('correctpassword')?.dirty || this.registerForm.get('correctpassword')?.touched)">
+              {{UIResource.passWordCondition}}
+            </mat-error> -->
           </mat-form-field>
-          <button class="login-button" mat-raised-button type="submit">{{UIResource.loginMenu}}</button>
+          
+          <mat-form-field appearance="outline">
+            <mat-label>{{UIResource.phoneNumberPlh}}</mat-label>
+            <input matInput formControlName="phoneNumber">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input matInput [matDatepicker]="picker" formControlName="dateOfBirth" [placeholder]="UIResource.dateOfBirthPlh">      
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>       
+            <mat-datepicker #picker ></mat-datepicker>     
+          </mat-form-field>
+          <button class="login-button" mat-raised-button type="submit">{{UIResource.register}}</button>
           <div class="register-link-container">
             <div class="dont-have-account">{{UIResource.haveAccount}}&nbsp;</div>          
             <a class="register-link" (click)="loginHere()">{{UIResource.loginHere}}</a>

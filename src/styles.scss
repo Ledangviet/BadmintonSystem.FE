@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 /* for sidenav to take a whole page */
+
 html, body { 
     margin: 0px;
     height: 100%;
@@ -15,16 +16,17 @@ html, body {
     --main-bg-color: whitesmoke;
     --main-text-color: #000000;
     --main-text-hover-color: #666666;
-    --main-ctrl-color: #B99470;
+    --main-ctrl-background-color: #B99470;
+    --main-ctrl-color: white;
     // Add more variables as needed
   }
 
 .default-button{
-    border-radius: 5%;
-    color: var(--main-text-color);
-    height: 100%;
-    background-color: var(--main-ctrl-color);
+    border-radius: 5px !important;
+    color: var(--main-ctrl-color) !important;
+    height: 35px;
+    background-color: var(--main-ctrl-background-color) !important;
     :hover{
-        color: var(--main-text-hover-color-color);
+        color: var(--main-text-hover-color-color) !important;
     }
 }

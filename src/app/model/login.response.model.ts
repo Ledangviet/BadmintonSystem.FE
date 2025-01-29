@@ -1,7 +1,7 @@
 import BaseResponseModel from './base.response.model';
 
 export default class LoginResponseModel extends BaseResponseModel {
-  value: {
+  override value: {
     accessToken: string;
     refreshToken: string;
     refreshTokenExpiryTime: string;

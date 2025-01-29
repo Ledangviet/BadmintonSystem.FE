@@ -1,6 +1,7 @@
 export default class BaseResponseModel {
     isSuccess: boolean;
     isFailure: boolean;
+    value: any;
     error: {
       code: string;
       message: string;
@@ -10,5 +11,6 @@ export default class BaseResponseModel {
       this.isSuccess = data.isSuccess;
       this.isFailure = data.isFailure;
       this.error = data.error;
+      this.value = data.value;
     }
   }

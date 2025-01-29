@@ -1,1 +1,47 @@
-<p>book works!</p>
+<div class="booking-container">
+
+  <div class="date-picker-container">
+    <div class="booking-banner">Select Booking Date :</div>
+    <form [formGroup]="selectedTimeform" class="date-picker">
+      <mat-form-field appearance="outline" class="form-field">
+        <input matInput [matDatepicker]="picker" formControlName="dateTime" [min]="minDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="yard-name"></th>
+        @for (time of timeSlots; track time) {
+        <th>{{time.startTime.slice(0, -3)}} - {{time.endTime.slice(0, -3)}}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (yardPrice of yardPriceList; track yardPrice) {
+      <tr>
+        <td>{{yardPrice.yard.name}}</td>
+        @for (detail of yardPrice.yardPricesDetails
+        ; track detail) {
+        <td (click)="onSelectTimeSlot(detail)" class="price-tag" [class.selected]="isSelected(detail)"
+          [class.available]="isAvailable(detail)" [class.unavailable]="!isAvailable(detail)"
+          [class.booked]="isBooked(detail)">
+        </td>
+        }
+      </tr>
+      }
+
+    </tbody>
+  </table>
+  <div class="clear-container">
+    <button mat-raised-button (click)="onClearAll()" class="default-button">Clear All</button>
+  </div>
+  <h4>Your Selected :</h4>
+  <app-booking-detail [selectedDate]="this.selectedDate"></app-booking-detail>
+  @if(this.anyPriceSelected){
+  <button class="login-button " mat-raised-button (click)="onCheckOut()">Check Out</button>
+  }
+</div>
