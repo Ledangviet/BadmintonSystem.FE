@@ -1,3 +1,5 @@
+@import '../../../../styles.scss';
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -5,8 +7,9 @@ table {
 
 th,
 td {
+  margin: 0;
   border: 1px solid black;
-  padding: 5px;
+  white-space: nowrap;
   text-align: center;
   font-size: 15px;
 }
@@ -20,33 +23,32 @@ th {
   transition: background-color 0.3s;
 }
 
-.price-tag.available{
+.price-tag.available {
   padding: 10px;
   transition: background-color 0.3s;
 }
 
-.price-tag.unavailable{
+.price-tag.unavailable {
   padding: 10px;
   transition: background-color 0.3s;
   opacity: 0.7;
   background-color: #e0e0e0;
   cursor: not-allowed;
-  color:#a0a0a0;
 }
 
 .price-tag.available:hover {
-  background-color: #d3d3d3;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .price-tag.selected {
-  background-color: #ffa07a;
+  background-color: yellow;
   color: white;
 }
 
 .price-tag.booked {
-  background-color: #B99470;
+  background-color: #D2B48C;
   color: white;
 }
 
@@ -54,26 +56,61 @@ th {
   width: 50px;
 }
 
-.date-picker-container {
-  min-height: 150px;
+.head-container {
+  background-color: var(--main-bg-color);
+  min-height: 151px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  color: #36454F;
 
   .booking-banner {
-    font-size: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    height: 100%;
+    margin-right: 20px;
+    text-align: center;
+    margin-left: 5px;
+  }
+
+  .fix-booking-banner {
+    font-size: 20px;
+    font-weight: bold;
+    height: 100%;
+    margin-left: 50px;
+    text-align: center;
+    margin-left: 5px;
+    font-style: italic;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  .name-banner {
+    margin-top: 10px;
+    font-family: 'Lucida Console';
+    font-size: 25px;
+  }
+
+  .date-picking {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .select-datedate-banner {
+    font-size: 20px;
     font-weight: bold;
     height: 100%;
     margin-right: 20px;
   }
 }
 
-.date-picker {
-
-}
-
-.form-field{
+.date-form-field {
   padding-top: 22px;
+  max-width: 150px;
 }
 
 .login-button {
@@ -84,10 +121,25 @@ th {
   height: 50px;
 }
 
-.booking-container{
-  padding-top:  50px;
+.booking-container {
+  padding-top: 50px;
 }
 
-.clear-container{
+.clear-container {
   margin-top: 5px;
+}
+
+.yard-name {
+  position: absolute;
+  width: 60px;
+  left: 10px;
+  top: auto;
+  border-top-width: 1px;
+  /*only relevant for first row*/
+}
+
+.table-container {
+  overflow-x: scroll;
+  margin-left: 70px;
+  overflow-y: visible;
 }

@@ -1,32 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 /* for sidenav to take a whole page */
 
-html, body { 
+html,
+body {
     margin: 0px;
     height: 100%;
     padding: 0px;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.mat-toolbar.mat-primary{
-    background-color: whitesmoke;
-}
-
 :root {
-    --main-bg-color: whitesmoke;
-    --main-text-color: #000000;
+    --main-bg-color: #FAFAFA;
+    --main-text-color: black;
     --main-text-hover-color: #666666;
-    --main-ctrl-background-color: #B99470;
+    --main-ctrl-background-color: #D2B48C;
     --main-ctrl-color: white;
     // Add more variables as needed
-  }
+}
 
-.default-button{
+.default-button {
     border-radius: 5px !important;
     color: var(--main-ctrl-color) !important;
     height: 35px;
     background-color: var(--main-ctrl-background-color) !important;
-    :hover{
+
+    :hover {
         color: var(--main-text-hover-color-color) !important;
     }
+}
+
+.mat-toolbar.mat-primary {
+    background-color: #F0F0F0;
 }

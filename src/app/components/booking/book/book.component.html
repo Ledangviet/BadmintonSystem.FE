@@ -1,47 +1,57 @@
 <div class="booking-container">
-
-  <div class="date-picker-container">
-    <div class="booking-banner">Select Booking Date :</div>
-    <form [formGroup]="selectedTimeform" class="date-picker">
-      <mat-form-field appearance="outline" class="form-field">
-        <input matInput [matDatepicker]="picker" formControlName="dateTime" [min]="minDate">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </form>
+  <div class="head-container">
+    <div class="booking-banner">{{this.UIResource.bookBanner}}<br>
+      <div class="name-banner">Chill Batminton</div>
+    </div>
+    <div class="date-picking">
+      <div class="select-datedate-banner"> {{this.UIResource.selectDate}}</div>
+      <form [formGroup]="selectedTimeform" class="date-picker">
+        <mat-form-field appearance="outline" class="date-form-field">
+          <input matInput [matDatepicker]="picker" formControlName="dateTime" [min]="minDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </form>
+    </div>
+    <div class="fix-booking-banner">{{this.UIResource.fixBooking}}<br>
+      <div class="name-banner">{{this.UIResource.fixPhone}}</div>
+    </div>
   </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th class="yard-name"></th>
-        @for (time of timeSlots; track time) {
-        <th>{{time.startTime.slice(0, -3)}} - {{time.endTime.slice(0, -3)}}</th>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th class="yard-name">{{this.UIResource.court}}</th>
+          @for (time of timeSlots; track time) {
+          <th>{{time.startTime.slice(0, -3)}} - {{time.endTime.slice(0, -3)}}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (yardPrice of yardPriceList; track yardPrice) {
+        <tr>
+          <td class="yard-name">
+            <div class="yard-name-child">{{yardPrice.yard.name}}</div>
+          </td>
+          @for (detail of yardPrice.yardPricesDetails
+          ; track detail) {
+          <td (click)="onSelectTimeSlot(detail)" class="price-tag" [class.selected]="isSelected(detail)"
+            [class.available]="isAvailable(detail)" [class.unavailable]="!isAvailable(detail)"
+            [class.booked]="isBooked(detail)">
+          </td>
+          }
+        </tr>
         }
-      </tr>
-    </thead>
-    <tbody>
-      @for (yardPrice of yardPriceList; track yardPrice) {
-      <tr>
-        <td>{{yardPrice.yard.name}}</td>
-        @for (detail of yardPrice.yardPricesDetails
-        ; track detail) {
-        <td (click)="onSelectTimeSlot(detail)" class="price-tag" [class.selected]="isSelected(detail)"
-          [class.available]="isAvailable(detail)" [class.unavailable]="!isAvailable(detail)"
-          [class.booked]="isBooked(detail)">
-        </td>
-        }
-      </tr>
-      }
 
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
   <div class="clear-container">
-    <button mat-raised-button (click)="onClearAll()" class="default-button">Clear All</button>
+    <button mat-raised-button (click)="onClearAll()" class="default-button">{{this.UIResource.clearAll}}</button>
   </div>
-  <h4>Your Selected :</h4>
+  <h3>{{this.UIResource.yourSelected}}</h3>
   <app-booking-detail [selectedDate]="this.selectedDate"></app-booking-detail>
   @if(this.anyPriceSelected){
-  <button class="login-button " mat-raised-button (click)="onCheckOut()">Check Out</button>
+  <button class="login-button " mat-raised-button (click)="onCheckOut()">{{this.UIResource.checkOut}}</button>
   }
 </div>

@@ -1,11 +1,12 @@
 .example-card {
-    min-width: 250px;
+    width: 250px;
     height: 250px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 16px;
     position: relative;
-    margin-right: 5px;
+    margin-right: 20px;
+    background-color: #F0F0F0;
 }
 
 .title {
@@ -41,7 +42,8 @@
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .price {
@@ -51,13 +53,14 @@
 
 .booking-detail-container {
     min-height: 350px;
+
 }
 
-.remove-time-slot{
+.remove-time-slot {
     padding: 0px 3px 1px 3px;
     margin-bottom: 2px;
 }
 
-.total-price{
+.total-price {
     text-align: center;
 }

@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { BookingDetailComponent } from '../booking-detail/booking-detail.component';
 import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { ResourceService } from '../../../services/shared/resource.service';
 
 @Component({
   selector: 'app-book',
@@ -29,7 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatNativeDateModule,
     CommonModule,
     ReactiveFormsModule,
-    MatInputModule,   
+    MatInputModule,
     BookingDetailComponent,
     MatButtonModule,
   ],
@@ -45,14 +46,15 @@ export class BookComponent {
   minDate = new Date();
   selectedDate: Date = new Date();
 
-  get anyPriceSelected(){
+  get anyPriceSelected() {
     return this.bookingService.selectedYardPrice.length > 0;
   }
   constructor(
     private authService: AuthService,
     private bookingService: BookingMainService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private resourceService: ResourceService
   ) {
     this.selectedTimeform = this.fb.group({
       dateTime: [this.selectedDate]
@@ -76,32 +78,48 @@ export class BookComponent {
     })
 
     let date = new Date();
+    date.setHours(date.getHours() + 8);
     let formattedDate = date.toISOString();
     this.bookingService.getYardByDate(`"${formattedDate}"`).subscribe((result: YardPriceByDateResponseModel) => {
       this.yardPriceList = result.value;
     })
 
-    this.selectedTimeform.get('dateTime')?.valueChanges.subscribe( () =>{
+    this.selectedTimeform.get('dateTime')?.valueChanges.subscribe(() => {
       this.bookingService.clearSelected();
-        let value = this.selectedTimeform.get('dateTime')?.value;
-        if(value){
-          this.selectedDate = value;
-          this.bookingService.selectedDate = this.selectedDate;
-        }
+      let value = this.selectedTimeform.get('dateTime')?.value;
+      if (value) {
+        this.selectedDate = value;
+        this.bookingService.selectedDate = this.selectedDate;
+        let date = new Date(value);
+        date.setHours(date.getHours() + 8);
+        let formattedDate = date.toISOString();
+        this.bookingService.getYardByDate(`"${formattedDate}"`).subscribe((result: YardPriceByDateResponseModel) => {
+          this.yardPriceList = result.value;
+        })
+      }
     })
 
+    this.UIResource = this.resourceService.getResource(this.UIResource);
   }
 
 
   public UIResource = {
+    bookBanner: "Đặt sân theo giờ",
+    fixPhone: "0353921582",
+    fixBooking: "Để đặt lịch cố định vui lòng gọi :",
+    selectDate: "Chọn ngày :",
+    court: "Sân",
+    clearAll: "Bỏ chọn",
+    checkOut: "Thanh Toán",
+    yourSelected: "Đã chọn :"
   }
 
-  
+
 
 
   onSelectTimeSlot(detail: YardPriceModel) {
 
-    if(!this.isAvailable(detail)) return;
+    if (!this.isAvailable(detail)) return;
     const index = this.bookingService.selectedYardPrice.indexOf(detail);
     if (index > -1) {
       this.bookingService.selectedYardPrice.splice(index, 1);
@@ -119,18 +137,19 @@ export class BookComponent {
     return false;
   }
 
-  isBooked(detail: YardPriceModel){
+  isBooked(detail: YardPriceModel) {
+    //console.log(detail.startTime + 'and' + detail.isBooking);
+
     if (detail.isBooking !== 0) {
       return true;
     }
     return false;
   }
 
-  isAvailable(detail: YardPriceModel){
+  isAvailable(detail: YardPriceModel) {
+    if (detail.isBooking) return false;
     let time = detail.startTime;
-
     let currentTime = new Date();
-
     const [startHour, startMinute, startSecond] = time.split(':').map(Number);
     const startTime = this.selectedDate;
     startTime.setHours(startHour, startMinute, startSecond, 0);
@@ -138,11 +157,11 @@ export class BookComponent {
     return startTime > currentTime;
   }
 
-  onCheckOut(){
-  this.router.navigate(['/checkout']);
+  onCheckOut() {
+    this.router.navigate(['/checkout']);
   }
 
-  onClearAll(){
+  onClearAll() {
     this.bookingService.clearSelected();
   }
 

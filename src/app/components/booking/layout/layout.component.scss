@@ -109,8 +109,9 @@ mat-toolbar {
 .footer {
     display: flex;
     justify-content: space-between;
-    background-color: whitesmoke;
+    background-color: var(--main-bg-color);
     padding: 20px;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .footer .left,
@@ -131,14 +132,15 @@ mat-toolbar {
     margin-right: 10px;
 }
 
-.header-layout{
+.header-layout {
     position: fixed;
     top: 0;
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Ensures the header stays on top of other elements */
+    z-index: 1000;
+    /* Ensures the header stays on top of other elements */
 }
 
-.quick-link-item{
+.quick-link-item {
     color: black;
 }

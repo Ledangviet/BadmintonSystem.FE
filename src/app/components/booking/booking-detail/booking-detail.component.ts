@@ -6,6 +6,7 @@ import { BookingMainService } from '../../../services/booking/booking-main.servi
 import { YardModel } from '../../../model/yard.model';
 import BaseResponseModel from '../../../model/base.response.model';
 import { CommonModule } from '@angular/common';
+import { ResourceService } from '../../../services/shared/resource.service';
 
 @Component({
   selector: 'app-booking-detail',
@@ -23,11 +24,21 @@ export class BookingDetailComponent {
   @Input() selectedDate: Date = new Date();
   selectedYardPrice: YardPriceModel[] = [];
   yardList: YardModel[] = [];
-  get anyPriceSelected(){
+  public UIResource = {
+    bookingDetailDate: "Date :",
+    bookingDetailTime: "Time :",
+    bookingDetailTotal: "Total Price :",
+    bookingDetailNotSelected: "You have not selected any time slot!",
+    bookingDetailPrice: "Price"
+  }
+  get anyPriceSelected() {
     return this.bookingService.selectedYardPrice.length > 0;
   }
+
+
   constructor(
-    private bookingService: BookingMainService
+    private bookingService: BookingMainService,
+    private resourceService: ResourceService
   ) {
 
   }
@@ -37,6 +48,8 @@ export class BookingDetailComponent {
     this.bookingService.selectedYardPriceChangeEmitter.subscribe(() => {
       this.updateYardPriceInYardList();
     });
+
+    this.UIResource = this.resourceService.getResource(this.UIResource);
 
     this.bookingService.getYardList(0, 100).subscribe((result: BaseResponseModel) => {
       if (result.isSuccess) {
@@ -85,12 +98,12 @@ export class BookingDetailComponent {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
-  removeYardPrice(detail: YardPriceModel){
+  removeYardPrice(detail: YardPriceModel) {
     this.bookingService.removeSelectedYardPrice(detail);
   }
 
-  removeYard(yard: YardModel){
-    yard.yardPriceList.forEach( detail  =>{
+  removeYard(yard: YardModel) {
+    yard.yardPriceList.forEach(detail => {
       this.removeYardPrice(detail);
     })
   }
