@@ -35,7 +35,7 @@
           </td>
           @for (detail of yardPrice.yardPricesDetails
           ; track detail) {
-          <td (click)="onSelectTimeSlot(detail)" class="price-tag" [class.selected]="isSelected(detail)"
+          <td (click)="onSelectTimeSlot(detail)" class="price-tag" [class.reserved]="isReserved(detail)" [class.selected]="isSelected(detail)"
             [class.available]="isAvailable(detail)" [class.unavailable]="!isAvailable(detail)"
             [class.booked]="isBooked(detail)">
           </td>
