@@ -27,14 +27,14 @@ mat-form-field {
 .login-button {
     width: 100%;
     margin-top: 10px;
-    background-color: var(--main-ctrl-color) !important;
+    background-color: var(--main-ctrl-background-color) !important;
     color: white !important;
     height: 50px;
 }
 .signin-title{
     font-weight: bold;
     margin-bottom: 30px;
-    color: var(--main-ctrl-color);
+    color: var(--main-ctrl-background-color);
 }
 
 .form-options {

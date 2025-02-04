@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../services/shared/auth.service';
-import { Router, RouterLink, RouterLinkWithHref } from '@angular/router';
+import { Router } from '@angular/router';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -78,7 +78,7 @@ export class AuthComponent {
     private toaster: ToastrService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['admin@gmail.com', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       rememberme: [false, Validators.required],
     });
