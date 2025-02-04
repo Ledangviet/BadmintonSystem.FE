@@ -47,6 +47,14 @@ th {
   color: white;
 }
 
+.price-tag.reserved {
+  background-color: #d28c8c;
+  color: white;
+  // pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .price-tag.booked {
   background-color: #D2B48C;
   color: white;
