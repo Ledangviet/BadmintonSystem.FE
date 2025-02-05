@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   // bookingHubUrl: 'http://localhost:5000/hubs/booking',
-  // apiUrl: 'http://localhost:5000/api/v1/',
+  // apiUrl: 'http://localhost:8000/api/v1/',
   bookingHubUrl: 'https://localhost:44368/hubs/booking',
   apiUrl: 'https://localhost:44368/api/v1/',
   storeKey:
