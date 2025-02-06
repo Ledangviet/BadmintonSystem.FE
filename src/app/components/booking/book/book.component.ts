@@ -22,11 +22,13 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { SignalRService } from '../../../services/signalR/booking/signalr.service';
+import { ChatComponent } from '../../shared/chat/chat.component';
 
 @Component({
   selector: 'app-book',
   standalone: true,
   imports: [
+    ChatComponent,
     MatFormFieldModule,
     MatCardModule,
     MatIconModule,

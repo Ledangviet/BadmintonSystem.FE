@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -30,10 +35,10 @@ import LoginResponseModel from '../../../model/login.response.model';
     MatIconModule,
     MatCheckboxModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
   ],
   templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss'
+  styleUrl: './auth.component.scss',
 })
 export class AuthComponent {
   loginForm: FormGroup;
@@ -45,30 +50,31 @@ export class AuthComponent {
     passwordPlh: 'Password',
     emailPlh: 'Email',
     userNamePlh: 'User name',
-    loginTitle: "LOGIN",
-    register: "Register",
-    registerTitle: "REGISTER",
-    correctPassword: "Correct Password",
-    loginMenu: "Login",
-    rememberMe: "Remember me",
-    forgotPassword: "Forgot password?",
+    loginTitle: 'LOGIN',
+    register: 'Register',
+    registerTitle: 'REGISTER',
+    correctPassword: 'Correct Password',
+    loginMenu: 'Login',
+    rememberMe: 'Remember me',
+    forgotPassword: 'Forgot password?',
     dontHaveAccount: "If you don't have an account, please ",
-    haveAccount: "If you already have an account, please",
-    loginHere: "Login here",
-    registerHere: "Register here!",
-    firstNamePlh: "First Name",
-    lastNamePlh: "Last Name",
-    adressLine1Plh: "Adress Line 1",
-    adressLine2Plh: "Adress Line 2",
-    streetPlh: "Street",
-    cityPlh: "City",
-    provincePlh: "Province",
-    phoneNumberPlh: "Phone Number",
-    genderPlh: "Gender",
-    dateOfBirthPlh: "Date of Birth",
-    registerSuccess: "Register Success!",
-    passWordCondition: "Your password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character from @$!%*?&."
-  }
+    haveAccount: 'If you already have an account, please',
+    loginHere: 'Login here',
+    registerHere: 'Register here!',
+    firstNamePlh: 'First Name',
+    lastNamePlh: 'Last Name',
+    adressLine1Plh: 'Adress Line 1',
+    adressLine2Plh: 'Adress Line 2',
+    streetPlh: 'Street',
+    cityPlh: 'City',
+    provincePlh: 'Province',
+    phoneNumberPlh: 'Phone Number',
+    genderPlh: 'Gender',
+    dateOfBirthPlh: 'Date of Birth',
+    registerSuccess: 'Register Success!',
+    passWordCondition:
+      'Your password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character from @$!%*?&.',
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -85,14 +91,24 @@ export class AuthComponent {
 
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', [
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
-      ]],
-      correctpassword: ['', [
-        Validators.required,
-        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')
-      ]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+          ),
+        ],
+      ],
+      correctpassword: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+          ),
+        ],
+      ],
       unit: [''],
       street: [''],
       adreessLine1: [''],
@@ -103,7 +119,7 @@ export class AuthComponent {
       phoneNumber: ['', [Validators.required]],
       gender: [0],
       dateOfBirth: [''],
-      avatarUrl: ['']
+      avatarUrl: [''],
     });
   }
   onSubmitLogin() {
@@ -111,35 +127,45 @@ export class AuthComponent {
       let email = this.loginForm.get('email')?.value;
       let passWord = this.loginForm.get('password')?.value;
       if (email != null && passWord != null) {
-        this.authService.login(email, passWord).subscribe((result: LoginResponseModel) =>{
-          if(result.isSuccess){
-            localStorage.setItem("accessToken",result.value.accessToken);
-            this.router.navigate(['/home']);
-            this.authService.loginStateChangeEmitter.emit(true);
-          }    
-        })
-        
+        this.authService
+          .login(email, passWord)
+          .subscribe((result: LoginResponseModel) => {
+            if (result.isSuccess) {
+              localStorage.setItem('accessToken', result.value.accessToken);
+              localStorage.setItem('email', result.value.user.email);
+              this.router.navigate(['/home']);
+              this.authService.loginStateChangeEmitter.emit(true);
+            }
+          });
       }
     }
   }
 
   onSubmitRegister() {
-    let email = this.registerForm.get("email")?.value;
-    let password = this.registerForm.get("password")?.value;
-    let phoneNumber = this.registerForm.get("phoneNumber")?.value;
-    let dateOfBirth = this.registerForm.get("dateOfBirth")?.value;
-    let registerModel = new RegisterModel(email, password, phoneNumber, dateOfBirth,0);
-    this.authService.register(registerModel).subscribe((response: RegisterResponseModel) => {
-      if (response.isSuccess) {
-        this.toaster.success(this.UIResource.registerSuccess);
-      }
-    })
+    let email = this.registerForm.get('email')?.value;
+    let password = this.registerForm.get('password')?.value;
+    let phoneNumber = this.registerForm.get('phoneNumber')?.value;
+    let dateOfBirth = this.registerForm.get('dateOfBirth')?.value;
+    let registerModel = new RegisterModel(
+      email,
+      password,
+      phoneNumber,
+      dateOfBirth,
+      0
+    );
+    this.authService
+      .register(registerModel)
+      .subscribe((response: RegisterResponseModel) => {
+        if (response.isSuccess) {
+          this.toaster.success(this.UIResource.registerSuccess);
+        }
+      });
   }
 
-  registerHere(){
-    this.state = "register";
+  registerHere() {
+    this.state = 'register';
   }
   loginHere() {
-    this.state = "login";
+    this.state = 'login';
   }
 }
