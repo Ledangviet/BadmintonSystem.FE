@@ -10,12 +10,6 @@ enum Gender {
   none = 2,
 }
 
-enum BookingStatus {
-  UNBOOKED = 0,
-  BOOKED = 1,
-  RESERVED = 2,
-}
-
 enum TimeSlotEnum {
   TimeSlot1,
   TimeSlot2,
