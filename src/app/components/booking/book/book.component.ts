@@ -22,11 +22,13 @@ import { Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { SignalRService } from '../../../services/signalR/booking/signalr.service';
+import { ChatComponent } from '../../shared/chat/chat.component';
 
 @Component({
   selector: 'app-book',
   standalone: true,
   imports: [
+    ChatComponent,
     MatFormFieldModule,
     MatCardModule,
     MatIconModule,
@@ -51,7 +53,10 @@ export class BookComponent {
   accessToken = localStorage.getItem('accessToken')?.toString();
 
   get anyPriceSelected() {
-    return this.bookingService.selectedYardPrice.length > 0;
+    const selected = this.bookingService.selectedYardPrice.filter(
+      (x: YardPriceModel) => x.isToken === this.accessToken
+    );
+    return selected.length > 0;
   }
   constructor(
     private authService: AuthService,
@@ -73,26 +78,21 @@ export class BookComponent {
         .startConnection(this.accessToken)
         .then(() => {
           this.signalRService.message$.subscribe((message) => {
+            const yardPriceDetails: YardPriceModel[] = [];
             if (!message) return;
-            const yardPrice = this.yardPriceList.find(
-              (item: YardPriceByDateModel) =>
-                item.yardPricesDetails.some(
-                  (x: YardPriceModel) => x.id === message.ids[0]
-                )
+            this.yardPriceList.filter((item: YardPriceByDateModel) =>
+              item.yardPricesDetails.some((x: YardPriceModel) => {
+                if (message.ids.includes(x.id)) {
+                  yardPriceDetails.push(x);
+                }
+              })
             );
 
-            if (!yardPrice) return;
-            const yardPriceDetail = yardPrice.yardPricesDetails.find(
-              (x: YardPriceModel) => x.id === message.ids[0]
-            );
-
-            if (!yardPriceDetail) return;
-            const index =
-              this.bookingService.selectedYardPrice.indexOf(yardPriceDetail);
-            if (message.type === 'RESERVED' && index === -1) {
-              this.bookingService.selectedYardPrice.push(yardPriceDetail);
-            } else if (message.type === 'UNBOOKED' && index > -1) {
-              this.bookingService.selectedYardPrice.splice(index, 1);
+            if (yardPriceDetails.length <= 0) return;
+            if (message?.type === 'BOOKED') {
+              this.handlerBookedSignalR(yardPriceDetails);
+            } else {
+              this.handlerReserveSignalR(yardPriceDetails, message.type);
             }
           });
         })
@@ -126,6 +126,14 @@ export class BookComponent {
       .getYardByDate(`"${formattedDate}"`)
       .subscribe((result: YardPriceByDateResponseModel) => {
         this.yardPriceList = result.value;
+        this.yardPriceList.filter((item: YardPriceByDateModel) => {
+          item.yardPricesDetails.some((x: YardPriceModel) => {
+            if (x.isBooking === 2) {
+              this.bookingService.selectedYardPrice.push(x);
+              this.bookingService.selectedYardPriceChangeEmitter.emit();
+            }
+          });
+        });
       });
 
     this.selectedTimeform.get('dateTime')?.valueChanges.subscribe(() => {
@@ -162,25 +170,21 @@ export class BookComponent {
   onSelectTimeSlot(detail: YardPriceModel) {
     if (!this.isAvailable(detail)) return;
     const index = this.bookingService.selectedYardPrice.indexOf(detail);
-    if (index > -1) {
+    const isUnbooked = index > -1;
+    const action = isUnbooked ? 'UNBOOKED' : 'RESERVED';
+    detail.isToken = isUnbooked ? '' : this.accessToken ? this.accessToken : '';
+    if (isUnbooked) {
+      detail.isBooking = detail.isBooking === 2 ? 0 : detail.isBooking;
       this.bookingService.selectedYardPrice.splice(index, 1);
-      this.bookingService.bookingReserve(detail.id, 'UNBOOKED').subscribe();
     } else {
-      if (this.accessToken) {
-        detail.isToken = this.accessToken;
-      }
-
       this.bookingService.selectedYardPrice.push(detail);
-      this.bookingService.bookingReserve(detail.id, 'RESERVED').subscribe();
     }
+    this.bookingService.bookingReserve(detail.id, action).subscribe();
     this.bookingService.selectedYardPriceChangeEmitter.emit();
   }
 
   isSelected(detail: YardPriceModel) {
-    if (
-      this.bookingService.selectedYardPrice.includes(detail) &&
-      detail.isToken === this.accessToken
-    ) {
+    if (detail.isToken === this.accessToken) {
       return true;
     }
     return false;
@@ -188,8 +192,9 @@ export class BookComponent {
 
   isReserved(detail: YardPriceModel) {
     if (
-      this.bookingService.selectedYardPrice.includes(detail) &&
-      detail.isToken !== this.accessToken
+      (this.bookingService.selectedYardPrice.includes(detail) &&
+        detail.isToken !== this.accessToken) ||
+      (detail.isBooking === 2 && detail.isToken !== this.accessToken)
     ) {
       return true;
     }
@@ -197,9 +202,7 @@ export class BookComponent {
   }
 
   isBooked(detail: YardPriceModel) {
-    //console.log(detail.startTime + 'and' + detail.isBooking);
-
-    if (detail.isBooking !== 0) {
+    if (detail.isBooking === 1) {
       return true;
     }
     return false;
@@ -207,7 +210,7 @@ export class BookComponent {
 
   isAvailable(detail: YardPriceModel) {
     if (this.isReserved(detail)) return false;
-    if (detail.isBooking) return false;
+    if (this.isBooked(detail)) return false;
     let time = detail.startTime;
     let currentTime = new Date();
     const [startHour, startMinute, startSecond] = time.split(':').map(Number);
@@ -223,5 +226,32 @@ export class BookComponent {
 
   onClearAll() {
     this.bookingService.clearSelected();
+  }
+
+  handlerBookedSignalR(yardPriceDetails: any) {
+    yardPriceDetails.forEach((item: YardPriceModel) => {
+      const index = this.bookingService.selectedYardPrice.indexOf(item);
+      item.isBooking = 1;
+      if (index > -1) {
+        this.bookingService.selectedYardPrice.splice(index, 1);
+      }
+      this.bookingService.selectedYardPrice.push(item);
+    });
+  }
+
+  handlerReserveSignalR(yardPriceDetails: any, type: string) {
+    yardPriceDetails.forEach((item: YardPriceModel) => {
+      const index = this.bookingService.selectedYardPrice.indexOf(item);
+      const isUnbooked = type === 'UNBOOKED';
+      const isIndex = index > -1;
+      if (isUnbooked) {
+        item.isToken = '';
+        item.isBooking = 0;
+        if (isIndex) this.bookingService.selectedYardPrice.splice(index, 1);
+        this.bookingService.removeSelectedYardPrice(item);
+      } else {
+        if (!isIndex) this.bookingService.selectedYardPrice.push(item);
+      }
+    });
   }
 }

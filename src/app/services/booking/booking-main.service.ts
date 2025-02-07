@@ -14,6 +14,7 @@ export class BookingMainService {
   selectedYardPrice: YardPriceModel[] = [];
   selectedYardPriceChangeEmitter = new EventEmitter();
   clearSelectedEmitter = new EventEmitter();
+  accessToken = localStorage.getItem('accessToken')?.toString();
   constructor(private apiClient: ApiClientService) {}
 
   getYardList(
@@ -36,8 +37,10 @@ export class BookingMainService {
 
   bookingReserve(id: string, type: string) {
     let url = `bookings/reserve/${id}`;
+
     var body = {
       type: type,
+      isToken: this.accessToken ? this.accessToken : '',
     };
     return this.apiClient.put(url, body);
   }
@@ -55,6 +58,9 @@ export class BookingMainService {
   }
 
   book(model: BookModel) {
-    return this.apiClient.post<BaseResponseModel>(`bookings`, model);
+    return this.apiClient.post<BaseResponseModel>(
+      `bookings/create-rabbitmq`,
+      model
+    );
   }
 }
