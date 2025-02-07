@@ -72,6 +72,10 @@ export class BookComponent {
   }
 
   ngOnInit() {
+
+    let isAuthenticated = this.authService.getIsAuthenticated();
+    if (!isAuthenticated) this.router.navigate(['/auth']);
+
     // Handler SignalR
     if (this.accessToken) {
       this.signalRService

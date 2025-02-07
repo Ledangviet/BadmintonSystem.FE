@@ -14,12 +14,13 @@ export class AuthService {
   public isAuthenticated = false;
   public loginStateChangeEmitter: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private apiClient: ApiClientService) {}
+  constructor(private apiClient: ApiClientService) { }
 
-  public getUserInfo() {}
+  public getUserInfo() { }
 
   getIsAuthenticated(): boolean {
-    return Boolean(localStorage.getItem('isAuthenticated'));
+    let isAuthen = localStorage.getItem('isAuthenticated');
+    return Boolean(isAuthen);
   }
 
   login(email: string, passWord: string) {

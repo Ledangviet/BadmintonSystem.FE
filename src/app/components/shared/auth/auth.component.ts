@@ -85,7 +85,7 @@ export class AuthComponent {
   ) {
     this.loginForm = this.fb.group({
       email: ['admin@gmail.com', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['123456@Aa', Validators.required],
       rememberme: [false, Validators.required],
     });
 
@@ -133,6 +133,7 @@ export class AuthComponent {
             if (result.isSuccess) {
               localStorage.setItem('accessToken', result.value.accessToken);
               localStorage.setItem('email', result.value.user.email);
+              localStorage.setItem('isAuthenticated', 'true');
               this.router.navigate(['/home']);
               this.authService.loginStateChangeEmitter.emit(true);
             }

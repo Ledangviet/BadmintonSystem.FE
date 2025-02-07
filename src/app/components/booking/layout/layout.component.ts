@@ -48,7 +48,7 @@ export class LayoutComponent {
     logoutMenu: "logout_menu",
     loginMenu: "login_menu"
   }
-  public get lang(): string{
+  public get lang(): string {
     return this.resourceService.lang.toUpperCase();
   }
 
@@ -64,7 +64,6 @@ export class LayoutComponent {
     this.phoneImagePath = this.blobService.getImageUrl('phoneicon.png');
     this.adressImagePath = this.blobService.getImageUrl('adressicon.png');
     this.UIResource = this.resourceService.getResource(this.UIResource);
-    this.isAuthenticated = this.authService.getIsAuthenticated();
     this.authService.loginStateChangeEmitter.subscribe(value => {
       this.isAuthenticated = value;
     });
@@ -74,11 +73,11 @@ export class LayoutComponent {
     this.router.navigate(['/auth']);
   }
 
-  onLogout(){
+  onLogout() {
     this.authService.logout();
     this.router.navigate(['/home']);
   }
-  onChangeLanguage(){
+  onChangeLanguage() {
     this.resourceService.setResource(this.lang == 'ENG' ? 'vi' : 'eng');
     window.location.reload();
   }

@@ -14,7 +14,7 @@
                 </li>
             </ul>
         </mat-sidenav>
-        <mat-sidenav-content >
+        <mat-sidenav-content>
             <div class="header-layout">
                 <mat-toolbar color="primary">
                     <div fxHide.gt-xs>
@@ -22,7 +22,7 @@
                             <mat-icon>menu</mat-icon>
                         </button>
                     </div>
-                    <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs >
+                    <div fxFlex fxLayout fxLayoutAlign="begin" fxHide.xs>
                         <ul fxLayout fxLayoutGap="25px" class="navigation-items">
                             <li>
                                 <a routerLink="/home">
@@ -42,9 +42,17 @@
                         </ul>
                     </div>
                     <div fxFlex fxLayout fxLayoutAlign="end">
-                        <div class="lang-button" (click)="onChangeLanguage()"><p>{{this.lang}}</p></div>
+                        @if (!this.isAuthenticated){
+                        <div class="lang-button" (click)="onChangeLanguage()">
+                            <p>Admin</p>
+                        </div>
+                        }
+                        <div class="lang-button" (click)="onChangeLanguage()">
+                            <p>{{this.lang}}</p>
+                        </div>
                         @if (!this.isAuthenticated) {
-                        <div class="default-button"><button mat-button (click)="onClickLogin()">{{this.UIResource.loginMenu}}</button></div>
+                        <div class="default-button"><button mat-button
+                                (click)="onClickLogin()">{{this.UIResource.loginMenu}}</button></div>
                         } @else {
                         <div class="logo-container" [matMenuTriggerFor]="userMenu">
                             <img class="user-logo" [src]="this.userImagePath" alt="User">
@@ -54,7 +62,7 @@
                                 <button mat-menu-item (click)="onLogout()">{{this.UIResource.logoutMenu}}</button>
                             </mat-menu>
                         </div>
-    
+
                         }
                     </div>
                 </mat-toolbar>
@@ -90,5 +98,5 @@
             </div>
         </mat-sidenav-content>
     </mat-sidenav-container>
-    
+
 </div>
