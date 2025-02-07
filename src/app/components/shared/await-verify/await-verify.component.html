@@ -1,0 +1,18 @@
+<div class="overlay" *ngIf="isVisible">
+  <div class="verify-card">
+    <img
+      src="https://png.pngtree.com/png-vector/20240524/ourmid/pngtree-hourglass-flat-icon-vector-style-icon-design-png-image_6922666.png"
+      alt="Verify"
+      class="verify-icon"
+    />
+    <h2>Chờ xác minh email ⏳</h2>
+    <p>Email xác minh đã được gửi. Vui lòng kiểm tra hộp thư của bạn.</p>
+    <p class="countdown-text">
+      Thời gian chờ: <span>{{ minutes }}:{{ seconds | number : "2.0" }}</span>
+    </p>
+    <button (click)="resendEmail()" [disabled]="isDisabled">
+      Gửi lại email
+    </button>
+    <button class="cancel-btn" (click)="cancel()">Hủy</button>
+  </div>
+</div>

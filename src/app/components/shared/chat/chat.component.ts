@@ -71,7 +71,6 @@ export class ChatComponent implements AfterViewChecked {
     private signalRChatService: SignalRChatService
   ) {}
 
-  // PIN SCROLL
   ngAfterViewChecked() {
     this.scrollToBottom();
     setTimeout(() => {
@@ -85,7 +84,6 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   ngOnInit() {
-    // Handler SignalR
     if (this.accessToken) {
       this.signalRChatService
         .startConnection(this.accessToken)
@@ -104,14 +102,12 @@ export class ChatComponent implements AfterViewChecked {
         });
     }
 
-    // GET API USER DETAIL
     this.authService
       .userDetail(this.email)
       .subscribe((result: LoginResponseModel) => {
         this.userDetail = result.value;
       });
 
-    // GET API CHAT MESSAGE
     this.chatService
       .getChatMessageList(1, 30)
       .subscribe((result: BaseResponseModel) => {
@@ -158,11 +154,11 @@ export class ChatComponent implements AfterViewChecked {
       id: '',
     };
     this.listChatMessage.unshift(messages);
-    if (this.isOpen && isAdmin) this.isRead = true;
-    this.isRead = false;
+    if (this.isOpen) {
+      if (isAdmin) this.isRead = true;
+    }
   }
 
-  // SEND MESSAGE
   sendMessage(newMessage: string) {
     if (newMessage.trim() === '') return;
     this.handleWhenChangeMessages(newMessage, new Date().toISOString(), false);
@@ -178,13 +174,6 @@ export class ChatComponent implements AfterViewChecked {
     this.scrollToBottom();
   }
 
-  scrollToBottom(): void {
-    if (this.chatContainer) {
-      this.chatContainer.nativeElement.scrollTop =
-        this.chatContainer.nativeElement.scrollHeight;
-    }
-  }
-
   isReadForYou() {
     return this.listChatMessage[0].isAdmin === true;
   }
@@ -193,6 +182,13 @@ export class ChatComponent implements AfterViewChecked {
     if (this.inputMess && this.inputMess.nativeElement) {
       this.inputMess.nativeElement.focus();
       this.isRead = true;
+    }
+  }
+
+  scrollToBottom(): void {
+    if (this.chatContainer) {
+      this.chatContainer.nativeElement.scrollTop =
+        this.chatContainer.nativeElement.scrollHeight;
     }
   }
 }

@@ -8,20 +8,14 @@
       <div class="container py-5">
         <div class="row d-flex justify-content-center">
           <div class="col-md-10 col-lg-8 col-xl-6">
-            <!-- CHAT HEADER HERE!!  -->
             <div class="card" id="chat2">
               <div class="card-header align-items-center p-3">
                 <h5 class="mb-0">Chat</h5>
               </div>
-              <!-- CHAT BODY HERE!!  -->
               <div class="chat-body">
                 <div class="chat-divider" [class.hidden-chat]="isReadForYou()">
                   Đã gửi
                 </div>
-                <!-- <div class="chat-divider" [class.hidden-chat]="isRead()">
-                  Đã xem
-                </div> -->
-
                 @for (message of listChatMessage ; track message){
                 <div
                   class="chat-message left"
@@ -35,9 +29,6 @@
                     <p>{{ message.content }}</p>
                   </div>
                 </div>
-
-                <!-- <div class="chat-divider">Today</div> -->
-
                 <div
                   class="chat-message right"
                   [class.hidden-chat]="isAdmin(message)"
@@ -46,10 +37,8 @@
                     <p>{{ message.content }}</p>
                   </div>
                 </div>
-
                 }
               </div>
-              <!-- CHAT FOOTER HERE!!  -->
               <div class="chat-footer">
                 <img
                   src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"

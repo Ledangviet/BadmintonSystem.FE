@@ -1,35 +1,35 @@
 .chat-widget {
-     position: fixed;
-     bottom: 80px;
-     right: 50px;
- }
- 
- .chat-button {
-     background-color: #007bff;
-     color: white;
-     border: none;
-     border-radius: 50%;
-     width: 65px;
-     height: 65px;
-     font-size: 24px;
-     cursor: pointer;
-     position: relative;
- }
+  position: fixed;
+  bottom: 80px;
+  right: 50px;
+}
 
- .chat-button::after {
-  content: '';
+.chat-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  font-size: 24px;
+  cursor: pointer;
+  position: relative;
+}
+
+.chat-button::after {
+  content: "";
   position: absolute;
-  bottom: 5px; /* Điều chỉnh khoảng cách từ nút */
-  right: 1px; /* Điều chỉnh vị trí mũi tên */
+  bottom: 5px;
+  right: 1px;
   width: 0;
   height: 0;
   border-left: 10px solid transparent;
   border-right: 40px solid transparent;
-  border-top: 30px solid #007bff; /* Màu của mũi tên */
-  transform: rotate(200deg); 
+  border-top: 30px solid #007bff;
+  transform: rotate(200deg);
 }
 
- .notification-badge {
+.notification-badge {
   position: absolute;
   top: -5px;
   right: -5px;
@@ -43,196 +43,184 @@
   align-items: center;
   justify-content: center;
 }
- 
- .chat-container {
-     position: absolute;
-     bottom: 35px;
-     right: 63px;
-     width: 350px;
-     background: white;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-     padding: 0;
-     border-radius: 12px;
-     max-height: 800px;
-     overflow: hidden;
-     display: flex;
-     flex-direction: column;
-     box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-     -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-     -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
- }
- 
- // Chat
- #chat2 .form-control {
-     border-color: transparent;
- }
- 
- #chat2 .form-control:focus {
-     border-color: transparent;
-     box-shadow: inset 0px 0px 0px 1px transparent;
- }
- 
- .card-header {
-     border-bottom: 1px solid #dcdcdc;
-     background: #4fa7ff;
-     h5 {
-          text-align: center;
-          margin: 0;
-          font-size: 16px;
-          padding: 16px;
-          color: #ffff;
-     }
- }
 
- .divider:after,
- .divider:before {
-     content: "";
-     flex: 1;
-     height: 1px;
-     background: #eee;
- }
+.chat-container {
+  position: absolute;
+  bottom: 35px;
+  right: 63px;
+  width: 350px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  border-radius: 12px;
+  max-height: 800px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+}
 
-// =====================================> BODY
-.chat-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    background: #f8f9fa;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
-  }
-  
-  /* Kiểu tin nhắn chung */
-  .chat-message {
-    display: flex;
-    align-items: flex-end;
-    max-width: 75%;
-  }
-  
-  /* Tin nhắn người nhận (bên trái) */
-  .chat-message.left {
-    align-self: flex-start;
-    > img {
-        width: 45px;
-        height: 45px;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-right: 10px;
-      }
-    > .message-content {
-        background: white;
-        color: black;
-        > p {
-        margin: 0;
-        }
-      }
-  }
-  
-  /* Tin nhắn người gửi (bên phải) */
-  .chat-message.right {
-    align-self: flex-end;
-    justify-content: flex-end;
-    > .message-content {
-        background: #007bff;
-        color: white;
-            > p {
-        margin: 0;
-        }
-      }
-  }
-  
-  /* Nội dung tin nhắn */
-  .message-content {
-    padding: 10px 15px;
-    border-radius: 15px;
-    max-width: 100%;
-    word-wrap: break-word;
-  }
-  
-  /* Phần phân chia ngày */
-  .chat-divider {
-    text-align: end;
-    color: #a2aab7;
-    font-size: 12px;
+#chat2 .form-control {
+  border-color: transparent;
+}
+
+#chat2 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.card-header {
+  border-bottom: 1px solid #dcdcdc;
+  background: #4fa7ff;
+  h5 {
+    text-align: center;
     margin: 0;
+    font-size: 16px;
+    padding: 16px;
+    color: #ffff;
   }
-  
-  // PIN
-  .chat-body {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    background: #f8f9fa;
-    max-height: 400px;
-    overflow-y: auto;
-    border-radius: 8px;
-    
-    /* Giữ tin nhắn mới nhất ở dưới cùng */
-    display: flex;
-    flex-direction: column-reverse;
-  }
-  
- // =================================> FOOTER
- .chat-footer {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: 8px;
-    border-top: 1px solid #ddd;
-  }
-  
-  .chat-footer img {
-    width: 30px;
-    height: 30px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+.chat-message {
+  display: flex;
+  align-items: flex-end;
+  max-width: 75%;
+}
+
+.chat-message.left {
+  align-self: flex-start;
+  > img {
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     object-fit: cover;
-  }
-  
-  .chat-footer .message-input {
-    flex: 1;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    outline: none;
-    background: white;
-  }
-  
-  .chat-footer .send-button {
-    background-color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  
-  .chat-footer .send-button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .chat-footer .send-button mat-icon {
-    color: blue;
-    font-size: 24px;
-  }
-
-  .chat-input {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
     margin-right: 10px;
   }
-  
-
-  .hidden-chat{
-    display: none;
+  > .message-content {
+    background: white;
+    color: black;
+    > p {
+      margin: 0;
+    }
   }
+}
+
+.chat-message.right {
+  align-self: flex-end;
+  justify-content: flex-end;
+  > .message-content {
+    background: #007bff;
+    color: white;
+    > p {
+      margin: 0;
+    }
+  }
+}
+
+.message-content {
+  padding: 10px 15px;
+  border-radius: 15px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.chat-divider {
+  text-align: end;
+  color: #a2aab7;
+  font-size: 12px;
+  margin: 0;
+}
+
+.chat-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  background: #f8f9fa;
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.chat-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  border-top: 1px solid #ddd;
+}
+
+.chat-footer img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.chat-footer .message-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  background: white;
+}
+
+.chat-footer .send-button {
+  background-color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.chat-footer .send-button:hover {
+  background-color: #e0e0e0;
+}
+
+.chat-footer .send-button mat-icon {
+  color: blue;
+  font-size: 24px;
+}
+
+.chat-input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.hidden-chat {
+  display: none;
+}
