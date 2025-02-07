@@ -59,7 +59,6 @@ export class BookComponent {
     return selected.length > 0;
   }
   constructor(
-    private authService: AuthService,
     private bookingService: BookingMainService,
     private fb: FormBuilder,
     private router: Router,

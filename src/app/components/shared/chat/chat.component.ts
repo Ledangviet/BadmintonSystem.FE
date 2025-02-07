@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ChatService } from '../../../services/chat/chat.service';
-import {
-  ChatRoomModel,
-  ChatRoomResponseModel,
-} from '../../../model/chat.room.response';
-import {
-  ChatMessageModel,
-  ChatMessageResponseModel,
-} from '../../../model/chat.message.response.model';
+import { ChatMessageModel } from '../../../model/chat.message.response.model';
 import { AuthService } from '../../../services/shared/auth.service';
 import LoginResponseModel from '../../../model/login.response.model';
 import BaseResponseModel from '../../../model/base.response.model';
+import { DatePipe } from '@angular/common';
+import { SignalRChatService } from '../../../services/signalR/chat/signalr.service';
+import ChatModel from '../../../model/chat.message.model';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-chat',
@@ -21,56 +23,176 @@ import BaseResponseModel from '../../../model/base.response.model';
   imports: [FormsModule, CommonModule, MatIconModule],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
+  providers: [DatePipe],
+  animations: [
+    trigger('chatOpen', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translate(100%, 100%) scale(0.5)',
+        }),
+        animate(
+          '300ms ease-out',
+          style({
+            opacity: 1,
+            transform: 'translate(0, 0) scale(1)',
+          })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in',
+          style({
+            opacity: 0,
+            transform: 'translate(100%, 100%) scale(0.5)',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
-export class ChatComponent {
+export class ChatComponent implements AfterViewChecked {
+  @ViewChild('chatContainer') chatContainer!: ElementRef;
+  @ViewChild('inputMess') inputMess!: ElementRef;
+
   isOpen = false;
-  message = '';
-  chatList = ['Chat 1', 'Chat 2', 'Chat 3'];
+  isRead = true;
+  newMessage = '';
+  accessToken = localStorage.getItem('accessToken')?.toString();
 
   userDetail: any;
-  listChatRoom: ChatRoomModel[] = [];
   listChatMessage: ChatMessageModel[] = [];
   email = localStorage.getItem('email')?.toString();
+  chatRoomId = '';
 
   constructor(
     private chatService: ChatService,
-    private authService: AuthService
+    private authService: AuthService,
+    private signalRChatService: SignalRChatService
   ) {}
 
+  // PIN SCROLL
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+    setTimeout(() => {
+      this.focusInput();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.scrollToBottom();
+    this.focusInput();
+  }
+
   ngOnInit() {
+    // Handler SignalR
+    if (this.accessToken) {
+      this.signalRChatService
+        .startConnection(this.accessToken)
+        .then(() => {
+          this.signalRChatService.message$.subscribe((message) => {
+            if (!message) return;
+            this.handleWhenChangeMessages(
+              message.content,
+              message.createdDate,
+              message.isAdmin
+            );
+          });
+        })
+        .catch((err) => {
+          console.error('SignalR connection failed:', err);
+        });
+    }
+
     // GET API USER DETAIL
     this.authService
       .userDetail(this.email)
       .subscribe((result: LoginResponseModel) => {
         this.userDetail = result.value;
-        console.log(result.value);
-      });
-
-    // GET API CHAT ROOM
-    this.chatService
-      .getChatRoomByAdminList(1, 10)
-      .subscribe((result: BaseResponseModel) => {
-        this.listChatRoom = result.value.items;
-        console.log('ROOM:::::::', result.value.items);
       });
 
     // GET API CHAT MESSAGE
     this.chatService
-      .getChatMessageList(1, 10)
+      .getChatMessageList(1, 30)
       .subscribe((result: BaseResponseModel) => {
-        this.listChatMessage = result.value.items;
-        console.log('MESS:::::::', result.value.items);
+        this.chatRoomId = result.value.items[0].chatRoomId;
+        this.listChatMessage = result.value.items.sort(
+          (a: any, b: any) =>
+            new Date(b.createdDate).getTime() -
+            new Date(a.createdDate).getTime()
+        );
+        const isAdmin = this.listChatMessage[0].isAdmin;
+        if (isAdmin) this.isRead = this.listChatMessage[0].isRead;
       });
   }
 
   toggleChat() {
     this.isOpen = !this.isOpen;
+    if (this.isOpen) {
+      this.chatService.readAllMessage(this.chatRoomId).subscribe();
+      this.isRead = true;
+      this.focusInput();
+    }
   }
 
-  sendMessage() {
-    if (this.message.trim()) {
-      console.log('Gửi tin nhắn:', this.message);
-      this.message = '';
+  isAdmin(message: ChatMessageModel) {
+    if (message.isAdmin === true) return true;
+    return false;
+  }
+
+  handleWhenChangeMessages(message: string, date: string, isAdmin: boolean) {
+    const messages: ChatMessageModel = {
+      user: this.userDetail.user,
+      imageUrl: '',
+      content: message,
+      isAdmin: isAdmin,
+      isRead: isAdmin ? false : true,
+      readDate: '',
+      chatRoomId: '',
+      createdDate: date,
+      modifiedDate: null,
+      createdBy: '',
+      modifiedBy: '',
+      isDeleted: false,
+      deletedAt: null,
+      id: '',
+    };
+    this.listChatMessage.unshift(messages);
+    if (this.isOpen && isAdmin) this.isRead = true;
+    this.isRead = false;
+  }
+
+  // SEND MESSAGE
+  sendMessage(newMessage: string) {
+    if (newMessage.trim() === '') return;
+    this.handleWhenChangeMessages(newMessage, new Date().toISOString(), false);
+
+    var model: ChatModel = {
+      content: newMessage,
+      imageUrl: 'kh co',
+      userId: this.userDetail.user.id,
+    };
+
+    this.chatService.sendMessage(model).subscribe();
+    this.newMessage = '';
+    this.scrollToBottom();
+  }
+
+  scrollToBottom(): void {
+    if (this.chatContainer) {
+      this.chatContainer.nativeElement.scrollTop =
+        this.chatContainer.nativeElement.scrollHeight;
+    }
+  }
+
+  isReadForYou() {
+    return this.listChatMessage[0].isAdmin === true;
+  }
+
+  focusInput() {
+    if (this.inputMess && this.inputMess.nativeElement) {
+      this.inputMess.nativeElement.focus();
+      this.isRead = true;
     }
   }
 }

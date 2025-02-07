@@ -9,16 +9,45 @@
      color: white;
      border: none;
      border-radius: 50%;
-     width: 60px;
-     height: 60px;
+     width: 65px;
+     height: 65px;
      font-size: 24px;
      cursor: pointer;
+     position: relative;
  }
+
+ .chat-button::after {
+  content: '';
+  position: absolute;
+  bottom: 5px; /* Điều chỉnh khoảng cách từ nút */
+  right: 1px; /* Điều chỉnh vị trí mũi tên */
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 40px solid transparent;
+  border-top: 30px solid #007bff; /* Màu của mũi tên */
+  transform: rotate(200deg); 
+}
+
+ .notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
  
  .chat-container {
      position: absolute;
      bottom: 35px;
-     right: 60px;
+     right: 63px;
      width: 350px;
      background: white;
      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -55,12 +84,6 @@
      }
  }
 
- .card-footer {
-     border-top: 1px solid #dcdcdc;
-     padding-top: 8px;
-     padding-bottom: 8px;
- }
-
  .divider:after,
  .divider:before {
      content: "";
@@ -68,15 +91,148 @@
      height: 1px;
      background: #eee;
  }
- 
- .card-body img {
-     width: 45px;
-     height: 100%;
- }
- 
- .card-body {
-     overflow-y: scroll;
-     scrollbar-width: thin;
-     scrollbar-color: transparent transparent;
-     padding: 12px;
- }
+
+// =====================================> BODY
+.chat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+  }
+  
+  /* Kiểu tin nhắn chung */
+  .chat-message {
+    display: flex;
+    align-items: flex-end;
+    max-width: 75%;
+  }
+  
+  /* Tin nhắn người nhận (bên trái) */
+  .chat-message.left {
+    align-self: flex-start;
+    > img {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+    > .message-content {
+        background: white;
+        color: black;
+        > p {
+        margin: 0;
+        }
+      }
+  }
+  
+  /* Tin nhắn người gửi (bên phải) */
+  .chat-message.right {
+    align-self: flex-end;
+    justify-content: flex-end;
+    > .message-content {
+        background: #007bff;
+        color: white;
+            > p {
+        margin: 0;
+        }
+      }
+  }
+  
+  /* Nội dung tin nhắn */
+  .message-content {
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 100%;
+    word-wrap: break-word;
+  }
+  
+  /* Phần phân chia ngày */
+  .chat-divider {
+    text-align: end;
+    color: #a2aab7;
+    font-size: 12px;
+    margin: 0;
+  }
+  
+  // PIN
+  .chat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    background: #f8f9fa;
+    max-height: 400px;
+    overflow-y: auto;
+    border-radius: 8px;
+    
+    /* Giữ tin nhắn mới nhất ở dưới cùng */
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  
+ // =================================> FOOTER
+ .chat-footer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .chat-footer img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .chat-footer .message-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    background: white;
+  }
+  
+  .chat-footer .send-button {
+    background-color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .chat-footer .send-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .chat-footer .send-button mat-icon {
+    color: blue;
+    font-size: 24px;
+  }
+
+  .chat-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+  }
+  
+
+  .hidden-chat{
+    display: none;
+  }
