@@ -139,5 +139,8 @@
     </mat-card>
   </div>
   }
-  <app-await-verify *ngIf="isVisible"></app-await-verify>
+  <app-await-verify
+    [isVisible]="isVisible"
+    (isVisibleChange)="receiveMessage($event)"
+  ></app-await-verify>
 </div>

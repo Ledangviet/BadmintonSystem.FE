@@ -1,4 +1,4 @@
-@import '../../../../styles.scss';
+@import "../../../../styles.scss";
 
 table {
   width: 100%;
@@ -56,7 +56,7 @@ th {
 }
 
 .price-tag.booked {
-  background-color: #D2B48C;
+  background-color: #d2b48c;
   color: white;
 }
 
@@ -72,7 +72,7 @@ th {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  color: #36454F;
+  color: #36454f;
 
   .booking-banner {
     font-size: 20px;
@@ -98,7 +98,7 @@ th {
 
   .name-banner {
     margin-top: 10px;
-    font-family: 'Lucida Console';
+    font-family: "Lucida Console";
     font-size: 25px;
   }
 

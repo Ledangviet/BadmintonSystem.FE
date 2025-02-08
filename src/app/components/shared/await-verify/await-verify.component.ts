@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { RegisterService } from '../../../services/signalR/register.service';
+import RegisterSignalRModel from '../../../model/register.signalR.model';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-await-verify',
@@ -10,12 +14,32 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './await-verify.component.scss',
 })
 export class AwaitVerifyComponent implements OnInit {
+  @Input() isVisible!: boolean;
+  @Output() isVisibleChange = new EventEmitter<boolean>();
+
   minutes: number = 10;
   seconds: number = 0;
-  isVisible: boolean = true;
+  // isVisible: boolean = true;
   isDisabled: boolean = true;
+  email = localStorage.getItem('email')?.toString();
 
-  ngOnInit() {
+  constructor(
+    private registerService: RegisterService,
+    private router: Router,
+    private toaster: ToastrService
+  ) {}
+
+  async ngOnInit(): Promise<void> {
+    try {
+      await this.registerService.startConnection();
+      this.registerService.message$.subscribe((message) => {
+        if (!message) return;
+        this.handlerSignalR(message);
+      });
+    } catch (err) {
+      console.error('SignalR connection failed:', err);
+    }
+
     this.startCountdown();
     this.enableResendAfterDelay();
   }
@@ -50,5 +74,14 @@ export class AwaitVerifyComponent implements OnInit {
 
   cancel() {
     this.isVisible = false;
+    this.isVisibleChange.emit(false);
+  }
+
+  handlerSignalR(message: RegisterSignalRModel) {
+    if (this.email === message.email && message.isVerified === 1) {
+      this.cancel();
+      localStorage.removeItem('email');
+      this.toaster.success('Register success!');
+    }
   }
 }

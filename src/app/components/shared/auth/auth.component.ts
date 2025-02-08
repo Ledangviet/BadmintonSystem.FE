@@ -155,6 +155,7 @@ export class AuthComponent {
       .subscribe((response: RegisterResponseModel) => {
         if (response.isSuccess) {
           this.isVisible = true;
+          localStorage.setItem('email', email);
         }
       });
   }
@@ -164,5 +165,9 @@ export class AuthComponent {
   }
   loginHere() {
     this.state = 'login';
+  }
+  receiveMessage(message: boolean) {
+    this.isVisible = message;
+    if (message === false) this.loginHere();
   }
 }
