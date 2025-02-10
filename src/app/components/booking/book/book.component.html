@@ -21,7 +21,7 @@
     <table>
       <thead>
         <tr>
-          <th class="yard-name">{{this.UIResource.court}}</th>
+          <th class="yard-name-head">{{this.UIResource.court}}</th>
           @for (time of timeSlots; track time) {
           <th>{{time.startTime.slice(0, -3)}} - {{time.endTime.slice(0, -3)}}</th>
           }
@@ -31,7 +31,7 @@
         @for (yardPrice of yardPriceList; track yardPrice) {
         <tr>
           <td class="yard-name">
-            <div class="yard-name-child">{{yardPrice.yard.name}}</div>
+            {{yardPrice.yard.name}}
           </td>
           @for (detail of yardPrice.yardPricesDetails
           ; track detail) {

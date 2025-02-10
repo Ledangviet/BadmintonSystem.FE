@@ -51,6 +51,9 @@ export class LayoutComponent {
   public get lang(): string {
     return this.resourceService.lang.toUpperCase();
   }
+  public get isBooking(): boolean{
+    return (this.router.url == '/booking')
+  }
 
   constructor(
     private blobService: BlobService,
@@ -60,6 +63,7 @@ export class LayoutComponent {
   ) { }
 
   ngOnInit() {
+    this.isAuthenticated = this.authService.getIsAuthenticated();
     this.userImagePath = this.blobService.getImageUrl('UserIcon.png');
     this.phoneImagePath = this.blobService.getImageUrl('phoneicon.png');
     this.adressImagePath = this.blobService.getImageUrl('adressicon.png');
@@ -81,9 +85,12 @@ export class LayoutComponent {
     this.resourceService.setResource(this.lang == 'ENG' ? 'vi' : 'eng');
     window.location.reload();
   }
+  
 
   onAdminClick() {
     this.authService.logout();
     this.router.navigate(['/admin/home']);
   }
+
+
 }
