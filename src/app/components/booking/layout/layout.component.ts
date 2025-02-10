@@ -81,4 +81,9 @@ export class LayoutComponent {
     this.resourceService.setResource(this.lang == 'ENG' ? 'vi' : 'eng');
     window.location.reload();
   }
+
+  onAdminClick() {
+    this.authService.logout();
+    this.router.navigate(['/admin/home']);
+  }
 }

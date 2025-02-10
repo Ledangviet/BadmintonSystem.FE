@@ -63,7 +63,8 @@ export class BookComponent {
     private fb: FormBuilder,
     private router: Router,
     private resourceService: ResourceService,
-    private signalRService: SignalRService
+    private signalRService: SignalRService,
+    private authService: AuthService
   ) {
     this.selectedTimeform = this.fb.group({
       dateTime: [this.selectedDate],
