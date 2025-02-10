@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiClientService } from '../shared/api-client.service';
 import { Observable } from 'rxjs';
 import BaseResponseModel from '../../model/base.response.model';
-import { ChatMessageResponseModel } from '../../model/chat.message.response.model';
 import ChatModel from '../../model/chat.message.model';
-import { ChatRoomResponseModel } from '../../model/chat.room.response';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +26,16 @@ export class ChatService {
     pageSize: number
   ): Observable<BaseResponseModel> {
     let url = `users/chat-message?PageIndex=${pageIndex}&PageSize=${pageSize}`;
-    return this.apiClient.get<BaseResponseModel>(url);
+    return this.apiClient.post<BaseResponseModel>(url, {});
   }
 
   sendMessage(model: ChatModel) {
-    return this.apiClient.post<BaseResponseModel>(`chat-message`, model);
+    return this.apiClient.post<BaseResponseModel>(`chat-messages`, model);
+  }
+
+  readAllMessage(chatRoomId: string) {
+    return this.apiClient.get<BaseResponseModel>(
+      `chat-messages?chatRoomId=${chatRoomId}`
+    );
   }
 }

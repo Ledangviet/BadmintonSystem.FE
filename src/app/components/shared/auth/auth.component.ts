@@ -21,6 +21,7 @@ import RegisterModel from '../../../model/register.model';
 import RegisterResponseModel from '../../../model/register.response.model';
 import { ToastrService } from 'ngx-toastr';
 import LoginResponseModel from '../../../model/login.response.model';
+import { AwaitVerifyComponent } from '../await-verify/await-verify.component';
 
 @Component({
   selector: 'app-auth',
@@ -36,6 +37,7 @@ import LoginResponseModel from '../../../model/login.response.model';
     MatCheckboxModule,
     MatNativeDateModule,
     MatDatepickerModule,
+    AwaitVerifyComponent,
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
@@ -45,6 +47,7 @@ export class AuthComponent {
   registerForm: FormGroup;
   hide = true;
   state = 'login';
+  isVisible: boolean = false;
 
   public UIResource = {
     passwordPlh: 'Password',
@@ -147,18 +150,13 @@ export class AuthComponent {
     let password = this.registerForm.get('password')?.value;
     let phoneNumber = this.registerForm.get('phoneNumber')?.value;
     let dateOfBirth = this.registerForm.get('dateOfBirth')?.value;
-    let registerModel = new RegisterModel(
-      email,
-      password,
-      phoneNumber,
-      dateOfBirth,
-      0
-    );
+    let registerModel = new RegisterModel(email, password, phoneNumber, 1);
     this.authService
       .register(registerModel)
       .subscribe((response: RegisterResponseModel) => {
         if (response.isSuccess) {
-          this.toaster.success(this.UIResource.registerSuccess);
+          this.isVisible = true;
+          localStorage.setItem('email', email);
         }
       });
   }
@@ -168,5 +166,9 @@ export class AuthComponent {
   }
   loginHere() {
     this.state = 'login';
+  }
+  receiveMessage(message: boolean) {
+    this.isVisible = message;
+    if (message === false) this.loginHere();
   }
 }

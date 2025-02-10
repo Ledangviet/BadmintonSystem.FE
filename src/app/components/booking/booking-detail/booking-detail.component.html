@@ -1,39 +1,38 @@
 <div class="booking-detail-container">
-    <div class="selected-price">
-        @for (yard of yardList; track yard){
-        @if(yard.yardPriceList.length > 0){
-        <mat-card class="example-card">
-            <mat-card-title class="title">{{yard.name}}</mat-card-title>
-            <mat-card-content>
-                <p class="date">{{UIResource.bookingDetailDate}} {{this.selectedDate | date:'dd-mm-yyyy'}}</p>
-                <div>{{UIResource.bookingDetailTime}}</div>
-                <div class="schedule">
-                    <ul>
-                        @for(yardPrice of yard.yardPriceList; track yardPrice){
-                        <li>{{yardPrice.startTime.slice(0, -3)}} - {{yardPrice.endTime.slice(0, -3)}}
-
-                            <button class="remove-time-slot" (click)="removeYardPrice(yardPrice)">x</button>
-
-                        </li>
-                        }
-                    </ul>
-                </div>
-                <p class="price">{{UIResource.bookingDetailPrice}}{{formatPrice(getYardTotalPrice(yard.id))}}</p>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-icon-button class="bin-icon" (click)="removeYard(yard)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-            </mat-card-actions>
-        </mat-card>
-        }
-        }
-
-    </div>
-    @if(anyPriceSelected){
-    <h4 class="total-price">{{UIResource.bookingDetailTotal}}{{formatPrice(this.getTotalprice())}}</h4>
-    }
-    @else {
-    <h2 class="total-price">{{UIResource.bookingDetailNotSelected}}</h2>
-    }
+  <div class="selected-price">
+    @for (yard of yardList; track yard){ @if(yard.yardPriceList.length > 0){
+    <mat-card class="example-card">
+      <mat-card-title class="title">{{ yard.name }}</mat-card-title>
+      <mat-card-content>
+        <p class="date">
+          {{ UIResource.bookingDetailDate }}
+          {{ this.selectedDate | date : "dd-mm-yyyy" }}
+        </p>
+        <div>{{ UIResource.bookingDetailTime }}</div>
+        <div class="schedule">
+          <ul>
+            @for(yardPrice of yard.yardPriceList; track yardPrice){
+            <li>
+              {{ yardPrice.startTime.slice(0, -3) }} -
+              {{ yardPrice.endTime.slice(0, -3) }}
+            </li>
+            }
+          </ul>
+        </div>
+        <p class="price">
+          {{ UIResource.bookingDetailPrice
+          }}{{ formatPrice(getYardTotalPrice(yard.id)) }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions> </mat-card-actions>
+    </mat-card>
+    } }
+  </div>
+  @if(anyPriceSelected){
+  <h4 class="total-price">
+    {{ UIResource.bookingDetailTotal }}{{ formatPrice(this.getTotalprice()) }}
+  </h4>
+  } @else {
+  <h2 class="total-price">{{ UIResource.bookingDetailNotSelected }}</h2>
+  }
 </div>
