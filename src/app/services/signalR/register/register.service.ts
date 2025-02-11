@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import RegisterSignalRModel from '../../model/register.signalR.model';
-import { environment } from '../../../environments/environment';
+import RegisterSignalRModel from '../../../model/register.signalR.model';
+import { environment } from '../../../../environments/environment';
 import * as signalR from '@microsoft/signalr';
 
 @Injectable({

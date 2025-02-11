@@ -21,7 +21,9 @@ import RegisterModel from '../../../model/register.model';
 import RegisterResponseModel from '../../../model/register.response.model';
 import { ToastrService } from 'ngx-toastr';
 import LoginResponseModel from '../../../model/login.response.model';
-import { AwaitVerifyComponent } from '../await-verify/await-verify.component';
+import { AwaitVerifyComponent } from '../pop-up/await-verify/await-verify.component';
+import { ErrorsComponent } from '../pop-up/errors/errors.component';
+import { LoadingComponent } from '../pop-up/loading/loading.component';
 
 @Component({
   selector: 'app-auth',
@@ -38,6 +40,8 @@ import { AwaitVerifyComponent } from '../await-verify/await-verify.component';
     MatNativeDateModule,
     MatDatepickerModule,
     AwaitVerifyComponent,
+    ErrorsComponent,
+    LoadingComponent,
   ],
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.scss',
@@ -48,6 +52,7 @@ export class AuthComponent {
   hide = true;
   state = 'login';
   isVisible: boolean = false;
+  isLoading: boolean = true;
 
   public UIResource = {
     passwordPlh: 'Password',
@@ -170,5 +175,13 @@ export class AuthComponent {
   receiveMessage(message: boolean) {
     this.isVisible = message;
     if (message === false) this.loginHere();
+  }
+
+  loadData() {
+    this.isLoading = true; // Bắt đầu loading
+    // Giả lập một yêu cầu tải dữ liệu
+    setTimeout(() => {
+      this.isLoading = false; // Kết thúc loading
+    }, 3000); // Thời gian giả lập 3 giây
   }
 }

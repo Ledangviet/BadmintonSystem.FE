@@ -1,0 +1,56 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Chỉ số z-index cao */
+}
+
+.loading-container {
+  background: white;
+  padding: 60px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Màu nền */
+  border-top: 8px solid rgb(165, 0, 38);
+  border-radius: 50%;
+  width: 50px; /* Kích thước vòng tròn */
+  height: 50px; /* Kích thước vòng tròn */
+  animation: spin 1s linear infinite; /* Hiệu ứng quay */
+  margin: 0 auto 10px; /* Căn giữa */
+}
+
+button {
+  background: rgb(215, 48, 39);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s; /* Hiệu ứng chuyển động */
+  font-size: 20px;
+  margin-top: 40px;
+}
+
+button:hover {
+  background: rgb(244, 109, 67); /* Màu cam đậm khi hover */
+  transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

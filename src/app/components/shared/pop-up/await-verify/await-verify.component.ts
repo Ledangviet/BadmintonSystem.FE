@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RegisterService } from '../../../services/signalR/register.service';
-import RegisterSignalRModel from '../../../model/register.signalR.model';
+import { RegisterService } from '../../../../services/signalR/register/register.service';
+import RegisterSignalRModel from '../../../../model/register.signalR.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 

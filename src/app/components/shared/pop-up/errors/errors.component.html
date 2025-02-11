@@ -1,0 +1,14 @@
+<!-- Error Pop-up -->
+<div class="error-popup" *ngIf="showErrorPopup">
+  <div class="popup-content">
+    <img
+      src="https://img.icons8.com/ios-filled/100/ff0000/error.png"
+      alt="Error"
+      class="icon"
+    />
+    <!-- Hình ảnh biểu tượng lỗi -->
+    <h3>ERROR</h3>
+    <p>{{ errorMessage }}</p>
+    <button (click)="closeErrorPopup()">Cancel</button>
+  </div>
+</div>
