@@ -11,8 +11,4 @@ import { Component, Input } from '@angular/core';
 export class LoadingComponent {
   constructor() {}
   @Input() isLoading: boolean = false;
-
-  closeLoadingPopup() {
-    this.isLoading = false;
-  }
 }

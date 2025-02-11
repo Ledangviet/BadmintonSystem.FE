@@ -29,17 +29,18 @@
 .text-await {
   font-size: 32px;
   letter-spacing: 2px;
-  color: rgb(253, 174, 97);
+  color: var(--main-ctrl-background-color);
 }
 .countdown-text {
   font-size: 18px;
   font-weight: bold;
-  color: #d32f2f;
+  color: var(--base-red-bold-color);
   margin-bottom: 15px;
 }
 
 button {
-  background: rgb(0, 104, 55);
+  // background: var(--base-green-very-bold-color);
+  background: #ccc;
   color: white;
   padding: 12px 20px;
   border: none;
@@ -54,13 +55,13 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:hover {
-  background: rgb(0, 104, 55);
-  transform: scale(1.05);
-}
+// button:hover {
+//   background: var(--base-green-very-bold-color);
+//   transform: scale(1.05);
+// }
 
 .cancel-btn {
-  background: rgb(215, 48, 39); /* Màu đỏ */
+  background: var(--base-red-bold-color); /* Màu đỏ */
   color: white;
   padding: 12px 20px;
   border: none;
@@ -73,7 +74,7 @@ button:hover {
 }
 
 .cancel-btn:hover {
-  background: rgb(244, 109, 67);
+  background: var(--base-red-hover-color);
   transform: scale(1.05);
 }
 

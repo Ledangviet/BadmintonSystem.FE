@@ -10,7 +10,9 @@
     <p class="countdown-text">
       Thời gian chờ: <span>{{ minutes }}:{{ seconds | number : "2.0" }}</span>
     </p>
-    <button (click)="resendEmail()" [disabled]="isDisabled">Send email</button>
-    <button class="cancel-btn" (click)="cancel()">Cancel</button>
+    <button (click)="resendEmail()" [disabled]="isDisabled" disabled>
+      Send email
+    </button>
+    <button class="cancel-btn" (click)="cancel(true)">Cancel</button>
   </div>
 </div>

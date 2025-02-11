@@ -4,7 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,37 +20,25 @@
 }
 
 .loader {
-  border: 8px solid #f3f3f3; /* Màu nền */
-  border-top: 8px solid rgb(165, 0, 38);
-  border-radius: 50%;
-  width: 50px; /* Kích thước vòng tròn */
-  height: 50px; /* Kích thước vòng tròn */
-  animation: spin 1s linear infinite; /* Hiệu ứng quay */
-  margin: 0 auto 10px; /* Căn giữa */
+  width: 60px;
+  aspect-ratio: 2;
+  --_g: no-repeat
+    radial-gradient(circle closest-side, rgb(215, 48, 39) 90%, #ffa1a100);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
 }
-
-button {
-  background: rgb(215, 48, 39);
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out, transform 0.2s; /* Hiệu ứng chuyển động */
-  font-size: 20px;
-  margin-top: 40px;
-}
-
-button:hover {
-  background: rgb(244, 109, 67); /* Màu cam đậm khi hover */
-  transform: scale(1.05); /* Phóng to nhẹ khi hover */
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+@keyframes l3 {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
   }
-  100% {
-    transform: rotate(360deg);
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
   }
 }

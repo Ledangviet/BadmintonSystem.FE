@@ -19,7 +19,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import RegisterModel from '../../../model/register.model';
 import RegisterResponseModel from '../../../model/register.response.model';
-import { ToastrService } from 'ngx-toastr';
 import LoginResponseModel from '../../../model/login.response.model';
 import { AwaitVerifyComponent } from '../pop-up/await-verify/await-verify.component';
 import { ErrorsComponent } from '../pop-up/errors/errors.component';
@@ -52,12 +51,20 @@ export class AuthComponent {
   hide = true;
   state = 'login';
   isVisible: boolean = false;
-  isLoading: boolean = true;
+  isLoading: boolean = false;
+  isEmailErrorDetail: boolean = true;
+  isPasswordErrorDetail: boolean = true;
+  isEmailExistsErrorDetail: boolean = true;
+  isPasswordConditionErrorDetail: boolean = true;
+  email = localStorage.getItem('email')?.toString();
 
   public UIResource = {
     passwordPlh: 'Password',
     emailPlh: 'Email',
     userNamePlh: 'User name',
+    emailExists: 'Email not exists, Please re-enter.',
+    emailNotExists: 'Email already exists, Please re-enter new email.',
+    passwordNotCorrect: 'Password not correct, Please re-enter.',
     loginTitle: 'LOGIN',
     register: 'Register',
     registerTitle: 'REGISTER',
@@ -81,15 +88,13 @@ export class AuthComponent {
     dateOfBirthPlh: 'Date of Birth',
     registerSuccess: 'Register Success!',
     passWordCondition:
-      'Your password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character from @$!%*?&.',
+      'The password must be at least 8 characters long and include at least one lowercase letter, one uppercase letter, one number, and one special character from @$!%*?&.',
   };
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private resource: ResourceService,
-    private toaster: ToastrService
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       email: ['admin@gmail.com', [Validators.required, Validators.email]],
@@ -131,13 +136,13 @@ export class AuthComponent {
     });
   }
   onSubmitLogin() {
+    this.isLoading = true;
     if (this.loginForm.valid) {
       let email = this.loginForm.get('email')?.value;
       let passWord = this.loginForm.get('password')?.value;
       if (email != null && passWord != null) {
-        this.authService
-          .login(email, passWord)
-          .subscribe((result: LoginResponseModel) => {
+        this.authService.login(email, passWord).subscribe(
+          (result: LoginResponseModel) => {
             if (result.isSuccess) {
               localStorage.setItem('accessToken', result.value.accessToken);
               localStorage.setItem('email', result.value.user.email);
@@ -145,25 +150,56 @@ export class AuthComponent {
               this.router.navigate(['/home']);
               this.authService.loginStateChangeEmitter.emit(true);
             }
-          });
+            this.isLoading = false;
+          },
+          (error) => {
+            const detail = error.error.detail.toLowerCase();
+            const containsPassword = detail.includes('password');
+            const containsEmail = detail.includes('email');
+            this.isEmailErrorDetail = true;
+            this.isPasswordErrorDetail = true;
+            if (error.status === 404 || error.status === 400) {
+              this.errorStatusLoginHandler(containsEmail, containsPassword);
+            } else {
+              console.error('An unexpected error occurred:', error);
+            }
+            this.isLoading = false;
+          }
+        );
       }
     }
   }
 
   onSubmitRegister() {
+    this.isLoading = true;
+    if (this.email) this.authService.cancelRegister(this.email).subscribe();
     let email = this.registerForm.get('email')?.value;
     let password = this.registerForm.get('password')?.value;
     let phoneNumber = this.registerForm.get('phoneNumber')?.value;
     let dateOfBirth = this.registerForm.get('dateOfBirth')?.value;
     let registerModel = new RegisterModel(email, password, phoneNumber, 1);
-    this.authService
-      .register(registerModel)
-      .subscribe((response: RegisterResponseModel) => {
+    this.authService.register(registerModel).subscribe(
+      (response: RegisterResponseModel) => {
         if (response.isSuccess) {
           this.isVisible = true;
           localStorage.setItem('email', email);
         }
-      });
+        this.isLoading = false;
+      },
+      (error) => {
+        const detail = error.error.detail.toLowerCase();
+        const containsPassword = detail.includes('password');
+        const containsEmail = detail.includes('email');
+        this.isEmailExistsErrorDetail = true;
+        this.isPasswordConditionErrorDetail = true;
+        if (error.status === 404 || error.status === 400) {
+          this.errorStatusRegisterHandler(containsEmail, containsPassword);
+        } else {
+          console.error('An unexpected error occurred:', error);
+        }
+        this.isLoading = false;
+      }
+    );
   }
 
   registerHere() {
@@ -172,16 +208,40 @@ export class AuthComponent {
   loginHere() {
     this.state = 'login';
   }
+
   receiveMessage(message: boolean) {
-    this.isVisible = message;
-    if (message === false) this.loginHere();
+    let email = this.registerForm.get('email')?.value;
+    this.authService.cancelRegister(email).subscribe();
+    if (message === true) {
+      this.isVisible = false;
+    } else {
+      this.isVisible = message;
+      if (message === false) this.loginHere();
+    }
   }
 
-  loadData() {
-    this.isLoading = true; // Bắt đầu loading
-    // Giả lập một yêu cầu tải dữ liệu
-    setTimeout(() => {
-      this.isLoading = false; // Kết thúc loading
-    }, 3000); // Thời gian giả lập 3 giây
+  errorStatusLoginHandler(containsEmail: boolean, containsPassword: boolean) {
+    const emailError = containsEmail ? { required: true } : null;
+    const passwordError = containsPassword ? { required: true } : null;
+
+    this.loginForm.get('email')?.setErrors(emailError);
+    this.loginForm.get('password')?.setErrors(passwordError);
+
+    this.isEmailErrorDetail = containsEmail ? false : true;
+    this.isPasswordErrorDetail = containsPassword ? false : true;
+  }
+
+  errorStatusRegisterHandler(
+    containsEmail: boolean,
+    containsPassword: boolean
+  ) {
+    const emailError = containsEmail ? { required: true } : null;
+    const passwordError = containsPassword ? { required: true } : null;
+
+    this.registerForm.get('email')?.setErrors(emailError);
+    this.registerForm.get('password')?.setErrors(passwordError);
+
+    this.isEmailExistsErrorDetail = containsEmail ? false : true;
+    this.isPasswordConditionErrorDetail = containsPassword ? false : true;
   }
 }
