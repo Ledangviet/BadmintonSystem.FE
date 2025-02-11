@@ -48,5 +48,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.5.2"
   },
-  "proxy": "http://localhost:5000/api/v1/"
+  "proxy": "https://bookingweb.shop/api/v1/"
 }

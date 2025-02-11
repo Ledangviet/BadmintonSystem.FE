@@ -138,7 +138,7 @@ export class ChatComponent implements AfterViewChecked {
 
   handleWhenChangeMessages(message: string, date: string, isAdmin: boolean) {
     const messages: ChatMessageModel = {
-      user: this.userDetail.user,
+      user: null,
       imageUrl: '',
       content: message,
       isAdmin: isAdmin,
