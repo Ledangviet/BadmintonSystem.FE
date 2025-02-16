@@ -21,6 +21,7 @@ export const routes: Routes = [
             { path: 'auth', component: AuthComponent },
             { path: 'checkout', component: CheckoutComponent },
             { path: 'verify-email', component: VerifyEmailComponent },
+            { path: 'not-found', component: NotFoundComponent },
         ],
     },
     {
@@ -33,13 +34,4 @@ export const routes: Routes = [
             { path: 'yard/price', component: YardPriceComponent },
         ],
     }
-  { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'booking', component: BookComponent },
-  { path: 'auth', component: AuthComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'admin/home', component: AdminHomeComponent },
-  { path: 'admin/yard', component: YardComponent },
-  { path: 'verify-email', component: VerifyEmailComponent },
-  { path: 'not-found', component: NotFoundComponent },
 ];
