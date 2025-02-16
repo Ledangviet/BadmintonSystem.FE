@@ -1,8 +1,69 @@
-<mat-sidenav-container>
-    <mat-sidenav>Start</mat-sidenav>
-    <mat-sidenav-content>
-        <div class="admin-home-container">
-            Admin home
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+<div class="sidebar" [class.close]="isCloseMenu()">
+    <div class="logo-details">
+        <i class='bx bx-home'></i>
+        <span class="logo_name">Administrator</span>
+    </div>
+    <ul class="nav-links">
+        <li [class.showMenu]="isShowCategory()">
+            <div class="iocn-link"  (click)="onExpandCategoryNav()">
+                <a >
+                    <i class='bx bx-collection'></i>
+                    <span class="link_name">Yard</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a href="admin/yard">Yard Manager</a></li>
+                <li><a href="admin/yard/price">Yard Price</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-user'></i>
+                <span class="link_name">User</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-category'></i>
+                <span class="link_name">Category</span>
+            </a>
+        </li>
+        <li>
+            <div class="iocn-link">
+                <a href="#">
+                    <i class='bx bx-group'></i>
+                    <span class="link_name">Provider</span>
+                </a>
+            </div>
+
+        </li> 
+        <li>
+            <a href="admin/yard">
+                <i class='bx bx-support'></i>
+                <span class="link_name">Service</span>
+            </a>
+        </li>       
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="link_name">Setting</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Setting</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<section class="home-section">  
+    <div class="home-content">
+        <i class='bx bx-menu' (click)="onToggleMenu()"></i>
+        <div class="content-container">
+            <router-outlet></router-outlet>
+        </div>    
+    </div>
+</section>

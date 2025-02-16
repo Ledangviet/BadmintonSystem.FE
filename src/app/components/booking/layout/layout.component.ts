@@ -89,7 +89,7 @@ export class LayoutComponent {
 
   onAdminClick() {
     this.authService.logout();
-    this.router.navigate(['/admin/home']);
+    this.router.navigate(['/admin']);
   }
 
 

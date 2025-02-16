@@ -1,17 +1,37 @@
 import { Component } from '@angular/core';
-import { MatSidenav, MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
+import { BookingMainService } from '../../../services/booking/booking-main.service';
 
 @Component({
   selector: 'app-admin-home',
   standalone: true,
   imports: [
-    MatSidenav,
-    MatSidenavContainer,
-    MatSidenavContent
+    MatIconModule,
+    RouterOutlet,
   ],
   templateUrl: './admin-home.component.html',
   styleUrl: './admin-home.component.scss'
 })
 export class AdminHomeComponent {
 
+  constructor(
+  ){
+
+  }
+  showMenu = false;
+  showCategory = false;
+  isShowCategory(){
+    return this.showCategory;
+  }
+  onExpandCategoryNav(){
+    this.showCategory = !this.showCategory;
+  }
+  onToggleMenu(){
+    this.showMenu = !this.showMenu;
+  }
+
+  isCloseMenu(){
+    return this.showMenu;
+  }
 }
