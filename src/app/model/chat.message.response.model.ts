@@ -2,7 +2,7 @@ import BaseResponseModel from './base.response.model';
 import UserResponseModel from './user.response.model';
 
 export class ChatMessageModel {
-  user: UserResponseModel;
+  user: UserResponseModel | null;
   imageUrl: string;
   content: string;
   isAdmin: boolean;

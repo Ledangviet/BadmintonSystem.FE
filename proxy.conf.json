@@ -1,0 +1,6 @@
+{
+     "/api": {
+       "target": "https://bookingweb.shop/api/v1/",
+       "secure": false
+     }
+   }

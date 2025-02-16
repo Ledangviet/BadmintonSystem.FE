@@ -3,32 +3,37 @@
 
 html,
 body {
-    margin: 0px;
-    height: 100%;
-    padding: 0px;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0px;
+  height: 100%;
+  padding: 0px;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 :root {
-    --main-bg-color: #FAFAFA;
-    --main-text-color: black;
-    --main-text-hover-color: #666666;
-    --main-ctrl-background-color: #D2B48C;
-    --main-ctrl-color: white;
-    // Add more variables as needed
+  --main-bg-color: #fafafa;
+  --main-text-color: black;
+  --main-text-hover-color: #666666;
+  --main-ctrl-background-color: #d2b48c;
+  --main-ctrl-color: white;
+  --base-green-bold-color: rgb(26, 152, 80);
+  --base-green-very-bold-color: rgb(0, 104, 55);
+  --base-green-hover-color: rgb(102, 189, 99);
+  --base-red-bold-color: rgb(215, 48, 39);
+  --base-red-hover-color: rgb(244, 109, 67);
+  // Add more variables as needed
 }
 
 .default-button {
-    border-radius: 5px !important;
-    color: var(--main-ctrl-color) !important;
-    height: 35px;
-    background-color: var(--main-ctrl-background-color) !important;
+  border-radius: 5px !important;
+  color: var(--main-ctrl-color) !important;
+  height: 35px;
+  background-color: var(--main-ctrl-background-color) !important;
 
-    :hover {
-        color: var(--main-text-hover-color-color) !important;
-    }
+  :hover {
+    color: var(--main-text-hover-color-color) !important;
+  }
 }
 
 .mat-toolbar.mat-primary {
-    background-color: #F0F0F0;
+  background-color: #f0f0f0;
 }

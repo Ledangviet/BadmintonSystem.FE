@@ -13,6 +13,9 @@
             <mat-label>{{ UIResource.emailPlh }}</mat-label>
             <input matInput formControlName="email" required />
           </mat-form-field>
+          <p class="input-error" [class.have-account]="isEmailErrorDetail">
+            {{ UIResource.emailNotExists }}
+          </p>
           <mat-form-field appearance="outline">
             <mat-label>{{ UIResource.passwordPlh }}</mat-label>
             <input
@@ -31,6 +34,9 @@
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
           </mat-form-field>
+          <p class="input-error" [class.have-account]="isPasswordErrorDetail">
+            {{ UIResource.passwordNotCorrect }}
+          </p>
           <div class="form-options">
             <mat-checkbox formControlName="rememberme">{{
               UIResource.rememberMe
@@ -66,6 +72,12 @@
             <mat-label>{{ UIResource.emailPlh }}</mat-label>
             <input matInput formControlName="email" required />
           </mat-form-field>
+          <p
+            class="input-error"
+            [class.have-account]="isEmailExistsErrorDetail"
+          >
+            {{ UIResource.emailExists }}
+          </p>
           <mat-form-field appearance="outline">
             <mat-label>{{ UIResource.passwordPlh }}</mat-label>
             <input
@@ -84,6 +96,12 @@
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
           </mat-form-field>
+          <p
+            class="input-error"
+            [class.have-account]="isPasswordConditionErrorDetail"
+          >
+            {{ UIResource.passWordCondition }}
+          </p>
           <mat-form-field appearance="outline">
             <mat-label>{{ UIResource.correctPassword }}</mat-label>
             <input
@@ -101,8 +119,8 @@
             >
               <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
             </button>
-            <!-- <mat-error class="password-error" *ngIf="this.registerForm.get('correctpassword')?.invalid && (this.registerForm.get('correctpassword')?.dirty || this.registerForm.get('correctpassword')?.touched)">
-              {{UIResource.passWordCondition}}
+            <!-- <mat-error class="password-error">
+              {{ UIResource.passWordCondition }}
             </mat-error> -->
           </mat-form-field>
 
@@ -143,4 +161,6 @@
     [isVisible]="isVisible"
     (isVisibleChange)="receiveMessage($event)"
   ></app-await-verify>
+  <app-errors></app-errors>
+  <app-loading [isLoading]="isLoading"></app-loading>
 </div>

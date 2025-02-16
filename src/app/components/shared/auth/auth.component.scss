@@ -1,72 +1,73 @@
 .login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 
 mat-card {
-    width: 600px;
-    padding: 20px;
+  width: 600px;
+  padding: 20px;
 }
 
 @media (max-width: 600px) {
-    mat-card {
-        width: 100%; 
-    }
-    .dont-have-account{
-        display: none;
-    }
+  mat-card {
+    width: 100%;
+  }
+  .dont-have-account {
+    display: none;
+  }
 }
 
 mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .login-button {
-    width: 100%;
-    margin-top: 10px;
-    background-color: var(--main-ctrl-background-color) !important;
-    color: white !important;
-    height: 50px;
+  width: 100%;
+  margin-top: 10px;
+  background-color: var(--main-ctrl-background-color) !important;
+  color: white !important;
+  height: 50px;
 }
-.signin-title{
-    font-weight: bold;
-    margin-bottom: 30px;
-    color: var(--main-ctrl-background-color);
+.signin-title {
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--main-ctrl-background-color);
 }
 
 .form-options {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .forgot-password {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.forgot-password {
+  text-decoration: none;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.register-link-container {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .register-link {
     text-decoration: none;
     color: #007bff;
     cursor: pointer;
+    text-align: center;
   }
-
-  .register-link-container{
-    margin-top: 5px;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    .register-link{
-        text-decoration: none;
-        color: #007bff;
-        cursor: pointer;
-        text-align: center;
-      }
-  }
-  .have-account{
-    display: none;
+}
+.have-account {
+  display: none;
 }
 
-.password-error{
-    font-size: 12px;
+.input-error {
+  color: var(--base-red-bold-color);
+  margin: -20px 0 24px 4px;
+  font-size: 12px;
 }
-  

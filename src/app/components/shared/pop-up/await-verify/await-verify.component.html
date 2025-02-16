@@ -5,14 +5,14 @@
       alt="Verify"
       class="verify-icon"
     />
-    <h2>Chờ xác minh email ⏳</h2>
+    <h2 class="text-await">VERIFY EMAIL⏳</h2>
     <p>Email xác minh đã được gửi. Vui lòng kiểm tra hộp thư của bạn.</p>
     <p class="countdown-text">
       Thời gian chờ: <span>{{ minutes }}:{{ seconds | number : "2.0" }}</span>
     </p>
-    <button (click)="resendEmail()" [disabled]="isDisabled">
-      Gửi lại email
+    <button (click)="resendEmail()" [disabled]="isDisabled" disabled>
+      Send email
     </button>
-    <button class="cancel-btn" (click)="cancel()">Hủy</button>
+    <button class="cancel-btn" (click)="cancel(true)">Cancel</button>
   </div>
 </div>

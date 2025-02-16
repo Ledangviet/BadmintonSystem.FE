@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import RegisterModel from '../../model/register.model';
 import RegisterResponseModel from '../../model/register.response.model';
 import e from 'express';
+import BaseResponseModel from '../../model/base.response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,9 @@ export class AuthService {
   public isAuthenticated = false;
   public loginStateChangeEmitter: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private apiClient: ApiClientService) { }
+  constructor(private apiClient: ApiClientService) {}
 
-  public getUserInfo() { }
+  public getUserInfo() {}
 
   getIsAuthenticated(): boolean {
     let isAuthen = localStorage.getItem('isAuthenticated');
@@ -40,6 +41,12 @@ export class AuthService {
     return this.apiClient.post<RegisterResponseModel>(
       'users/register',
       registerModel
+    );
+  }
+
+  cancelRegister(email: string): Observable<BaseResponseModel> {
+    return this.apiClient.get<BaseResponseModel>(
+      `users/cancel-verify-email?email=${email}`
     );
   }
 

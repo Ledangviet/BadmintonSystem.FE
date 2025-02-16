@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RegisterService } from '../../../services/signalR/register.service';
-import RegisterSignalRModel from '../../../model/register.signalR.model';
+import { RegisterService } from '../../../../services/signalR/register/register.service';
+import RegisterSignalRModel from '../../../../model/register.signalR.model';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,7 +21,7 @@ export class AwaitVerifyComponent implements OnInit {
   seconds: number = 0;
   // isVisible: boolean = true;
   isDisabled: boolean = true;
-  email = localStorage.getItem('email')?.toString();
+  private interval: any;
 
   constructor(
     private registerService: RegisterService,
@@ -72,16 +72,33 @@ export class AwaitVerifyComponent implements OnInit {
     this.enableResendAfterDelay();
   }
 
-  cancel() {
-    this.isVisible = false;
-    this.isVisibleChange.emit(false);
+  cancel(isClick: boolean) {
+    if (isClick === false) {
+      this.isVisible = false;
+      this.isVisibleChange.emit(false);
+    } else {
+      this.isVisible = false;
+      this.isVisibleChange.emit(true);
+    }
+    this.resetCountdown();
   }
 
   handlerSignalR(message: RegisterSignalRModel) {
-    if (this.email === message.email && message.isVerified === 1) {
-      this.cancel();
+    const email = localStorage.getItem('email')?.toString();
+    console.log(message);
+    if (email === message.email && message.isVerified === 1) {
+      this.cancel(false);
       localStorage.removeItem('email');
       this.toaster.success('Register success!');
     }
+  }
+
+  resetCountdown() {
+    clearInterval(this.interval);
+    this.minutes = 10;
+    this.seconds = 0;
+    this.isVisible = true;
+    this.isDisabled = true;
+    this.startCountdown();
   }
 }

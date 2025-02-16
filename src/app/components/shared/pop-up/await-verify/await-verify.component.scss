@@ -22,26 +22,30 @@
 }
 
 .verify-icon {
-  font-size: 60px !important;
   color: #ff9800; /* Màu cam */
-  margin-bottom: 15px;
   pointer-events: none; /* Ngăn click */
 }
 
+.text-await {
+  font-size: 32px;
+  letter-spacing: 2px;
+  color: var(--main-ctrl-background-color);
+}
 .countdown-text {
   font-size: 18px;
   font-weight: bold;
-  color: #d32f2f;
+  color: var(--base-red-bold-color);
   margin-bottom: 15px;
 }
 
 button {
-  background: #007bff;
+  // background: var(--base-green-very-bold-color);
+  background: #ccc;
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: background 0.3s ease-in-out, transform 0.2s;
 }
@@ -51,18 +55,18 @@ button:disabled {
   cursor: not-allowed;
 }
 
-button:hover {
-  background: #0056b3;
-  transform: scale(1.05);
-}
+// button:hover {
+//   background: var(--base-green-very-bold-color);
+//   transform: scale(1.05);
+// }
 
 .cancel-btn {
-  background: #ff746a; /* Màu đỏ */
+  background: var(--base-red-bold-color); /* Màu đỏ */
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 6px;
-  font-size: 16px;
+  font-size: 20px;
   cursor: pointer;
   transition: background 0.3s ease-in-out, transform 0.2s;
   margin-top: 10px;
@@ -70,7 +74,7 @@ button:hover {
 }
 
 .cancel-btn:hover {
-  background: #ff5f54;
+  background: var(--base-red-hover-color);
   transform: scale(1.05);
 }
 
