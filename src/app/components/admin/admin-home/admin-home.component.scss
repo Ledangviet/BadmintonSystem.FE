@@ -237,6 +237,10 @@ body{
 .home-section .home-content .bx-menu{
   cursor: pointer;
   margin-right: 10px;
+  position: absolute;
+  z-index: 100;
+  left: 150;
+  top: 0;
 }
 .home-section .home-content .text{
   font-size: 26px;

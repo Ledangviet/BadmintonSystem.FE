@@ -8,23 +8,36 @@
         <span class="logo_name">Administrator</span>
     </div>
     <ul class="nav-links">
-        <li [class.showMenu]="isShowCategory()">
-            <div class="iocn-link"  (click)="onExpandCategoryNav()">
+        <li [class.showMenu]="this.showDashboard">
+            <div class="iocn-link"  (click)="onExpandDashboard()">
                 <a >
                     <i class='bx bx-collection'></i>
-                    <span class="link_name">Yard</span>
+                    <span class="link_name">Quản Lí</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
             <ul class="sub-menu">
-                <li><a href="admin/yard">Yard Manager</a></li>
-                <li><a href="admin/yard/price">Yard Price</a></li>
+                <li><a href="admin/dashboard">Tình Trạng Sân </a></li>
+                <li><a href="admin/yard/price">Giá sân </a></li>
+            </ul>
+        </li>
+        <li [class.showMenu]="isShowCategory()">
+            <div class="iocn-link"  (click)="onExpandCategoryNav()">
+                <a >
+                    <i class='bx bx-collection'></i>
+                    <span class="link_name">Sân </span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a href="admin/yard">Quản lí sân </a></li>
+                <li><a href="admin/yard/price">Giá sân </a></li>
             </ul>
         </li>
         <li>
             <a href="#">
                 <i class='bx bx-user'></i>
-                <span class="link_name">User</span>
+                <span class="link_name">Người dùng</span>
             </a>
         </li>
         <li>

@@ -9,6 +9,7 @@ import { VerifyEmailComponent } from './components/shared/verify-email/verify-em
 import { LayoutComponent } from './components/booking/layout/layout.component';
 import { YardPriceComponent } from './components/admin/yard-price/yard-price.component';
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {
@@ -28,8 +29,9 @@ export const routes: Routes = [
         path: 'admin',
         component: AdminHomeComponent,
         children: [
-            { path: '', component: YardComponent },
-            { path: 'home', component: YardComponent },
+            { path: '', component: DashboardComponent },
+            { path: 'home', component: DashboardComponent },
+            { path: 'dashboard', component: DashboardComponent },
             { path: 'yard', component: YardComponent },
             { path: 'yard/price', component: YardPriceComponent },
         ],

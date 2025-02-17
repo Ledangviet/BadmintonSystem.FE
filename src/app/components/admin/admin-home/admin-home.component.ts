@@ -14,13 +14,13 @@ import { BookingMainService } from '../../../services/booking/booking-main.servi
   styleUrl: './admin-home.component.scss'
 })
 export class AdminHomeComponent {
-
+  showDashboard = false;
+  showMenu = false;
+  showCategory = false;
   constructor(
   ){
 
   }
-  showMenu = false;
-  showCategory = false;
   isShowCategory(){
     return this.showCategory;
   }
@@ -33,5 +33,9 @@ export class AdminHomeComponent {
 
   isCloseMenu(){
     return this.showMenu;
+  }
+
+  onExpandDashboard(){
+    this.showDashboard = !this.showDashboard
   }
 }
