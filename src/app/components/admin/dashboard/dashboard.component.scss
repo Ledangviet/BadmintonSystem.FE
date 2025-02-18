@@ -1,13 +1,21 @@
 .dashboard-container{
-    min-height: 1200px;
-    min-width: 1200px;
+    height: 1200px;
+    min-width: 1500px;
     font-family: 'arial';
     .dashboard-head-container{
         padding-top: 20px;
         margin-top: 20px;
         text-align: center;
+        background-color: white;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        .banner{
+            font-weight: bold;
+            font-size: 40px;
+        }
     }
-    background-color: white;
+    
     border-radius: 10px;
 }
 
@@ -18,3 +26,40 @@
     justify-content: space-around;
     margin-right: 300px;
 }
+
+.court-container{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    max-width: 1020px;
+    .court{
+        margin: 20px;
+        background-color: wheat;
+        min-width: 300px;
+        min-height: 300px;
+        border-radius: 10px;
+    }
+}
+
+.content-container{
+    border-radius: 5px;
+    padding-top: 20px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    .court-info-container{
+        width: 500px;
+        margin-right: 20px;
+        text-align: center;
+    }
+
+    .separator{
+        background-color: wheat;
+        width: 5px;
+        height: 800px;
+        border-radius: 1px;
+    }
+}
+

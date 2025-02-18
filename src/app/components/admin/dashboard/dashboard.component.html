@@ -1,14 +1,52 @@
 <div class="dashboard-container">
-    <div class="dashboard-head-container"> 
-        <h1>Tình Trạng Sân </h1>
-        <div class="list-filter">
-            <mat-form-field>
-                <mat-label>Favorite food</mat-label>
-                <mat-select>
-                    <mat-option >Tất Cả </mat-option>
-                </mat-select>
-              </mat-form-field>
-        </div>
+  <div class="dashboard-head-container">
+    <span class="banner">Tình Trạng Sân</span>
+  </div>
+  <div class="content-container">   
+    <div class="">
+      <div class="list-filter">
+        <mat-form-field>
+          <mat-label>Trạng Thái </mat-label>
+          <mat-select [(ngModel)]="selectedStatus" name="status" (ngModelChange)="onFilterChange($event)">
+            @for (status of listStatus; track status) {
+            <mat-option [value]="status.value">{{status.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <form>
+          <mat-form-field>
+            <mat-label>Khung giờ </mat-label>
+            <mat-select [(ngModel)]="selectedTimeSlot" name="timeslot" (ngModelChange)="onFilterChange($event)">
+              @for (timeslot of timeSlots; track timeslot) {
+              <mat-option [value]="timeslot.id">{{timeslot.textModel}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </div>
+      <div class="court-container">
+        <div class="court">
+        <h2>Court 1</h2>
+      </div>
+      <div class="court">
+        <h2>Court 1</h2>
+      </div>
+      <div class="court">
+        <h2>Court 1</h2>
+      </div>
+      <div class="court">
+        <h2>Court 1</h2>
+      </div>
+      <div class="court">
+        <h2>Court 1</h2>
+      </div>
     </div>
-    <div class="court-container"></div>
+      
+    </div>
+    <div class="separator">
+    </div>
+    <div class="court-info-container">
+      content
+    </div>
+  </div>
 </div>
