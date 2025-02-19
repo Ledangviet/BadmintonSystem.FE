@@ -1,8 +1,8 @@
-.dashboard-container{
-    height: 1200px;
-    min-width: 1500px;
+.dashboard-container {
     font-family: 'arial';
-    .dashboard-head-container{
+    width: 100%;
+
+    .dashboard-head-container {
         padding-top: 20px;
         margin-top: 20px;
         text-align: center;
@@ -10,56 +10,242 @@
         padding-bottom: 20px;
         margin-bottom: 20px;
         border-radius: 5px;
-        .banner{
+
+        .banner {
             font-weight: bold;
-            font-size: 40px;
+            font-size: 30px;
         }
     }
-    
     border-radius: 10px;
 }
 
-.list-filter{
+.list-filter {
     position: relative;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-right: 300px;
+    justify-items: center;
 }
 
-.court-container{
+.court-container {
     text-align: center;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    align-content: space-between;
-    max-width: 1020px;
-    .court{
-        margin: 20px;
-        background-color: wheat;
-        min-width: 300px;
-        min-height: 300px;
-        border-radius: 10px;
+    align-content: flex-start;
+    justify-content: first baseline;
+    overflow-x: auto;
+
+    .court {
+        margin: 10px;
+        background-color: #06BED8;
+        width: 31%;
+        aspect-ratio: 1 / 0.6;
+        border-radius: 5px;
+
+        .court-name {
+            margin-top: 40px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+    }
+
+    .court:hover{
+        background-color: #0594A8; /* Change to a slightly darker shade */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+
+    .court.booked {
+        background-color: #F65045;
+    }
+    .court.booked:hover {
+        background-color: #D43F36;
+        cursor: pointer;
+    }
+    .court.selected {
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        transform: scale(1.02);
     }
 }
 
-.content-container{
+.content-container {
     border-radius: 5px;
     padding-top: 20px;
     background-color: white;
     display: flex;
     flex-direction: row;
-    .court-info-container{
-        width: 500px;
-        margin-right: 20px;
+    padding-bottom: 20px;
+
+    .court-info-container {
+        padding: 20px;
+        width: 28%;
         text-align: center;
+        
     }
 
-    .separator{
-        background-color: wheat;
-        width: 5px;
-        height: 800px;
+    .separator {
+        background-color: #333333;
+        width: 1px;
         border-radius: 1px;
+        border: none;
+    }
+    .left-content-container{
+        width: 70%;
     }
 }
 
+hr {
+    border: none;
+    height: 1px;
+    background-color: #333333;
+}
+
+.color-def {
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
+}
+
+.color-available {
+    background-color: #06BED8;   
+    width: 25px;
+    height: 15px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.color-booked {
+    background-color: #F65045;
+    width: 25px;
+    height: 15px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.court-info-container {
+    min-height: 550px;
+    background-color: azure;
+}
+
+.bill-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    height: 100px;
+    margin: 0px 20px 20px 20px;
+
+    .court-name {
+        font-size: 40px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    border-bottom:1px solid #333333;
+
+
+    .info {
+        .info-item {
+            text-align: left;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+    }
+}
+
+.bill-content {
+    overflow-x: auto;
+
+    .bill-content-item {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px dotted #333333;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .service-name {
+            text-align: left;
+            width: 40%;
+        }
+
+        .total {
+            width: 40%;
+        }
+
+        .quantity {
+            width: 20%;
+        }
+    }
+
+    .bill-content-item.solid {
+        border-bottom: 1px solid #333333;
+    }
+
+    .bill-content-item.none-border {
+        border-bottom: none;
+    }
+}
+
+.bill-footer {
+    margin-top: 20px;
+
+    .bill-content-item {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .service-name {
+            text-align: left;
+            width: 40%;
+        }
+
+        .total {
+            width: 40%;
+        }
+
+        .quantity {
+            width: 20%;
+        }
+    }
+
+    .cash-out {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .border-top {
+        border-top: 1px solid #333333;
+    }
+}
+
+.checkout-button-container {
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .checkout-button {
+        width: 100px;
+        height: 40px;
+        background-color: #F5A75B;
+        color: white;
+        border: none;
+        border-radius: 3px;
+    }
+
+    .checkout-button:hover {
+        background-color: #E5944A; /* Change to a slightly darker shade */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+}

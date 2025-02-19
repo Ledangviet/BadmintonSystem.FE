@@ -9,6 +9,9 @@ import { BookingMainService } from '../../../services/booking/booking-main.servi
 import { TimeSlotModel } from '../../../model/timeslot.model';
 import { resourceLimits } from 'worker_threads';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { YardPriceByDateModel, YardPriceByDateResponseModel } from '../../../model/yardPriceByDateResponse.model';
+import { YardPriceModel } from '../../../model/yardPrice.model';
+import { timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,8 +33,10 @@ export class DashboardComponent {
   ];
   public yardList: YardModel[] = [];
   public timeSlots: TimeSlotModel[] = [];
-  public selectedTimeSlot: any;
+  public selectedTimeSlotID: any;
   public selectedStatus: any;
+  public yardPriceList: any;
+  public selectedYard: any;
 
   constructor(
     private adminService: AdminMainService,
@@ -46,6 +51,7 @@ export class DashboardComponent {
     this.adminService.getYardList().subscribe((result: BaseResponseModel) => {
       if (result.isSuccess) {
         this.yardList = result.value.items as YardModel[];
+        this.selectedYard = this.yardList[0]
       }
     })
 
@@ -58,9 +64,18 @@ export class DashboardComponent {
           slot.textModel = slot.startTime.slice(0, -3) + '-' + slot.endTime.slice(0, -3);
         })
         let currentTimeSlot = this.getCurrentTimeslot(this.timeSlots);
-        this.selectedTimeSlot = currentTimeSlot?.id;
+        this.selectedTimeSlotID = currentTimeSlot?.id;
       }
-    })
+    });
+
+    let date = new Date();
+    date.setHours(date.getHours() + 8);
+    let formattedDate = date.toISOString();
+    this.bookingService
+      .getYardByDate(`"${formattedDate}"`)
+      .subscribe((result: YardPriceByDateResponseModel) => {
+        this.yardPriceList = result.value;
+      });
   }
 
   getCurrentTimeslot(timeslots: TimeSlotModel[]): TimeSlotModel | null {
@@ -95,5 +110,32 @@ export class DashboardComponent {
   onFilterChange(newTimeSlot: any) {
     console.log('Selected Time Slot ID:', newTimeSlot);
     // Add your logic here
+  }
+
+  isBooked(yardPrice: YardPriceByDateModel) {
+
+    if(yardPrice.yardPricesDetails == null) return false;
+    let timeSlot = yardPrice.yardPricesDetails.filter( y => y.timeSlotId == this.selectedTimeSlotID);
+    if(timeSlot.length > 0){
+      if(timeSlot[0].isBooking == 1){
+        return true
+      }
+    }
+    return false;
+  }
+
+  onSelectYard(yardPrice: YardPriceByDateModel){
+    this.selectedYard = yardPrice;
+  }
+
+
+  getBillByTimeSlot(){
+
+  }
+
+  isSelected(yardPrice:YardPriceByDateModel){
+    if(this.selectedYard == null) return false
+    if(this.selectedYard == yardPrice) return true;
+    return false;
   }
 }

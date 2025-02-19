@@ -214,7 +214,6 @@ body{
 .home-section{
   position: relative;
   background: #E4E9F7;
-  height: 100vh;
   left: 260px;
   width: calc(100% - 260px);
   transition: all 0.5s ease;
@@ -271,4 +270,8 @@ body{
     left: 78px;
     width: calc(100% - 78px);
   }
+}
+
+.content-container{
+  width:100%
 }

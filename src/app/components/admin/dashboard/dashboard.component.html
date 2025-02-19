@@ -2,10 +2,20 @@
   <div class="dashboard-head-container">
     <span class="banner">Tình Trạng Sân</span>
   </div>
-  <div class="content-container">   
-    <div class="">
+  <div class="content-container">
+    <div class="left-content-container">
       <div class="list-filter">
-        <mat-form-field>
+        <div class="color-def-container">
+          <div class="color-def">
+            <div class="color-available "></div>
+            <div class="def">Trống </div>
+          </div>
+          <div class="color-def">
+            <div class="color-booked "></div>
+            <div class="def">Đã đặt </div>
+          </div>
+        </div>
+        <mat-form-field appearance="outline">
           <mat-label>Trạng Thái </mat-label>
           <mat-select [(ngModel)]="selectedStatus" name="status" (ngModelChange)="onFilterChange($event)">
             @for (status of listStatus; track status) {
@@ -14,9 +24,9 @@
           </mat-select>
         </mat-form-field>
         <form>
-          <mat-form-field>
+          <mat-form-field appearance="outline">
             <mat-label>Khung giờ </mat-label>
-            <mat-select [(ngModel)]="selectedTimeSlot" name="timeslot" (ngModelChange)="onFilterChange($event)">
+            <mat-select [(ngModel)]="selectedTimeSlotID" name="timeslot" (ngModelChange)="onFilterChange($event)">
               @for (timeslot of timeSlots; track timeslot) {
               <mat-option [value]="timeslot.id">{{timeslot.textModel}}</mat-option>
               }
@@ -24,29 +34,119 @@
           </mat-form-field>
         </form>
       </div>
+      <hr>
       <div class="court-container">
-        <div class="court">
-        <h2>Court 1</h2>
+        @for (yardPrice of yardPriceList; track yardPrice) {
+        <div class="court" [class.selected]="isSelected(yardPrice)" [class.booked]="isBooked(yardPrice)"
+          (click)="onSelectYard(yardPrice)">
+          <div class="court-name">{{yardPrice.yard.name}}</div>
+        </div>
+        }
       </div>
-      <div class="court">
-        <h2>Court 1</h2>
-      </div>
-      <div class="court">
-        <h2>Court 1</h2>
-      </div>
-      <div class="court">
-        <h2>Court 1</h2>
-      </div>
-      <div class="court">
-        <h2>Court 1</h2>
-      </div>
-    </div>
-      
+
     </div>
     <div class="separator">
     </div>
+    @if(isBooked(this.selectedYard)){
     <div class="court-info-container">
-      content
+      <div class="bill-header">
+        <div class="court-name">Court 1</div>
+        <div class="info">
+          <div class="info-item">
+            Thời gian : 1 hrs
+          </div>
+          <div class="info-item">
+            Thành tiền : 100.000 $
+          </div>
+        </div>
+      </div>
+      <div class="bill-content">
+        <div class="bill-content-item solid">
+          <div class="service-name">Dịch vụ </div>
+          <div class="quantity"> Số lượng </div>
+          <div class="total">Thành tiền </div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Cocacola </div>
+          <div class="quantity">5</div>
+          <div class="total">200 </div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Revive </div>
+          <div class="quantity">2</div>
+          <div class="total">100 </div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Tra da </div>
+          <div class="quantity">2</div>
+          <div class="total">50 </div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Mi tom</div>
+          <div class="quantity">2</div>
+          <div class="total">50</div>
+        </div>
+
+        <div class="bill-content-item none-border">
+          <div class="service-name">Total</div>
+          <div class="total"> 100.000.000</div>
+        </div>
+      </div>
+      <div class="bill-footer">
+        <div class="bill-content-item">
+          <div class="service-name">Khuyen mai :</div>
+          <div class="total"> 20%(50.000)</div>
+        </div>
+
+        <div class="bill-content-item cash-out">
+          <div class="service-name">Thành Tiền :</div>
+          <div class="total"> 20.000.000</div>
+        </div>
+
+        <div class="checkout-button-container">
+          <button class="checkout-button">Xuất Hóa Đơn</button>
+          <button class="checkout-button">Thanh Toán</button>
+        </div>
+      </div>
     </div>
+    }@else{
+    <div class="court-info-container">
+      <div class="bill-header">
+        <div class="court-name">Court 1</div>
+      </div>
+      <div class="bill-content">
+        <div class="bill-content-item none-border">
+          <div class="service-name">Khung Gio : </div>
+          <div class="total">Chon khung gio </div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Tong Gio</div>
+          <div class="total"> 2 hrs</div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Ngay </div>
+          <div class="total"> Chon ngay</div>
+        </div>
+      </div>
+      <div class="bill-footer">
+        <div class="bill-content-item">
+          <div class="service-name">Khuyen mai :</div>
+          <div class="total"> 20%(50.000)</div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Dat coc :</div>
+          <div class="total"> 50%(50.000)</div>
+        </div>
+        <div class="bill-content-item cash-out">
+          <div class="service-name">Thành Tiền :</div>
+          <div class="total"> 20.000.000</div>
+        </div>
+
+        <div class="checkout-button-container">
+          <button class="checkout-button">Đặt Sân </button>
+        </div>
+      </div>
+    </div>
+    }
   </div>
 </div>
