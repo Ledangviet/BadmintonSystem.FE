@@ -12,6 +12,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { YardPriceByDateModel, YardPriceByDateResponseModel } from '../../../model/yardPriceByDateResponse.model';
 import { YardPriceModel } from '../../../model/yardPrice.model';
 import { timestamp } from 'rxjs';
+import { BillModel, Booking } from '../../../model/bill.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -37,6 +38,10 @@ export class DashboardComponent {
   public selectedStatus: any;
   public yardPriceList: any;
   public selectedYard: any;
+  public listBill : BillModel[] = [];
+  public selectedBill: any;
+  public selectedTimeSlotIDs : any;
+  public name: string = '';
 
   constructor(
     private adminService: AdminMainService,
@@ -76,6 +81,25 @@ export class DashboardComponent {
       .subscribe((result: YardPriceByDateResponseModel) => {
         this.yardPriceList = result.value;
       });
+
+      //get bill list
+      const startDate = new Date();
+      startDate.setHours(0, 0, 0, 0);
+      let formattedStartDate = startDate.toISOString();
+      const endDate = new Date();
+      endDate.setHours(23, 59, 59, 999);
+      let formattedEndDate = startDate.toISOString();
+      this.adminService.getBillList(formattedStartDate,formattedEndDate).subscribe((result: BaseResponseModel) =>{
+          if(result.isSuccess){
+            this.listBill = result.value.items as BillModel[];
+            this.listBill.map( bill =>{
+              this.adminService.getBookingByID(bill.bookingId).subscribe((result: BaseResponseModel) =>{
+                bill.booking = result.value as Booking;
+              })
+            })
+          }
+      })
+      
   }
 
   getCurrentTimeslot(timeslots: TimeSlotModel[]): TimeSlotModel | null {
@@ -108,29 +132,44 @@ export class DashboardComponent {
   }
 
   onFilterChange(newTimeSlot: any) {
-    console.log('Selected Time Slot ID:', newTimeSlot);
+    console.log('Selected Time Slot ID:', this.selectedTimeSlotID);
     // Add your logic here
   }
 
-  isBooked(yardPrice: YardPriceByDateModel) {
-
-    if(yardPrice.yardPricesDetails == null) return false;
+  getStatus(yardPrice: YardPriceByDateModel): number {
+    if(!this.selectedYard) return 3;
+    if(! yardPrice|| !yardPrice.yardPricesDetails) return 3;
     let timeSlot = yardPrice.yardPricesDetails.filter( y => y.timeSlotId == this.selectedTimeSlotID);
     if(timeSlot.length > 0){
       if(timeSlot[0].isBooking == 1){
-        return true
+        return 1
       }
     }
-    return false;
+    return 0;
   }
 
   onSelectYard(yardPrice: YardPriceByDateModel){
     this.selectedYard = yardPrice;
+    this.getBillBySelectYard();
   }
 
 
-  getBillByTimeSlot(){
+  getBillBySelectYard(){
+    let timeSlot = this.timeSlots.filter( t => t.id == this.selectedTimeSlotID)[0];
+    if(timeSlot != null){
+      let bill = this.listBill.filter( b =>{
+        if(b.booking.bookingLines.filter( l => {
+          if(l.startTime == timeSlot.startTime && l.yardName == this.selectedYard.yard.name) return true;
+          return false;
+        }).length > 0) return true;
+        return false;
+      })
 
+      if(bill.length > 0){
+        this.selectedBill = bill[0];
+        console.log(this.selectedBill);
+      }
+    }
   }
 
   isSelected(yardPrice:YardPriceByDateModel){
@@ -138,4 +177,26 @@ export class DashboardComponent {
     if(this.selectedYard == yardPrice) return true;
     return false;
   }
+
+  isTimeSlotAvailable(timeslot: TimeSlotModel){
+    if(!timeslot || !this.selectedYard || !this.selectedYard.yardPricesDetails) return true;
+    let yardDetail = this.selectedYard.yardPricesDetails.filter( (yard: YardPriceModel) =>yard.timeSlotId == timeslot.id);
+    if(yardDetail.length > 0){
+      console.log( 'timehour: ' + parseInt(yardDetail[0].startTime.substring(0, 2)));
+      console.log( 'currenthour: ' + new Date().getHours());
+      
+      if(yardDetail[0].isBooking != 0  || parseInt(yardDetail[0].startTime.substring(0, 2)) < new Date().getHours())
+      return false;
+    }
+    return true;
+  }
+
+  getCurrentDateFormatted(): string {
+    const date = new Date();
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based, so we add 1
+    const year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+}
 }

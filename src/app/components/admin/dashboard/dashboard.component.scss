@@ -55,10 +55,17 @@
         cursor: pointer; /* Change cursor to pointer */
     }
 
-    .court.booked {
+    .court.opended {
         background-color: #F65045;
     }
-    .court.booked:hover {
+    .court.booked {
+        background-color: #F5A75B;
+    }
+    .court.booked {
+        background-color: #E5944A;
+    }
+    .c
+    .court.opended:hover {
         background-color: #D43F36;
         cursor: pointer;
     }
@@ -122,6 +129,14 @@ hr {
     margin-right: 5px;
 }
 
+.color-opened{
+    background-color: #F5A75B;
+    width: 25px;
+    height: 15px;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
 .court-info-container {
     min-height: 550px;
     background-color: azure;
@@ -169,10 +184,27 @@ hr {
         .service-name {
             text-align: left;
             width: 40%;
+            line-height: 100%;
+            position: relative;
+            .center-line{
+                position: absolute;
+                top: 30%;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                transform: translateY(-50%);
+            }
         }
 
         .total {
             width: 40%;
+        }
+
+        .time-slot-select{
+            width: 100%;        
+            .form-field{
+                height: 20px;
+            }
         }
 
         .quantity {
@@ -186,6 +218,10 @@ hr {
 
     .bill-content-item.none-border {
         border-bottom: none;
+    }
+
+    .bill-content-item.no-margin {
+        margin: 0px;
     }
 }
 

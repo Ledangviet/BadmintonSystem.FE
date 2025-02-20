@@ -10,9 +10,14 @@
             <div class="color-available "></div>
             <div class="def">Trống </div>
           </div>
+
+          <div class="color-def">
+            <div class="color-opened "></div>
+            <div class="def">Đã đặt </div>
+          </div>
           <div class="color-def">
             <div class="color-booked "></div>
-            <div class="def">Đã đặt </div>
+            <div class="def">Đang Mở </div>
           </div>
         </div>
         <mat-form-field appearance="outline">
@@ -37,8 +42,8 @@
       <hr>
       <div class="court-container">
         @for (yardPrice of yardPriceList; track yardPrice) {
-        <div class="court" [class.selected]="isSelected(yardPrice)" [class.booked]="isBooked(yardPrice)"
-          (click)="onSelectYard(yardPrice)">
+        <div class="court" [class.selected]="isSelected(yardPrice)" [class.booked]="getStatus(yardPrice) == 1"
+          [class.opened]="getStatus(yardPrice) == 2" (click)="onSelectYard(yardPrice)">
           <div class="court-name">{{yardPrice.yard.name}}</div>
         </div>
         }
@@ -47,7 +52,7 @@
     </div>
     <div class="separator">
     </div>
-    @if(isBooked(this.selectedYard)){
+    @if(getStatus(selectedYard) == 2){
     <div class="court-info-container">
       <div class="bill-header">
         <div class="court-name">Court 1</div>
@@ -109,7 +114,70 @@
         </div>
       </div>
     </div>
-    }@else{
+    }
+    @if(getStatus(selectedYard) == 0){
+    <div class="court-info-container">
+      <div class="bill-header">
+        <div class="court-name">{{selectedYard.yard.name}}</div>
+      </div>
+      <div class="bill-content">
+        <div class="bill-content-item none-border no-margin">
+          <div class="time-slot-select">
+            <form>
+              <mat-form-field class="small-form-field" appearance="outline">
+                <mat-label>Khung giờ </mat-label>
+                <mat-select [(ngModel)]="selectedTimeSlotIDs" name="timeslot" (ngModelChange)="onFilterChange($event)"
+                  multiple>
+                  @for (timeslot of timeSlots; track timeslot) {
+                  <mat-option [disabled]="!isTimeSlotAvailable(timeslot)"
+                    [value]="timeslot.id">{{timeslot.textModel}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>   
+        </div>
+        <div class="bill-content-item none-border no-margin">
+          <div class="time-slot-select">
+            <mat-form-field class="small-form-field" appearance="outline">
+              <mat-label>Tên người đặt </mat-label>
+              <input matInput [(ngModel)]="name">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Tổng giờ :</div>
+          <div class="total">{{selectedTimeSlotIDs?.length}} hrs</div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Ngày :</div>
+          <div class="total">{{getCurrentDateFormatted()}}</div>
+        </div>
+
+      </div>
+      <div class="bill-footer">
+        <div class="bill-content-item">
+          <div class="service-name">Khuyen mai :</div>
+          <div class="total"> 20%(50.000)</div>
+        </div>
+        <div class="bill-content-item">
+          <div class="service-name">Dat coc :</div>
+          <div class="total"> 50%(50.000)</div>
+        </div>
+        <div class="bill-content-item cash-out">
+          <div class="service-name">Thành Tiền :</div>
+          <div class="total"> 20.000.000</div>
+        </div>
+
+        <div class="checkout-button-container">
+          <button class="checkout-button">Đặt Sân </button>
+        </div>
+      </div>
+    </div>
+    }
+
+
+    @if(getStatus(selectedYard) == 1){
     <div class="court-info-container">
       <div class="bill-header">
         <div class="court-name">Court 1</div>
