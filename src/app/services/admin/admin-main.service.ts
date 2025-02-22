@@ -38,4 +38,9 @@ export class AdminMainService {
     let url = `bookings/${id}`
     return this.apiClient.get<BaseResponseModel>(url);
   }
+
+  openBill(billID: string){
+    let url = `bills/open-booking/${billID}`;
+    return this.apiClient.put<BaseResponseModel>(url,{});
+  }
 }

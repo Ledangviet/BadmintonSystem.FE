@@ -13,6 +13,7 @@ import { YardPriceByDateModel, YardPriceByDateResponseModel } from '../../../mod
 import { YardPriceModel } from '../../../model/yardPrice.model';
 import { timestamp } from 'rxjs';
 import { BillModel, Booking } from '../../../model/bill.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,21 +33,33 @@ export class DashboardComponent {
     { value: '1', viewValue: 'Đã đặt ' },
     { value: '2', viewValue: 'Trống ' },
   ];
+  listPercent = [
+    { value: '30', viewValue: '30 %' },
+    { value: '40', viewValue: '40 %' },
+    { value: '50', viewValue: '50 %' },
+    { value: '60', viewValue: '60 %' },
+    { value: '70', viewValue: '70 %' },
+    { value: '80', viewValue: '80 %' },
+    { value: '90', viewValue: '90 %' },
+    { value: '100', viewValue: '100 %' },
+  ];
   public yardList: YardModel[] = [];
   public timeSlots: TimeSlotModel[] = [];
   public selectedTimeSlotID: any;
   public selectedStatus: any;
   public yardPriceList: any;
   public selectedYard: any;
-  public listBill : BillModel[] = [];
+  public listBill: BillModel[] = [];
   public selectedBill: any;
-  public selectedTimeSlotIDs : any;
+  public selectedTimeSlotIDs: any;
   public name: string = '';
+  public selectedPercent: number = 100;
 
   constructor(
     private adminService: AdminMainService,
     private bookingService: BookingMainService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toater: ToastrService
   ) {
   }
 
@@ -82,24 +95,23 @@ export class DashboardComponent {
         this.yardPriceList = result.value;
       });
 
-      //get bill list
-      const startDate = new Date();
-      startDate.setHours(0, 0, 0, 0);
-      let formattedStartDate = startDate.toISOString();
-      const endDate = new Date();
-      endDate.setHours(23, 59, 59, 999);
-      let formattedEndDate = startDate.toISOString();
-      this.adminService.getBillList(formattedStartDate,formattedEndDate).subscribe((result: BaseResponseModel) =>{
-          if(result.isSuccess){
-            this.listBill = result.value.items as BillModel[];
-            this.listBill.map( bill =>{
-              this.adminService.getBookingByID(bill.bookingId).subscribe((result: BaseResponseModel) =>{
-                bill.booking = result.value as Booking;
-              })
-            })
-          }
-      })
-      
+    //get bill list
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0, 0);
+    let formattedStartDate = startDate.toISOString();
+    startDate.setHours(23, 59, 59, 999);
+    let formattedEndDate = startDate.toISOString();
+    this.adminService.getBillList(formattedStartDate, formattedEndDate).subscribe((result: BaseResponseModel) => {
+      if (result.isSuccess) {
+        this.listBill = result.value.items as BillModel[];
+        this.listBill.map(bill => {
+          this.adminService.getBookingByID(bill.bookingId).subscribe((result: BaseResponseModel) => {
+            bill.booking = result.value as Booking;
+          })
+        })
+      }
+    })
+
   }
 
   getCurrentTimeslot(timeslots: TimeSlotModel[]): TimeSlotModel | null {
@@ -137,56 +149,61 @@ export class DashboardComponent {
   }
 
   getStatus(yardPrice: YardPriceByDateModel): number {
-    if(!this.selectedYard) return 3;
-    if(! yardPrice|| !yardPrice.yardPricesDetails) return 3;
-    let timeSlot = yardPrice.yardPricesDetails.filter( y => y.timeSlotId == this.selectedTimeSlotID);
-    if(timeSlot.length > 0){
-      if(timeSlot[0].isBooking == 1){
-        return 1
+    if (!this.selectedYard) return 5;
+    if (!yardPrice || !yardPrice.yardPricesDetails) return 5;
+    let timeSlot = yardPrice.yardPricesDetails.filter(y => y.timeSlotId == this.selectedTimeSlotID);
+    if (timeSlot.length > 0) {
+      let bill = this.getBillByYard(yardPrice) as BillModel;
+      if (bill) {
+        return bill.status;
       }
+      return timeSlot[0].isBooking;
     }
     return 0;
   }
 
-  onSelectYard(yardPrice: YardPriceByDateModel){
+  onSelectYard(yardPrice: YardPriceByDateModel) {
+    this.selectedBill = null;
     this.selectedYard = yardPrice;
-    this.getBillBySelectYard();
-  }
-
-
-  getBillBySelectYard(){
-    let timeSlot = this.timeSlots.filter( t => t.id == this.selectedTimeSlotID)[0];
-    if(timeSlot != null){
-      let bill = this.listBill.filter( b =>{
-        if(b.booking.bookingLines.filter( l => {
-          if(l.startTime == timeSlot.startTime && l.yardName == this.selectedYard.yard.name) return true;
-          return false;
-        }).length > 0) return true;
-        return false;
-      })
-
-      if(bill.length > 0){
-        this.selectedBill = bill[0];
-        console.log(this.selectedBill);
-      }
+    let bill = this.getBillByYard(yardPrice) as BillModel;
+    if (bill) {
+      this.selectedBill = bill;
     }
   }
 
-  isSelected(yardPrice:YardPriceByDateModel){
-    if(this.selectedYard == null) return false
-    if(this.selectedYard == yardPrice) return true;
+
+  getBillByYard(yardPrice: YardPriceByDateModel): any {
+    let timeSlot = this.timeSlots.filter(t => t.id == this.selectedTimeSlotID)[0];
+    if (timeSlot != null) {
+      let bill = this.listBill.filter(b => {
+        let listbill = b.booking.bookingLines?.filter(l => {
+          if (l.startTime == timeSlot.startTime && l.yardName == yardPrice.yard.name) return true;
+          return false
+        })
+        if (listbill?.length > 0) return true;
+        return false;
+      })
+
+      if (bill.length > 0) {
+        return bill[0];
+      }
+      return null
+    }
+  }
+
+  isSelected(yardPrice: YardPriceByDateModel) {
+    if (this.selectedYard == null) return false
+    if (this.selectedYard == yardPrice) return true;
     return false;
   }
 
-  isTimeSlotAvailable(timeslot: TimeSlotModel){
-    if(!timeslot || !this.selectedYard || !this.selectedYard.yardPricesDetails) return true;
-    let yardDetail = this.selectedYard.yardPricesDetails.filter( (yard: YardPriceModel) =>yard.timeSlotId == timeslot.id);
-    if(yardDetail.length > 0){
-      console.log( 'timehour: ' + parseInt(yardDetail[0].startTime.substring(0, 2)));
-      console.log( 'currenthour: ' + new Date().getHours());
-      
-      if(yardDetail[0].isBooking != 0  || parseInt(yardDetail[0].startTime.substring(0, 2)) < new Date().getHours())
-      return false;
+  isTimeSlotAvailable(timeslot: TimeSlotModel) {
+    if (!timeslot || !this.selectedYard || !this.selectedYard.yardPricesDetails) return true;
+    let yardDetail = this.selectedYard.yardPricesDetails.filter((yard: YardPriceModel) => yard.timeSlotId == timeslot.id);
+    if (yardDetail.length > 0) {
+
+      if (yardDetail[0].isBooking != 0 || parseInt(yardDetail[0].endTime.substring(0, 2)) < new Date().getHours())
+        return false;
     }
     return true;
   }
@@ -198,5 +215,30 @@ export class DashboardComponent {
     const year = date.getFullYear();
 
     return `${day}-${month}-${year}`;
-}
+  }
+
+  caculateTotal() {
+    if (!this.selectedYard || !this.selectedTimeSlotIDs) return 0;
+    let yardPrice = this.selectedYard as YardPriceByDateModel;
+    let listID = this.selectedTimeSlotIDs as string[];
+    let listPrice = yardPrice.yardPricesDetails.filter(d => listID.includes(d.timeSlotId));
+    let total = 0;
+    listPrice.forEach(p => {
+      total += p.price;
+    })
+    return total;
+  }
+
+  onPercentChange() {
+
+  }
+
+  openYard() {
+    this.adminService.openBill(this.selectedBill.id).subscribe((result: BaseResponseModel) => {
+      if (result.isSuccess) {
+        this.toater.success("Mở sân thành công!");
+        this.ngOnInit();
+      }
+    });
+  }
 }

@@ -55,7 +55,7 @@
         cursor: pointer; /* Change cursor to pointer */
     }
 
-    .court.opended {
+    .court.opened {
         background-color: #F65045;
     }
     .court.booked {
@@ -65,7 +65,7 @@
         background-color: #E5944A;
     }
     .c
-    .court.opended:hover {
+    .court.opened:hover {
         background-color: #D43F36;
         cursor: pointer;
     }
@@ -122,6 +122,7 @@ hr {
 }
 
 .color-booked {
+    
     background-color: #F65045;
     width: 25px;
     height: 15px;
@@ -129,7 +130,7 @@ hr {
     margin-right: 5px;
 }
 
-.color-opened{
+.color-opened{ 
     background-color: #F5A75B;
     width: 25px;
     height: 15px;
@@ -200,13 +201,6 @@ hr {
             width: 40%;
         }
 
-        .time-slot-select{
-            width: 100%;        
-            .form-field{
-                height: 20px;
-            }
-        }
-
         .quantity {
             width: 20%;
         }
@@ -222,6 +216,13 @@ hr {
 
     .bill-content-item.no-margin {
         margin: 0px;
+    }
+}
+
+.time-slot-select{
+    width: 100%;        
+    .form-field{
+        height: 20px;
     }
 }
 
