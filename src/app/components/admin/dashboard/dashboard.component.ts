@@ -7,13 +7,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BookingMainService } from '../../../services/booking/booking-main.service';
 import { TimeSlotModel } from '../../../model/timeslot.model';
-import { resourceLimits } from 'worker_threads';
 import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { YardPriceByDateModel, YardPriceByDateResponseModel } from '../../../model/yardPriceByDateResponse.model';
 import { YardPriceModel } from '../../../model/yardPrice.model';
-import { timestamp } from 'rxjs';
 import { BillModel, Booking } from '../../../model/bill.model';
 import { ToastrService } from 'ngx-toastr';
+import { ServiceModel } from '../../../model/service.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -54,6 +53,10 @@ export class DashboardComponent {
   public selectedTimeSlotIDs: any;
   public name: string = '';
   public selectedPercent: number = 100;
+  public listService: ServiceModel[] = [];
+  public isAddServicePopupVisible = false;
+  public selectedService: any;
+  public serivceQuantity = 0;
 
   constructor(
     private adminService: AdminMainService,
@@ -95,6 +98,18 @@ export class DashboardComponent {
         this.yardPriceList = result.value;
       });
 
+    this.getBillList();
+
+    this.listService = [];
+    this.adminService.getService().subscribe(result => {
+      if (result) {
+        this.listService = result.value.items as ServiceModel[];
+        console.log(this.listService)
+      }
+    })
+  }
+
+  getBillList() {
     //get bill list
     const startDate = new Date();
     startDate.setHours(0, 0, 0, 0);
@@ -111,7 +126,6 @@ export class DashboardComponent {
         })
       }
     })
-
   }
 
   getCurrentTimeslot(timeslots: TimeSlotModel[]): TimeSlotModel | null {
@@ -240,5 +254,61 @@ export class DashboardComponent {
         this.ngOnInit();
       }
     });
+  }
+
+  addService() {
+    let bill = this.selectedBill as BillModel;
+    let s = bill.serviceLineDetails.filter(s => s.service.id == this.selectedService)
+    if(s.length > 0){
+      //update quantity
+      let newQuantity = s[0].serviceLine.quantity + this.serivceQuantity;
+      console.log(this.selectedBill);
+      console.log('qtt',s[0].serviceLine.id,newQuantity);
+      this.adminService.updateServiceLineQuantity(s[0].serviceLine.id,newQuantity).subscribe( result =>{
+        if(result.isSuccess){
+          this.toater.success("Thêm thành công!");
+          this.refreshBill();
+        }
+      })
+
+    }
+    else{
+      this.adminService.addServiceToBill(this.selectedService, this.serivceQuantity, this.selectedBill.id).subscribe(result => {
+        if (result.isSuccess) {
+          this.toater.success("Thêm dịch vụ thành công !");
+          
+          this.refreshBill();
+  
+          this.closeAddServicePopup();
+        }
+      })
+    }
+  }
+
+  refreshBill(){
+    const startDate = new Date();
+          startDate.setHours(0, 0, 0, 0);
+          let formattedStartDate = startDate.toISOString();
+          startDate.setHours(23, 59, 59, 999);
+          let formattedEndDate = startDate.toISOString();
+          this.adminService.getBillList(formattedStartDate, formattedEndDate).subscribe((result: BaseResponseModel) => {
+            if (result.isSuccess) {
+              this.listBill = result.value.items as BillModel[];
+              this.listBill.map(bill => {
+                this.adminService.getBookingByID(bill.bookingId).subscribe((result: BaseResponseModel) => {
+                  bill.booking = result.value as Booking;
+                  this.onSelectYard(this.selectedYard);
+                })
+              })  
+            }
+          })
+  }
+
+  openAddServicePopup(): void {
+    this.isAddServicePopupVisible = true;
+  }
+
+  closeAddServicePopup() {
+    this.isAddServicePopupVisible = false;
   }
 }

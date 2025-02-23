@@ -52,123 +52,120 @@
     </div>
     <div class="separator">
     </div>
-
-    @if(getStatus(selectedYard) == 0){
-      <div class="court-info-container">
-        <div class="bill-header">
-          <div class="court-name">{{selectedYard?.yard?.name}}</div>
-        </div>
-        <div class="bill-content">
-          <div class="bill-content-item none-border no-margin">
-            <div class="time-slot-select">
-              <form>
-                <mat-form-field class="small-form-field" appearance="outline">
-                  <mat-label>Khung giờ </mat-label>
-                  <mat-select [(ngModel)]="selectedTimeSlotIDs" name="timeslot" (ngModelChange)="onFilterChange($event)"
-                    multiple>
-                    @for (timeslot of timeSlots; track timeslot) {
-                    <mat-option [disabled]="!isTimeSlotAvailable(timeslot)"
-                      [value]="timeslot.id">{{timeslot.textModel}}</mat-option>
-                    }
-                  </mat-select>
-                </mat-form-field>
-              </form>
-            </div>
-          </div>
-          <div class="bill-content-item none-border no-margin">
-            <div class="time-slot-select">
+    <div class="court-info-container">
+      @if(getStatus(selectedYard) == 0){
+      <div class="bill-header">
+        <div class="court-name">{{selectedYard?.yard?.name}}</div>
+      </div>
+      <div class="bill-content">
+        <div class="bill-content-item none-border no-margin">
+          <div class="time-slot-select">
+            <form>
               <mat-form-field class="small-form-field" appearance="outline">
-                <mat-label>Tên người đặt </mat-label>
-                <input matInput [(ngModel)]="name">
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="bill-content-item none-border">
-            <div class="service-name">Tổng giờ :</div>
-            <div class="total">{{selectedTimeSlotIDs?.length}} hrs</div>
-          </div>
-          <div class="bill-content-item none-border">
-            <div class="service-name">Ngày :</div>
-            <div class="total">{{getCurrentDateFormatted()}}</div>
-          </div>
-  
-        </div>
-        <div class="bill-footer">
-  
-  
-          <div class="bill-content-item cash-out">
-            <div class="service-name">Thành Tiền :</div>
-            <div class="total">{{caculateTotal()}} VND</div>
-          </div>
-          <div class="bill-content-item">
-            <div class="time-slot-select">
-              <mat-form-field appearance="outline">
-                <mat-label>Trả trước </mat-label>
-                <mat-select [(ngModel)]="selectedPercent" name="status" (ngModelChange)="onPercentChange()">
-                  @for (percent of listPercent; track percent) {
-                  <mat-option [value]="percent.value">{{percent.viewValue}}</mat-option>
+                <mat-label>Khung giờ </mat-label>
+                <mat-select [(ngModel)]="selectedTimeSlotIDs" name="timeslot" (ngModelChange)="onFilterChange($event)"
+                  multiple>
+                  @for (timeslot of timeSlots; track timeslot) {
+                  <mat-option [disabled]="!isTimeSlotAvailable(timeslot)"
+                    [value]="timeslot.id">{{timeslot.textModel}}</mat-option>
                   }
                 </mat-select>
               </mat-form-field>
-            </div>
-           
+            </form>
           </div>
-  
-  
-          <div class="checkout-button-container">
-            <button class="checkout-button"> Đặt Sân </button>
+        </div>
+        <div class="bill-content-item none-border no-margin">
+          <div class="time-slot-select">
+            <mat-form-field class="small-form-field" appearance="outline">
+              <mat-label>Tên người đặt </mat-label>
+              <input matInput [(ngModel)]="name">
+            </mat-form-field>
           </div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Tổng giờ :</div>
+          <div class="total">{{selectedTimeSlotIDs?.length}} hrs</div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Ngày :</div>
+          <div class="total">{{getCurrentDateFormatted()}}</div>
+        </div>
+
+      </div>
+      <div class="bill-footer">
+
+
+        <div class="bill-content-item cash-out">
+          <div class="service-name">Thành Tiền :</div>
+          <div class="total">{{caculateTotal()}} VND</div>
+        </div>
+        <div class="bill-content-item">
+          <div class="time-slot-select">
+            <mat-form-field appearance="outline">
+              <mat-label>Trả trước </mat-label>
+              <mat-select [(ngModel)]="selectedPercent" name="status" (ngModelChange)="onPercentChange()">
+                @for (percent of listPercent; track percent) {
+                <mat-option [value]="percent.value">{{percent.viewValue}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+
+        <div class="checkout-button-container">
+          <button class="checkout-button"> Đặt Sân </button>
         </div>
       </div>
-      }
-  
-  
-      @if(getStatus(selectedYard) == 1){
-      <div class="court-info-container">
-        <div class="bill-header">
-          <div class="court-name">{{this.selectedYard?.yard?.name}}</div>
-        </div>
-        <div class="bill-content">
-          <div class="bill-content-item none-border">
-            <div class="service-name">Tên người đặt : </div>
-            <div class="total"> {{this.selectedBill?.name}}</div>
-          </div>
-          <div class="bill-content-item none-border">
-            <div class="service-name">Số điện thoại : </div>
-            <div class="total"> {{this.selectedBill?.booking?.phoneNumber}}</div>
-          </div>
-          <div class="bill-content-item none-border">
-            <div class="service-name">Tổng thời gian </div>
-            <div class="total"> {{this.selectedBill?.booking?.bookingLines?.length}} hrs</div>
-          </div>
-        </div>
-        <div class="bill-footer">
-          <div class="bill-content-item">
-            <div class="service-name">Đã trả :</div>
-            <div class="total"> {{this.selectedBill?.totalPayment}}</div>
-          </div>
-          <div class="bill-content-item cash-out">
-            <div class="service-name">Còn lại  :</div>
-            <div class="total"> {{this.selectedBill?.totalPrice}}</div>
-          </div>
-  
-          <div class="checkout-button-container">
-            <button class="checkout-button" (click)="openYard()">Mở Sân </button>
-          </div>
-        </div>
-      </div>
+
       }
 
-    @if(getStatus(selectedYard) == 2){
-    <div class="court-info-container">
+
+      @if(getStatus(selectedYard) == 1){
       <div class="bill-header">
-        <div class="court-name">Court 2 </div>
+        <div class="court-name">{{this.selectedYard?.yard?.name}}</div>
+      </div>
+      <div class="bill-content">
+        <div class="bill-content-item none-border">
+          <div class="service-name">Tên người đặt : </div>
+          <div class="total"> {{this.selectedBill?.name}}</div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Số điện thoại : </div>
+          <div class="total"> {{this.selectedBill?.booking?.phoneNumber}}</div>
+        </div>
+        <div class="bill-content-item none-border">
+          <div class="service-name">Tổng thời gian </div>
+          <div class="total"> {{this.selectedBill?.booking?.bookingLines?.length}} hrs</div>
+        </div>
+      </div>
+      <div class="bill-footer">
+        <div class="bill-content-item">
+          <div class="service-name">Đã trả :</div>
+          <div class="total"> {{this.selectedBill?.totalPayment}}</div>
+        </div>
+        <div class="bill-content-item cash-out">
+          <div class="service-name">Còn lại :</div>
+          <div class="total"> {{this.selectedBill?.totalPrice}}</div>
+        </div>
+
+        <div class="checkout-button-container">
+          <button class="checkout-button" (click)="openYard()">Mở Sân </button>
+        </div>
+      </div>
+
+      }
+
+      @if(getStatus(selectedYard) == 2){
+      <div class="bill-header">
+        <div class="court-name">{{this.selectedYard.yard.name}}</div>
         <div class="info">
           <div class="info-item">
-            Thời gian : 1 hrs
+            Thời gian : {{this.selectedBill?.booking.bookingLines?.length}}
           </div>
           <div class="info-item">
-            Thành tiền : 100.000 $
+            Thành tiền : {{this.selectedBill?.totalPrice}} $
           </div>
         </div>
       </div>
@@ -178,27 +175,16 @@
           <div class="quantity"> Số lượng </div>
           <div class="total">Thành tiền </div>
         </div>
-        <div class="bill-content-item">
-          <div class="service-name">Cocacola </div>
-          <div class="quantity">5</div>
-          <div class="total">200 </div>
+        <div class="bill-line-list-container">
+          @for(line of selectedBill?.serviceLineDetails; track line){
+            <div class="bill-content-item">
+              <div class="service-name">{{line.service.name}} </div>
+              <div class="quantity">{{line.serviceLine.quantity}}</div>
+              <div class="total">{{line.serviceLine.totalPrice}} </div>
+            </div>
+            }
         </div>
-        <div class="bill-content-item">
-          <div class="service-name">Revive </div>
-          <div class="quantity">2</div>
-          <div class="total">100 </div>
-        </div>
-        <div class="bill-content-item">
-          <div class="service-name">Tra da </div>
-          <div class="quantity">2</div>
-          <div class="total">50 </div>
-        </div>
-        <div class="bill-content-item">
-          <div class="service-name">Mi tom</div>
-          <div class="quantity">2</div>
-          <div class="total">50</div>
-        </div>
-
+       
         <div class="bill-content-item none-border">
           <div class="service-name">Total</div>
           <div class="total"> 100.000.000</div>
@@ -217,13 +203,40 @@
           <div class="total"> 20%(50.000)</div>
         </div>
 
+        @if(isAddServicePopupVisible){
+        <div class="overlay"></div>
+        <div class="popup">
+          <div class="popup-content">
+            <h2>Thêm dịch vụ </h2>
+            <mat-form-field appearance="outline">
+              <mat-label>Dịch vụ </mat-label>
+              <mat-select [(ngModel)]="selectedService" name="status" (ngModelChange)="onPercentChange()">
+                @for (service of listService; track service) {
+                <mat-option [value]="service.id">{{service.name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Số lượng </mat-label>
+              <input matInput type="number" [(ngModel)]="serivceQuantity" min="1">
+            </mat-form-field>
+            <div class="checkout-button-container">
+              <button class="checkout-button" (click)="addService()">Thêm </button>
+              <button class="checkout-button" (click)="closeAddServicePopup()">Hủy </button>
+            </div>
+          </div>
+        </div>
+        }
+
+
         <div class="checkout-button-container">
+          <button class="checkout-button" (click)="openAddServicePopup()">Thêm dịch vụ </button>
           <button class="checkout-button">Xuất Hóa Đơn</button>
           <button class="checkout-button">Thanh Toán</button>
         </div>
       </div>
+
+      }
     </div>
-    }
-    
   </div>
 </div>

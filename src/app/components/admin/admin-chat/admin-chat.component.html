@@ -1,0 +1,24 @@
+<div class="chat-container">
+    <div class="sidebar">
+      <ul class="chat-list">
+        <li class="chat-item" *ngFor="let chat of chats" (click)="selectChat(chat)">
+          {{ chat.user }}
+        </li>
+      </ul>
+    </div>
+    <div class="main-chat">
+      <div class="chat-header">
+        <h2>{{ selectedChat?.user }}</h2>
+      </div>
+      <div class="chat-messages">
+        <div *ngFor="let message of selectedChat?.messages" class="message">
+          <span class="message-user">{{ message.user }}:</span>
+          <span class="message-text">{{ message.text }}</span>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
+        <button (click)="sendMessage()">Send</button>
+      </div>
+    </div>
+  </div>

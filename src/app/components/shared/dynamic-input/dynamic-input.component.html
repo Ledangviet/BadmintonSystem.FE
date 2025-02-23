@@ -8,15 +8,15 @@
       <label>{{ field.fieldTitle }}</label>
       <ng-container [ngSwitch]="field.type">
         <input *ngSwitchCase="inputType.String" [(ngModel)]="field.value" type="text" />
-        <input *ngSwitchCase="inputType.Number" [(ngModel)]="field.value" type="number" pattern="\d*"/>
+        <input *ngSwitchCase="inputType.Number" [(ngModel)]="field.value" type="number" pattern="\d*" min="1"/>
         <select *ngSwitchCase="inputType.Select" [(ngModel)]="field.value">
           <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
         </select>
       </ng-container>
     </div>
     <div class="button-group">
-      <button (click)="save()">Save</button>
-      <button (click)="close()">Close</button>
+      <button (click)="save()">Lưu </button>
+      <button (click)="close()">Thoát </button>
     </div>
   </div>
 </div>

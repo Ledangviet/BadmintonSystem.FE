@@ -1,30 +1,32 @@
 <div class="service-container">
-  <div class="service-manager-banner">Quản lí dịch vụ </div>
-  <div class="button-group">
-    <button (click)="openPopup()" class="add-service-button">Thêm Dịch Vụ </button>
-    <button [disabled]="this.selectedService.length < 1" (click)="removeService()" class="add-service-button">Xóa Dịch Vụ </button>
-  </div>
-  <app-dynamic-input [title]="inputTitle" [inputFields]="fields" (saveEvent)="handleSave($event)"
-    #popup></app-dynamic-input>
-  <ag-grid-angular class="service-grid" [defaultColDef]="defaultColDef" [rowData]="this.listService"
-    [columnDefs]="columnDefs"
-    [rowSelection]="rowSelection"
-     [editType]="editType" (gridReady)="onGridReady($event)"
-    (rowValueChanged)="onRowValueChanged($event)"
-    (selectionChanged)="onSelectionChanged($event)"
-     />
-
-
-     <div class="service-manager-banner">Danh mục </div>
-     <div class="button-group">
-      <button (click)="openPopup()" class="add-service-button">Thêm Danh Mục  </button>
-      <button [disabled]="this.selectedService.length < 1" (click)="removeService()" class="add-service-button">Xóa Danh Mục </button>
+  <div class="group-service">
+    <div class="service-manager-banner">Quản lí dịch vụ </div>
+    <div class="button-group">
+      <button (click)="openPopup()" class="add-service-button">Thêm Dịch Vụ </button>
+      <button [disabled]="this.selectedService.length < 1" (click)="removeService()" class="add-service-button">Xóa Dịch
+        Vụ </button>
     </div>
-     <ag-grid-angular class="service-grid" [defaultColDef]="defaultColDef" [rowData]="this.listCategories"
-     [columnDefs]="catColDef"
-     [rowSelection]="rowSelection"
-      [editType]="editType" (gridReady)="onGridReady($event)"
-     (rowValueChanged)="onCatRowValueChanged($event)"
-     (selectionChanged)="onCatSelectionChanged($event)"
-      />
+    <app-dynamic-input [title]="inputTitle" [inputFields]="fields" (saveEvent)="handleSave($event)"
+      #popup></app-dynamic-input>
+    <ag-grid-angular class="service-grid" [defaultColDef]="defaultColDef" [rowData]="this.listService"
+      [columnDefs]="columnDefs" [rowSelection]="rowSelection" [editType]="editType" (gridReady)="onGridReady($event)"
+      (rowValueChanged)="onRowValueChanged($event)" (selectionChanged)="onSelectionChanged($event)" />
+  </div>
+
+  <div class="group-service">
+
+    <div class="service-manager-banner">Danh mục </div>
+    <div class="button-group">
+      <button (click)="addCat()" class="add-service-button">Thêm Danh Mục </button>
+      <button [disabled]="this.selectedCat.length < 1" (click)="removeCat()" class="add-service-button">Xóa Danh
+        Mục </button>
+    </div>
+    <app-dynamic-input [title]="catInputTitle" [inputFields]="catfields" (saveEvent)="saveCat($event)"
+    #catpopup></app-dynamic-input>
+
+    <ag-grid-angular class="cat-grid" [defaultColDef]="defaultColDef" [rowData]="this.listCategories"
+      [columnDefs]="catColDef" [rowSelection]="rowSelection" [editType]="editType" (gridReady)="onGridReady($event)"
+      (rowValueChanged)="onCatRowValueChanged($event)" (selectionChanged)="onCatSelectionChanged($event)" />
+  </div>
+
 </div>

@@ -4,7 +4,7 @@ import { ApiClientService } from '../shared/api-client.service';
 import { YardModel } from '../../model/yard.model';
 import BaseResponseModel from '../../model/base.response.model';
 import { BillModel } from '../../model/bill.model';
-import { ServiceModel } from '../../model/service.model';
+import { CategoryModel, ServiceModel } from '../../model/service.model';
 import { AddServiceRequestModel } from '../../model/addservice.request.model';
 
 @Injectable({
@@ -66,7 +66,30 @@ export class AdminMainService {
     return this.apiClient.put<BaseResponseModel>(url,service);
   }
 
+  updateCat(cat: CategoryModel){
+    let url = `categories/{categoryId}?id=${cat.id}`
+    return this.apiClient.put<BaseResponseModel>(url,cat);
+  }
+
   removeService(ids: string[]){
     return this.apiClient.delete<BaseResponseModel>("services",ids);
+  }
+
+  addCategory(name: string){
+    return this.apiClient.post<BaseResponseModel>("categories",{name: name});
+  }
+
+  removeCat(ids: string[]){
+    return this.apiClient.delete<BaseResponseModel>("categories",ids);
+  }
+
+  addServiceToBill(serviceId: string, quantity: number,billID: string){
+    let url = `bills/create-service/${billID}`;
+    return this.apiClient.post<BaseResponseModel>(url,[{serviceId: serviceId,quantity: quantity, comboFixedId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",billId: billID}])
+  }
+
+  updateServiceLineQuantity(serviceLineId : string, quantity: number){
+    let url = 'bills/update-quantity-service';
+    return this.apiClient.put<BaseResponseModel>(url,{serviceLineId: serviceLineId,quantity: quantity});
   }
 }

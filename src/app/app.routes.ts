@@ -11,6 +11,8 @@ import { YardPriceComponent } from './components/admin/yard-price/yard-price.com
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ServicesComponent } from './components/admin/services/services.component';
+import { ChatComponent } from './components/shared/chat/chat.component';
+import { AdminChatComponent } from './components/admin/admin-chat/admin-chat.component';
 
 export const routes: Routes = [
     {
@@ -36,6 +38,7 @@ export const routes: Routes = [
             { path: 'yard', component: YardComponent },
             { path: 'yard/price', component: YardPriceComponent },
             { path: 'service', component: ServicesComponent },
+            { path: 'chat', component: AdminChatComponent },
         ],
     }
 ];

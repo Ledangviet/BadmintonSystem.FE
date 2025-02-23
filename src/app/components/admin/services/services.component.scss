@@ -1,7 +1,12 @@
 .service-grid{
     margin-top: 25px;
-    min-width: 1200px;
     height: 400px;
+    background-color: black;
+    border-radius: 10px;
+}
+.cat-grid{
+    margin-top: 25px;
+    height: 300px;
     background-color: black;
     border-radius: 10px;
 }
@@ -48,4 +53,8 @@
     color: #666; /* Darker text color */
     cursor:not-allowed;
     opacity: 0.6; /* Slightly transparent */
+}
+
+.group-service{
+    margin:20px;
 }

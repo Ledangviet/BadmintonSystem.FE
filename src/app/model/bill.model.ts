@@ -1,3 +1,5 @@
+import { ServiceLineDetail } from "./service.model";
+
 export class BookingLine {
     yardName: string;
     startTime: string;
@@ -71,7 +73,7 @@ export class Booking {
 export class BillModel {
     booking: Booking;
     billLineDetails: any;
-    serviceLineDetails: any;
+    serviceLineDetails: ServiceLineDetail[] = []
     totalPriceByRangeDate: number;
     totalPrice: number;
     totalPayment: number;

@@ -44,3 +44,38 @@ export class ServiceModel {
         this.id = data.id;
     }
 }
+
+export class ServiceLineModel {
+    serviceId: string;
+    comboFixedId: string;
+    quantity: number;
+    totalPrice: number;
+    billId: string;
+    id: string;
+
+    constructor(
+        serviceId: string,
+        comboFixedId: string,
+        quantity: number,
+        totalPrice: number,
+        billId: string,
+        id: string
+    ) {
+        this.serviceId = serviceId;
+        this.comboFixedId = comboFixedId;
+        this.quantity = quantity;
+        this.totalPrice = totalPrice;
+        this.billId = billId;
+        this.id = id;
+    }
+}
+
+export class ServiceLineDetail {
+    service: ServiceModel;
+    serviceLine: ServiceLineModel;
+
+    constructor(service: ServiceModel, serviceLine: ServiceLineModel) {
+        this.service = service;
+        this.serviceLine = serviceLine;
+    }
+}
