@@ -1,3 +1,10 @@
+
+export enum InputType {
+  String = 0,
+  Number = 1,
+  Select = 2
+}
+
 enum MessageTypeEnum {
   success = 1,
   warn = 2,
@@ -34,3 +41,4 @@ enum TimeSlotEnum {
   TimeSlot21,
   TimeSlot22,
 }
+

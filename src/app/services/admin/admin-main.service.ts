@@ -4,6 +4,8 @@ import { ApiClientService } from '../shared/api-client.service';
 import { YardModel } from '../../model/yard.model';
 import BaseResponseModel from '../../model/base.response.model';
 import { BillModel } from '../../model/bill.model';
+import { ServiceModel } from '../../model/service.model';
+import { AddServiceRequestModel } from '../../model/addservice.request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +44,29 @@ export class AdminMainService {
   openBill(billID: string){
     let url = `bills/open-booking/${billID}`;
     return this.apiClient.put<BaseResponseModel>(url,{});
+  }
+
+  getService(){
+    let url = 'services/filter-and-sort?PageIndex=0&PageSize=100';
+    return this.apiClient.get<BaseResponseModel>(url);
+  }
+
+  getCategories(){
+    let url = `categories?PageIndex=0&PageSize=1000`
+    return this.apiClient.get<BaseResponseModel>(url);
+  }
+
+  addService(model: AddServiceRequestModel){
+    let url = "services";
+    return this.apiClient.post<BaseResponseModel>(url,model);
+  }
+
+  updateService(service: ServiceModel){
+    let url = `services/{serviceId}?id=${service.id}`
+    return this.apiClient.put<BaseResponseModel>(url,service);
+  }
+
+  removeService(ids: string[]){
+    return this.apiClient.delete<BaseResponseModel>("services",ids);
   }
 }

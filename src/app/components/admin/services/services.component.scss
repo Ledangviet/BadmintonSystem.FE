@@ -1,0 +1,51 @@
+.service-grid{
+    margin-top: 25px;
+    min-width: 1200px;
+    height: 400px;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.service-container{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+#myGrid {
+    flex: 1 1 0px;
+    width: 100%;
+}
+
+.service-manager-banner{
+    width: 100%;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.add-service-button{
+    margin-left: 8px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+}
+
+.button-group{
+    display: flex;
+    flex-direction: row;
+}
+
+.add-service-button:disabled {
+    background-color: #ccc; /* Gray background */
+    color: #666; /* Darker text color */
+    cursor:not-allowed;
+    opacity: 0.6; /* Slightly transparent */
+}

@@ -1,0 +1,22 @@
+<div class="popup-overlay" *ngIf="isVisible">
+  <div class="popup">
+    <div class="popup-header">
+      <h2>{{ title }}</h2>
+      <button class="close-button" (click)="close()">×</button>
+    </div>
+    <div *ngFor="let field of inputFields">
+      <label>{{ field.fieldTitle }}</label>
+      <ng-container [ngSwitch]="field.type">
+        <input *ngSwitchCase="inputType.String" [(ngModel)]="field.value" type="text" />
+        <input *ngSwitchCase="inputType.Number" [(ngModel)]="field.value" type="number" pattern="\d*"/>
+        <select *ngSwitchCase="inputType.Select" [(ngModel)]="field.value">
+          <option *ngFor="let option of field.options" [value]="option">{{ option }}</option>
+        </select>
+      </ng-container>
+    </div>
+    <div class="button-group">
+      <button (click)="save()">Save</button>
+      <button (click)="close()">Close</button>
+    </div>
+  </div>
+</div>

@@ -38,6 +38,6 @@ export class ApiClientService {
 
   /**Delete request */
   delete<T>(url: string, body : any): Observable<T>{
-    return this.httpClient.delete<T>(this.baseUrl + url,{headers : this.header});
+    return this.httpClient.delete<T>(this.baseUrl + url,{headers : this.header,body: body});
   }
 }
