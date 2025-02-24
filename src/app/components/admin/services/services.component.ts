@@ -11,7 +11,6 @@ import {
   SelectEditorModule,
   TextEditorModule,
   ValidationModule,
-  createGrid,
 } from "ag-grid-community";
 import { AdminMainService } from '../../../services/admin/admin-main.service';
 import BaseResponseModel from '../../../model/base.response.model';

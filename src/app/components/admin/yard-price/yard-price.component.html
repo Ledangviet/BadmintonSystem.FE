@@ -1,1 +1,13 @@
-<p>yard-price works!</p>
+<div class="yard-price-container">
+    <div class="yard-type-container">
+        <div class="banner">Loại sân </div>
+
+        <button (click)="addType()" class="add-service-button">Thêm Danh Mục </button>
+        <button [disabled]="this.selectedYardType?.length < 1" (click)="removeType()" class="add-service-button">Xóa
+            Danh</button>
+        <ag-grid-angular class="cat-grid" [defaultColDef]="defaultColDef" [rowData]="this.listYardType"
+            [columnDefs]="catColDef" [rowSelection]="rowSelection" [editType]="editType"
+            (rowValueChanged)="onTypeRowValueChanged($event)" (selectionChanged)="onTypeSelectionChanged($event)" />
+    </div>
+
+</div>
