@@ -15,7 +15,7 @@ export class ChatService {
     pageSize: number
   ): Observable<BaseResponseModel> {
     var body = {
-      appRoleType: 3,
+      appRoleType: 0,
     };
     let url = `chat-rooms/filter-and-sort?PageIndex=${pageIndex}&PageSize=${pageSize}`;
     return this.apiClient.post<BaseResponseModel>(url, body);
@@ -23,10 +23,18 @@ export class ChatService {
 
   getChatMessageList(
     pageIndex: number,
-    pageSize: number
+    pageSize: number,
+    userId: string
   ): Observable<BaseResponseModel> {
     let url = `users/chat-message?PageIndex=${pageIndex}&PageSize=${pageSize}`;
-    return this.apiClient.post<BaseResponseModel>(url, {});
+    var id = userId.trim();
+    if (!id) {
+      return this.apiClient.post<BaseResponseModel>(url, {});
+    }
+    var body = {
+      userId: userId,
+    };
+    return this.apiClient.post<BaseResponseModel>(url, body);
   }
 
   sendMessage(model: ChatModel) {

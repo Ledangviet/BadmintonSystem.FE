@@ -1,30 +1,50 @@
 <div class="chat-container">
-    <div class="sidebar">
-      <div class="search-bar">
-        <input type="text" [(ngModel)]="searchQuery" placeholder="Search users..." />
-        <button (click)="searchUsers()">
-          Search
-        </button>
-      </div>
-      <ul class="chat-list">
-        <li *ngFor="let chat of filteredChats" (click)="selectChat(chat)">
-          {{ chat.user }}
-        </li>
-      </ul>
+  <div class="sidebar">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search users..."
+      />
+      <button (click)="searchUsers()">Search</button>
     </div>
-    <div class="main-chat">
-      <div class="chat-header">
-        <h2>{{ selectedChat?.user }}</h2>
-      </div>
-      <div class="chat-messages">
-        <div *ngFor="let message of selectedChat?.messages" class="message">
-          <span class="message-user">{{ message.user }}:</span>
-          <span class="message-text">{{ message.text }}</span>
+    <ul class="chat-list">
+      <li *ngFor="let chat of listRoomChat" (click)="selectChat(chat)">
+        {{ chat.user.userName }}
+      </li>
+    </ul>
+  </div>
+  <div class="main-chat">
+    <div class="chat-header">
+      <h2>{{ selectedUser?.userName ?? "" }}</h2>
+    </div>
+    <div #chatContainer class="chat-messages">
+      @for (message of listMessChat ; track message){
+      <div class="chat-message left" [class.hidden-chat]="isAdmin(message)">
+        <img
+          src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+          alt="User Avatar"
+        />
+        <div class="message-content">
+          <p>{{ message.content }}</p>
         </div>
       </div>
-      <div class="chat-input">
-        <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..." />
-        <button (click)="sendMessage()">Send</button>
+      <div class="chat-message right" [class.hidden-chat]="!isAdmin(message)">
+        <div class="message-content">
+          <p>{{ message.content }}</p>
+        </div>
       </div>
+      }
+      <!-- The Body -->
+    </div>
+    <div class="chat-input">
+      <input
+        type="text"
+        [(ngModel)]="newMessage"
+        placeholder="Type a message..."
+        (keydown.enter)="sendMessage(newMessage)"
+      />
+      <button (click)="sendMessage(newMessage)">Send</button>
     </div>
   </div>
+</div>
