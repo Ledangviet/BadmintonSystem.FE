@@ -17,8 +17,10 @@ export class AdminChatComponent {
     { user: 'User1', messages: [{ user: 'User1', text: 'Hello!' }, { user: 'Admin', text: 'Hi there!' }] },
     { user: 'User2', messages: [{ user: 'User2', text: 'Good morning!' }, { user: 'Admin', text: 'Good morning!' }] }
   ];
+  filteredChats = this.chats;
   selectedChat = this.chats[0];
   newMessage = '';
+  searchQuery = '';
 
   selectChat(chat: any) {
     this.selectedChat = chat;
@@ -29,5 +31,8 @@ export class AdminChatComponent {
       this.selectedChat.messages.push({ user: 'Admin', text: this.newMessage });
       this.newMessage = '';
     }
+  }
+  searchUsers() {
+    this.filteredChats = this.chats.filter(chat => chat.user.toLowerCase().includes(this.searchQuery.toLowerCase()));
   }
 }

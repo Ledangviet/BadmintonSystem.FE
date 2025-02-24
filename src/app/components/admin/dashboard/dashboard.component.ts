@@ -182,6 +182,7 @@ export class DashboardComponent {
     let bill = this.getBillByYard(yardPrice) as BillModel;
     if (bill) {
       this.selectedBill = bill;
+      console.log(this.listBill);
     }
   }
 
@@ -258,8 +259,8 @@ export class DashboardComponent {
 
   addService() {
     let bill = this.selectedBill as BillModel;
-    let s = bill.serviceLineDetails.filter(s => s.service.id == this.selectedService)
-    if(s.length > 0){
+    let s = bill.serviceLineDetails?.filter(s => s.service.id == this.selectedService)
+    if(s?.length > 0){
       //update quantity
       let newQuantity = s[0].serviceLine.quantity + this.serivceQuantity;
       console.log(this.selectedBill);
@@ -310,5 +311,14 @@ export class DashboardComponent {
 
   closeAddServicePopup() {
     this.isAddServicePopupVisible = false;
+  }
+
+  caculateTotalSerivce(){
+    let total = 0;
+    let bill = this.selectedBill as BillModel;
+    bill?.serviceLineDetails?.forEach( l =>{
+      total += l.serviceLine.totalPrice;
+    })
+    return total;
   }
 }

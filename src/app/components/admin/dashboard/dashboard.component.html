@@ -167,6 +167,9 @@
           <div class="info-item">
             Thành tiền : {{this.selectedBill?.totalPrice}} $
           </div>
+          <div class="info-item">
+            Tên : {{this.selectedBill?.name}}
+          </div>
         </div>
       </div>
       <div class="bill-content">
@@ -186,8 +189,8 @@
         </div>
        
         <div class="bill-content-item none-border">
-          <div class="service-name">Total</div>
-          <div class="total"> 100.000.000</div>
+          <div class="service-name">Tổng dịch vụ </div>
+          <div class="total">{{caculateTotalSerivce()}}</div>
         </div>
       </div>
       <div class="bill-footer">
@@ -195,12 +198,12 @@
 
         <div class="bill-content-item cash-out">
           <div class="service-name">Thành Tiền :</div>
-          <div class="total"> 20.000.000</div>
+          <div class="total"> {{this.selectedBill?.totalPrice + caculateTotalSerivce()}}</div>
         </div>
 
         <div class="bill-content-item">
           <div class="service-name">Khuyen mai :</div>
-          <div class="total"> 20%(50.000)</div>
+          <div class="total"> 0%</div>
         </div>
 
         @if(isAddServicePopupVisible){
