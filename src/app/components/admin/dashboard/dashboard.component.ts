@@ -13,6 +13,7 @@ import { YardPriceModel } from '../../../model/yardPrice.model';
 import { BillModel, Booking } from '../../../model/bill.model';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceModel } from '../../../model/service.model';
+import { BookModel } from '../../../model/book.request.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -52,6 +53,7 @@ export class DashboardComponent {
   public selectedBill: any;
   public selectedTimeSlotIDs: any;
   public name: string = '';
+  public phoneNum : string = '';
   public selectedPercent: number = 100;
   public listService: ServiceModel[] = [];
   public isAddServicePopupVisible = false;
@@ -320,5 +322,25 @@ export class DashboardComponent {
       total += l.serviceLine.totalPrice;
     })
     return total;
+  }
+
+  onCheckOut(){
+  }
+
+  onBook(){
+    let name = this.name;
+    let phoneNum = this.phoneNum.toString();
+  
+    let percent = parseInt(this.selectedPercent.toString());
+    let saleID = undefined;
+    let yardPriceIds = this.selectedTimeSlotIDs;
+    let model = new BookModel(name, phoneNum, saleID, percent, yardPriceIds);
+
+    this.bookingService.book(model).subscribe((result: BaseResponseModel) => {
+      if (result.isSuccess) {
+        this.toater.success('Book completed successfully!');
+        this.refreshBill();
+      }
+    });
   }
 }

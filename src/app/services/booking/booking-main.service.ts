@@ -58,6 +58,7 @@ export class BookingMainService {
   }
 
   book(model: BookModel) {
+    console.log(model);
     return this.apiClient.post<BaseResponseModel>(
       `bookings/create-rabbitmq`,
       model

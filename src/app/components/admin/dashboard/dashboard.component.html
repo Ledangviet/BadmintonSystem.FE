@@ -82,6 +82,14 @@
             </mat-form-field>
           </div>
         </div>
+        <div class="bill-content-item none-border no-margin">
+          <div class="time-slot-select">
+            <mat-form-field class="small-form-field" appearance="outline">
+              <mat-label>Số điện thoại </mat-label>
+              <input type="number" matInput [(ngModel)]="phoneNum">
+            </mat-form-field>
+          </div>
+        </div>
         <div class="bill-content-item none-border">
           <div class="service-name">Tổng giờ :</div>
           <div class="total">{{selectedTimeSlotIDs?.length}} hrs</div>
@@ -115,7 +123,7 @@
 
 
         <div class="checkout-button-container">
-          <button class="checkout-button"> Đặt Sân </button>
+          <button class="checkout-button" (click)="onBook()"> Đặt Sân </button>
         </div>
       </div>
 
@@ -235,7 +243,7 @@
         <div class="checkout-button-container">
           <button class="checkout-button" (click)="openAddServicePopup()">Thêm dịch vụ </button>
           <button class="checkout-button">Xuất Hóa Đơn</button>
-          <button class="checkout-button">Thanh Toán</button>
+          <button class="checkout-button" (click)="onCheckOut()">Thanh Toán</button>
         </div>
       </div>
 
