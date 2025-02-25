@@ -109,7 +109,7 @@ export class ChatComponent implements AfterViewChecked {
       });
 
     this.chatService
-      .getChatMessageList(1, 30)
+      .getChatMessageList(1, 30, '')
       .subscribe((result: BaseResponseModel) => {
         this.chatRoomId = result.value.items[0].chatRoomId;
         this.listChatMessage = result.value.items.sort(
