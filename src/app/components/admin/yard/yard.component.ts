@@ -3,7 +3,7 @@ import { AdminMainService } from '../../../services/admin/admin-main.service';
 import { YardModel } from '../../../model/yard.model';
 import { YardTypeModel } from '../../../model/yardType.model';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
-import type { ColDef, RowSelectionMode, RowSelectionOptions } from 'ag-grid-community';
+import type { ColDef, ISelectCellEditorParams, RowSelectionMode, RowSelectionOptions, RowValueChangedEvent } from 'ag-grid-community';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { YardTableDataModel } from '../../../model/yardtabledata.model';
 import { MissionResultRenderer } from '../../shared/custom-control/missionResultRender.component';
@@ -19,7 +19,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
   imports: [
     AgGridAngular,
     DynamicInputComponent
-],
+  ],
   templateUrl: './yard.component.html',
   styleUrl: './yard.component.scss'
 })
@@ -32,9 +32,8 @@ export class YardComponent {
   public inputTitle = "Thêm sân ";
   public typeOptions: string[] = [];
 
-
   fields: InputField[] = [];
-    @ViewChild('addyardpopup') addyardpopup!: DynamicInputComponent;
+  @ViewChild('addyardpopup') addyardpopup!: DynamicInputComponent;
 
 
 
@@ -42,14 +41,22 @@ export class YardComponent {
     private adminService: AdminMainService,
     private toastr: ToastrService
   ) { }
+
+
   colDefs: ColDef[] = [
     {
       field: "name",
       headerName: "Tên ",
+      editable: true
     },
     {
       field: "type",
       headerName: "Loại Sân ",
+      editable: true,
+      cellEditor: "agSelectCellEditor",
+      cellEditorParams: {
+        values: ['English', 'Spanish', 'French', 'Portuguese', '(other)'],
+      } as ISelectCellEditorParams,
     },
     {
       field: "status",
@@ -66,23 +73,47 @@ export class YardComponent {
     mode: "multiRow",
   };
 
+
   ngOnInit() {
     this.refreshData();
   }
 
-  refreshData(){
+  refreshColDef() {
+    this.colDefs = [
+      {
+        field: "name",
+        headerName: "Tên ",
+        editable: true
+      },
+      {
+        field: "type",
+        headerName: "Loại Sân ",
+        editable: true,
+        cellEditor: "agSelectCellEditor",
+        cellEditorParams: {
+          values: this.typeOptions,
+        } as ISelectCellEditorParams,
+      },
+      {
+        field: "status",
+        headerName: "Trạng thái ",
+        cellRenderer: MissionResultRenderer,
+      }
+    ];
+  }
+  refreshData() {
     this.adminService.getYardTypeList(10, 0).subscribe((result) => {
       if (result.isSuccess) {
         this.yardTypeList = result.value.items as YardTypeModel[];
         this.typeOptions = this.yardTypeList.map(yardType => yardType.name);
+        this.refreshColDef();
       }
       this.adminService.getYardList().subscribe(result => {
         if (result.isSuccess) {
           this.yardList = result.value.items as YardModel[];
           this.tableData = this.yardList.map((yard: YardModel) => {
-            return new YardTableDataModel(yard.name, this.getYardTypeById(yard.yardTypeId), yard.isStatus == 1 ? true : false, this.newformatDate(yard.createdDate ?? ''), this.newformatDate(yard.modifiedDate ?? ''), yard.createdBy, yard.modifiedBy || "N/A")
+            return new YardTableDataModel(yard.name, this.getYardTypeById(yard.yardTypeId), yard.isStatus == 1 ? true : false, this.newformatDate(yard.createdDate ?? ''), this.newformatDate(yard.modifiedDate ?? ''), yard.createdBy, yard.modifiedBy || "N/A",yard.id)
           })
-          console.log(this.tableData);
         }
       })
     })
@@ -120,14 +151,14 @@ export class YardComponent {
 
   }
 
-  getYardTypeIdByName(name: string){
-    let types = this.yardTypeList.filter( t => t.name == name);
-    if(types.length > 0) return types[0].id;
+  getYardTypeIdByName(name: string) {
+    let types = this.yardTypeList.filter(t => t.name == name);
+    if (types.length > 0) return types[0].id;
     return "";
   }
 
-  handleSaveYard(event: any){
-    this.adminService.addYard(event.name,this.getYardTypeIdByName(event.type)).subscribe(result => {
+  handleSaveYard(event: any) {
+    this.adminService.addYard(event.name, this.getYardTypeIdByName(event.type)).subscribe(result => {
       console.log(result);
       if (result.isSuccess) {
         this.toastr.success("Thêm sân thành công!");
@@ -139,6 +170,16 @@ export class YardComponent {
   onYardSelectionChanged(event: any) {
     const selectedRows = event.api.getSelectedRows();
     this.selectedYard = selectedRows as YardModel[];
+  }
+
+  onRowValueChanged(event: RowValueChangedEvent) {
+    const data = event.data;
+    console.log(data);
+    this.adminService.updateYard(data.id,data.name,this.getYardTypeIdByName(data.type)).subscribe( result =>{
+      if(result.isSuccess){
+        this.toastr.success("Sửa thông tin sân thành công !")
+      }
+    })
   }
 }
 

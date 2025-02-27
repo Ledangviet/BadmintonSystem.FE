@@ -23,6 +23,9 @@ th {
   font-size: 20px;
   font-weight: normal;
   white-space: nowrap;
+  height: 40px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .price-tag {
@@ -143,7 +146,7 @@ th {
 
 .yard-name {
   position: absolute;
-  width: 60px;
+  width: 80px;
   left: 10px;
   top: auto;
   border-top-width: 1px;
@@ -153,13 +156,13 @@ th {
 
 .yard-name-head{
   position: absolute;
-  width: 60px;
+  width: 62px;
   left: 10px;
 }
 
 .table-container {
   overflow-x: scroll;
-  margin-left: 70px;
+  margin-left: 90px;
   overflow-y: visible;
 }
 

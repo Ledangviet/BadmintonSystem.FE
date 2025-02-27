@@ -109,4 +109,9 @@ export class AdminMainService {
   addYard(name: string,id: string){
     return this.apiClient.post<BaseResponseModel>('yards',{name: name,yardTypeId: id,isStatus: 0});
   }
+
+  updateYard(id: string,name: string,typeId: string){
+    let url = `yards/{yardId}?id=${id}`
+    return this.apiClient.put<BaseResponseModel>(url,{id: id, name: name, yardTypeId: typeId,isStatus:0});
+  }
 }
