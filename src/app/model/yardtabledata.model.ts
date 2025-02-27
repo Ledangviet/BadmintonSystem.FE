@@ -1,7 +1,7 @@
 export class YardTableDataModel {
     name: string;
     type: string;
-    status: string;
+    status: boolean;
     createdDate: string;
     modifiedDate: string;
     createdBy: string;
@@ -10,7 +10,7 @@ export class YardTableDataModel {
     constructor(
         name: string,
         type: string,
-        status: string,
+        status: boolean,
         createdDate: string,
         modifiedDate: string,
         createdBy: string,

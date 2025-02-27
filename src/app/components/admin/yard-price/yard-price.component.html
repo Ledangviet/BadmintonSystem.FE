@@ -2,12 +2,17 @@
     <div class="yard-type-container">
         <div class="banner">Loại sân </div>
 
-        <button (click)="addType()" class="add-service-button">Thêm Danh Mục </button>
-        <button [disabled]="this.selectedYardType?.length < 1" (click)="removeType()" class="add-service-button">Xóa
-            Danh</button>
+
+        <app-dynamic-input [title]="inputTitle" [inputFields]="fields" (saveEvent)="handleSaveType($event)"
+        #addtypepopup></app-dynamic-input>
+
+        <button (click)="addType()" class="add-service-button">Thêm </button>
+        <button [disabled]="this.selectedYardType?.length  == 0 || !this.selectedYardType" (click)="removeType()" class="add-service-button">Xóa</button>
         <ag-grid-angular class="cat-grid" [defaultColDef]="defaultColDef" [rowData]="this.listYardType"
             [columnDefs]="catColDef" [rowSelection]="rowSelection" [editType]="editType"
             (rowValueChanged)="onTypeRowValueChanged($event)" (selectionChanged)="onTypeSelectionChanged($event)" />
     </div>
-
+    <div class="price-container">
+        
+    </div>
 </div>

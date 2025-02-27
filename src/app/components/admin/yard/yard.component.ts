@@ -1,19 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AdminMainService } from '../../../services/admin/admin-main.service';
 import { YardModel } from '../../../model/yard.model';
 import { YardTypeModel } from '../../../model/yardType.model';
 import { AgGridAngular } from 'ag-grid-angular'; // Angular Data Grid Component
-import type { ColDef, RowSelectionMode } from 'ag-grid-community';
+import type { ColDef, RowSelectionMode, RowSelectionOptions } from 'ag-grid-community';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { YardTableDataModel } from '../../../model/yardtabledata.model';
+import { MissionResultRenderer } from '../../shared/custom-control/missionResultRender.component';
+import { InputType } from '../../../model/enum';
+import { DynamicInputComponent } from "../../shared/dynamic-input/dynamic-input.component";
+import { InputField } from '../../../model/inputfield.model';
+import { ToastrService } from 'ngx-toastr';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 @Component({
   selector: 'app-yard',
   standalone: true,
   imports: [
-    AgGridAngular
-  ],
+    AgGridAngular,
+    DynamicInputComponent
+],
   templateUrl: './yard.component.html',
   styleUrl: './yard.component.scss'
 })
@@ -22,33 +28,61 @@ export class YardComponent {
   public tableData: YardTableDataModel[] = [];
   public yardList: YardModel[] = [];
   public yardTypeList: YardTypeModel[] = [];
+  public selectedYard: YardModel[] = [];
+  public inputTitle = "Thêm sân ";
+  public typeOptions: string[] = [];
+
+
+  fields: InputField[] = [];
+    @ViewChild('addyardpopup') addyardpopup!: DynamicInputComponent;
+
+
 
   constructor(
-    private adminService: AdminMainService
+    private adminService: AdminMainService,
+    private toastr: ToastrService
   ) { }
   colDefs: ColDef[] = [
-    { field: 'name' },
-    { field: 'type' },
-    { field: 'status' },
-    { field: 'createdDate' },
-    { field: 'modifiedDate' },
-    { field: 'createdBy' },
-    { field: 'modifiedBy' }
+    {
+      field: "name",
+      headerName: "Tên ",
+    },
+    {
+      field: "type",
+      headerName: "Loại Sân ",
+    },
+    {
+      field: "status",
+      headerName: "Trạng thái ",
+      cellRenderer: MissionResultRenderer,
+    }
   ];
   defaultColDef: ColDef = {
     flex: 1,
   };
+
+  editType: "fullRow" = "fullRow";
+  rowSelection: RowSelectionOptions = {
+    mode: "multiRow",
+  };
+
   ngOnInit() {
+    this.refreshData();
+  }
+
+  refreshData(){
     this.adminService.getYardTypeList(10, 0).subscribe((result) => {
       if (result.isSuccess) {
         this.yardTypeList = result.value.items as YardTypeModel[];
+        this.typeOptions = this.yardTypeList.map(yardType => yardType.name);
       }
       this.adminService.getYardList().subscribe(result => {
         if (result.isSuccess) {
           this.yardList = result.value.items as YardModel[];
           this.tableData = this.yardList.map((yard: YardModel) => {
-            return new YardTableDataModel(yard.name, this.getYardTypeById(yard.yardTypeId), yard.isStatus == 1 ? 'Available' : 'Un-available', this.newformatDate(yard.createdDate ?? ''), this.newformatDate(yard.modifiedDate ?? ''), yard.createdBy, yard.modifiedBy || "N/A")
+            return new YardTableDataModel(yard.name, this.getYardTypeById(yard.yardTypeId), yard.isStatus == 1 ? true : false, this.newformatDate(yard.createdDate ?? ''), this.newformatDate(yard.modifiedDate ?? ''), yard.createdBy, yard.modifiedBy || "N/A")
           })
+          console.log(this.tableData);
         }
       })
     })
@@ -75,4 +109,36 @@ export class YardComponent {
     return `${day}-${month}-${year}`;
   }
 
+  addYard() {
+    this.fields = [
+      { type: InputType.String, label: 'name', fieldTitle: 'Tên', value: '' },
+      { type: InputType.Select, label: 'type', fieldTitle: 'Loại sân ', value: '', options: this.typeOptions }]
+    this.addyardpopup.open();
+  }
+
+  removeYard() {
+
+  }
+
+  getYardTypeIdByName(name: string){
+    let types = this.yardTypeList.filter( t => t.name == name);
+    if(types.length > 0) return types[0].id;
+    return "";
+  }
+
+  handleSaveYard(event: any){
+    this.adminService.addYard(event.name,this.getYardTypeIdByName(event.type)).subscribe(result => {
+      console.log(result);
+      if (result.isSuccess) {
+        this.toastr.success("Thêm sân thành công!");
+        this.refreshData();
+      }
+    });
+  }
+
+  onYardSelectionChanged(event: any) {
+    const selectedRows = event.api.getSelectedRows();
+    this.selectedYard = selectedRows as YardModel[];
+  }
 }
+

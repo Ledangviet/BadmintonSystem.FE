@@ -131,6 +131,9 @@
 
 
       @if(getStatus(selectedYard) == 1){
+      <div id="bill-printer">
+
+      </div>
       <div class="bill-header">
         <div class="court-name">{{this.selectedYard?.yard?.name}}</div>
       </div>
@@ -166,87 +169,79 @@
       }
 
       @if(getStatus(selectedYard) == 2){
-      <div class="bill-header">
-        <div class="court-name">{{this.selectedYard.yard.name}}</div>
-        <div class="info">
-          <div class="info-item">
-            Thời gian : {{this.selectedBill?.booking.bookingLines?.length}}
-          </div>
-          <div class="info-item">
-            Thành tiền : {{this.selectedBill?.totalPrice}} $
-          </div>
-          <div class="info-item">
-            Tên : {{this.selectedBill?.name}}
+      <div id="bill-printer">
+        <div class="bill-header">
+          <div class="court-name">{{this.selectedYard.yard.name}}</div>
+          <div class="info">
+            <div class="info-item">
+              Thời gian : {{this.selectedBill?.booking.bookingLines?.length}}
+            </div>
+            <div class="info-item">
+              Thành tiền : {{this.selectedBill?.totalPrice}} $
+            </div>
+            <div class="info-item">
+              Tên : {{this.selectedBill?.name}}
+            </div>
           </div>
         </div>
-      </div>
-      <div class="bill-content">
-        <div class="bill-content-item solid">
-          <div class="service-name">Dịch vụ </div>
-          <div class="quantity"> Số lượng </div>
-          <div class="total">Thành tiền </div>
-        </div>
-        <div class="bill-line-list-container">
-          @for(line of selectedBill?.serviceLineDetails; track line){
+        <div class="bill-content">
+          <div class="bill-content-item solid">
+            <div class="service-name">Dịch vụ </div>
+            <div class="quantity"> Số lượng </div>
+            <div class="total">Thành tiền </div>
+          </div>
+          <div class="bill-line-list-container">
+            @for(line of selectedBill?.serviceLineDetails; track line){
             <div class="bill-content-item">
               <div class="service-name">{{line.service.name}} </div>
               <div class="quantity">{{line.serviceLine.quantity}}</div>
               <div class="total">{{line.serviceLine.totalPrice}} </div>
             </div>
             }
-        </div>
-       
-        <div class="bill-content-item none-border">
-          <div class="service-name">Tổng dịch vụ </div>
-          <div class="total">{{caculateTotalSerivce()}}</div>
-        </div>
-      </div>
-      <div class="bill-footer">
+          </div>
 
-
-        <div class="bill-content-item cash-out">
-          <div class="service-name">Thành Tiền :</div>
-          <div class="total"> {{this.selectedBill?.totalPrice + caculateTotalSerivce()}}</div>
-        </div>
-
-        <div class="bill-content-item">
-          <div class="service-name">Khuyen mai :</div>
-          <div class="total"> 0%</div>
-        </div>
-
-        @if(isAddServicePopupVisible){
-        <div class="overlay"></div>
-        <div class="popup">
-          <div class="popup-content">
-            <h2>Thêm dịch vụ </h2>
-            <mat-form-field appearance="outline">
-              <mat-label>Dịch vụ </mat-label>
-              <mat-select [(ngModel)]="selectedService" name="status" (ngModelChange)="onPercentChange()">
-                @for (service of listService; track service) {
-                <mat-option [value]="service.id">{{service.name}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Số lượng </mat-label>
-              <input matInput type="number" [(ngModel)]="serivceQuantity" min="1">
-            </mat-form-field>
-            <div class="checkout-button-container">
-              <button class="checkout-button" (click)="addService()">Thêm </button>
-              <button class="checkout-button" (click)="closeAddServicePopup()">Hủy </button>
-            </div>
+          <div class="bill-content-item solid">
+            <div class="service-name">Tổng dịch vụ </div>
+            <div class="total">{{caculateTotalSerivce()}}</div>
           </div>
         </div>
-        }
+        <div class="bill-footer">
 
+          <div class="bill-content-item cash-out">
+            <div class="service-name">Thành Tiền :</div>
+            <div class="total"> {{this.selectedBill?.totalPrice + caculateTotalSerivce()}}</div>
+          </div>
 
-        <div class="checkout-button-container">
-          <button class="checkout-button" (click)="openAddServicePopup()">Thêm dịch vụ </button>
-          <button class="checkout-button">Xuất Hóa Đơn</button>
-          <button class="checkout-button" (click)="onCheckOut()">Thanh Toán</button>
+          @if(isAddServicePopupVisible){
+          <div class="overlay"></div>
+          <div class="popup">
+            <div class="popup-content">
+              <h2>Thêm dịch vụ </h2>
+              <mat-form-field appearance="outline">
+                <mat-label>Dịch vụ </mat-label>
+                <mat-select [(ngModel)]="selectedService" name="status" (ngModelChange)="onPercentChange()">
+                  @for (service of listService; track service) {
+                  <mat-option [value]="service.id">{{service.name}}</mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Số lượng </mat-label>
+                <input matInput type="number" [(ngModel)]="serivceQuantity" min="1">
+              </mat-form-field>
+              <div class="checkout-button-container">
+                <button class="checkout-button" (click)="addService()">Thêm </button>
+                <button class="checkout-button" (click)="closeAddServicePopup()">Hủy </button>
+              </div>
+            </div>
+          </div>
+          }
         </div>
       </div>
-
+      <div class="checkout-button-container">
+        <button class="checkout-button" (click)="openAddServicePopup()">Thêm dịch vụ </button>
+        <button class="checkout-button" (click)="onCheckOut()">Thanh Toán</button>
+      </div>
       }
     </div>
   </div>

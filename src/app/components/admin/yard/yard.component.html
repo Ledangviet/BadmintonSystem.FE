@@ -1,12 +1,11 @@
 <div class="yard-list-container">
 
     <div class="yard-banner">Yard Manager</div>
-    <div class="list-button">
-        <button>Add</button>
-        <button>Update</button>
-        <button>Delete</button>
-        <button>Edit</button>
-    </div>
+    <button (click)="addYard()" class="add-service-button">Thêm </button>
+    <button [disabled]="this.selectedYard.length  == 0 || !this.selectedYard" (click)="removeYard()" class="add-service-button">Xóa</button>
+   
+    <app-dynamic-input [title]="inputTitle" [inputFields]="fields" (saveEvent)="handleSaveYard($event)"
+    #addyardpopup></app-dynamic-input>
     <div class="content">
         <!-- The AG Grid component, with Dimensions, CSS Theme, Row Data, and Column Definition -->
         <ag-grid-angular
@@ -14,8 +13,9 @@
           [rowData]="tableData"
           [columnDefs]="colDefs"
           [defaultColDef]="defaultColDef"
-          [pagination]=[true]
-          [rowSelection]="'single'"
+          [rowSelection]="rowSelection"
+          [editType]="editType"
+          (selectionChanged)="onYardSelectionChanged($event)"
         />
     </div>
 </div>

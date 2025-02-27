@@ -11,8 +11,7 @@ import type { ICellRendererParams } from 'ag-grid-community';
         <span :class="missionSpan">
             @if (value()) {
                 <img
-                    [alt]="value()"
-                    [src]="'https://www.ag-grid.com/example-assets/icons/' + value() + '.png'"
+                    [src]="value()"
                     [height]="30"
                     :class="missionIcon"
                 />
@@ -20,7 +19,7 @@ import type { ICellRendererParams } from 'ag-grid-community';
         </span>
     `,
     styles: [
-        'img { width: auto; height: auto; } span {display: flex; height: 100%; justify-content: center; align-items: center} ',
+        'img { width: auto; height: auto; } span {display: flex; height: 100%; justify-content: left; align-items: center} ',
     ],
 })
 export class MissionResultRenderer implements ICellRendererAngularComp {
@@ -31,7 +30,7 @@ export class MissionResultRenderer implements ICellRendererAngularComp {
     }
 
     refresh(params: ICellRendererParams): boolean {
-        this.value.set(params.value ? 'tick-in-circle' : 'cross-in-circle');
+        this.value.set(params.value ? 'https://vietle.blob.core.windows.net/badminton/tick-in-circle.png' : 'https://vietle.blob.core.windows.net/badminton/tick-in-circle.png');
         return true;
     }
 }

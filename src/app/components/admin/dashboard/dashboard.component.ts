@@ -325,6 +325,35 @@ export class DashboardComponent {
   }
 
   onCheckOut(){
+    const printContents = document.getElementById('bill-printer')!.innerHTML;
+    const iframe = document.createElement('iframe');
+    iframe.style.position = 'absolute';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = 'none';
+    document.body.appendChild(iframe);
+
+    const doc = iframe.contentWindow!.document;
+    doc.open();
+    doc.write(`
+      <html>
+        <head>
+          <title>Print Bill</title>
+          <style>
+            .content-container { border-radius: 5px; padding-top: 20px; background-color: white; display: flex; flex-direction: row; padding-bottom: 20px; } .court-info-container { padding: 20px; width: 28%; text-align: center; } .separator { background-color: #333333; width: 1px; border-radius: 1px; border: none; } .left-content-container { width: 70%; } .bill-header { display: flex; flex-direction: row; align-items: center; justify-content: stretch; height: 100px; margin: 0px 20px 20px 20px; border-bottom: 1px solid #333333; } .court-name { font-size: 40px; font-weight: bold; text-align: center; } .info .info-item { text-align: left; margin-left: 20px; margin-top: 10px; } .bill-content { overflow-x: auto; } .bill-content-item { margin-left: 10px; margin-right: 10px; padding-top: 10px; padding-bottom: 10px; border-bottom: 1px dotted #333333; display: flex; flex-direction: row; justify-content: space-between; } .service-name { text-align: left; width: 40%; line-height: 100%; position: relative; } .center-line { position: absolute; top: 30%; left: 0; width: 100%; height: 1px; transform: translateY(-50%); } .total { width: 40%; } .quantity { width: 20%; } .bill-content-item.solid { border-bottom: 1px solid #333333; } .bill-content-item.none-border { border-bottom: none; } .bill-content-item.no-margin { margin: 0px; } .bill-footer { margin-top: 20px; } .bill-footer .bill-content-item { margin-left: 10px; margin-right: 10px; padding-top: 10px; padding-bottom: 10px; display: flex; flex-direction: row; justify-content: space-between; } .bill-footer .service-name { text-align: left; width: 40%; } .bill-footer .total { width: 40%; } .bill-footer .quantity { width: 20%; } .cash-out { font-size: 18px; font-weight: bold; margin-top: 20px; } .border-top { border-top: 1px solid #333333; }
+          </style>
+        </head>
+        <body>
+          ${printContents}
+        </body>
+      </html>
+    `);
+    doc.close();
+
+    iframe.contentWindow!.focus();
+    iframe.contentWindow!.print();
+
+    document.body.removeChild(iframe);
   }
 
   onBook(){
