@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/booking/home/home.component';
 import { BookComponent } from './components/booking/book/book.component';
 import { AuthComponent } from './components/shared/auth/auth.component';
 import { CheckoutComponent } from './components/booking/checkout/checkout.component';
@@ -11,16 +10,18 @@ import { YardPriceComponent } from './components/admin/yard-price/yard-price.com
 import { NotFoundComponent } from './components/shared/not-found/not-found.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { ServicesComponent } from './components/admin/services/services.component';
-import { ChatComponent } from './components/shared/chat/chat.component';
 import { AdminChatComponent } from './components/admin/admin-chat/admin-chat.component';
+import { TenantAdminComponent } from './components/tenants/tenant-admin/tenant-admin.component';
+import { ClubComponent } from './components/tenants/club/club.component';
 
 export const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
         children: [
-            { path: '', component: HomeComponent },
-            { path: 'home', component: HomeComponent },
+            { path: '', component: TenantAdminComponent },
+            { path: 'home', component: TenantAdminComponent },
+            { path: 'club', component: ClubComponent },
             { path: 'booking', component: BookComponent },
             { path: 'auth', component: AuthComponent },
             { path: 'checkout', component: CheckoutComponent },

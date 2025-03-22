@@ -1,0 +1,57 @@
+<div class="tenant-container">
+    <div class="slider">
+        <div class="slides">
+            <div class="slide">
+                <img src="https://vietle.blob.core.windows.net/badminton/NewBanner.jpg" alt="Slide 1">
+            </div>
+            <div class="slide">
+                <img src="https://vietle.blob.core.windows.net/badminton/NewBanner.jpg" alt="Slide 2">
+            </div>
+            <div class="slide">
+                <img src="https://vietle.blob.core.windows.net/badminton/NewBanner.jpg" alt="Slide 3">
+            </div>
+        </div>
+        <div class="slide-text">
+            <p class="title">Badminton Journey</p>
+            <p class="slogan">Bắt đầu hành trình của bạn với chúng tôi</p>
+            <p class="slogan"> <a class="book-link"> Đặt sân </a></p>
+            <p class="slogan"> <a href="club" class="book-link">Đăng ký câu lạc bộ</a></p>
+            <p class="subtitle">KP5 - P.Trảng Dài - TP.Biên Hòa - Đồng Nai</p>
+            <a href="learn-more.html">
+                <button>Learn more</button></a>
+        </div>
+        <div class="dots">
+            <span class="dot" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+        </div>
+    </div>
+    <div style="padding: 20px 30px; display: flex; flex-direction: column; gap: 20px">
+        <div style="display: flex; gap: 10px">
+            <h2 style="font-size: 24px;">Danh Sách Câu Lạc Bộ</h2>
+        </div>
+
+        <div class="list-card">
+
+            @for(tenant of listTenant; track tenant.id){
+                <div class="card">
+                    <div class="card-image">
+                        <img src="https://vietle.blob.core.windows.net/badminton/card-img.png" alt="Sân Phương My">
+                    </div>
+                    <div class="card-content">
+                        <h2 class="card-title">{{tenant.name}}</h2>
+                        <p class="card-address">Address: KP5 - Trảng Dài - Biên Hoà - Đồng Nai</p>
+                        <div class="card-buttons">
+                            <a href="booking.html">
+                                <button class="book-now-content">Book Now</button>
+                            </a>
+                            <a href="#" class="view-more">View More</a>
+                        </div>
+                    </div>
+                </div>
+            }          
+        </div>
+    </div>
+</div>
+
+

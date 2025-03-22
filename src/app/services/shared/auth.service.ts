@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   login(email: string, passWord: string) {
-    return this.apiClient.post<LoginResponseModel>('users/login', {
+    return this.apiClient.postNoHeader<LoginResponseModel>('users/login', {
       email: email,
       password: passWord,
     });

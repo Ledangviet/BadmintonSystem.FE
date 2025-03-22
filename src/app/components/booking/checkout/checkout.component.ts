@@ -48,7 +48,7 @@ export class CheckoutComponent {
   ) {
     this.checkoutForm = this.fb.group({
       name: ['', [Validators.required]],
-      prepay: ['', [Validators.required]],
+      prepay: ['100', [Validators.required]],
       phone: ['', [Validators.required]],
       discount: [''],
     });
@@ -74,9 +74,10 @@ export class CheckoutComponent {
       (item: { id: string }) => item.id
     );
     let model = new BookModel(name, phoneNum, saleID, percent, yardPriceIds);
-
+    
     this.bookingService.book(model).subscribe((result: BaseResponseModel) => {
       if (result.isSuccess) {
+        //this.bookingService.checkOut().
         window.location.reload();
         this.toaster.success('Book completed successfully!');
         this.router.navigate(['/booking']);

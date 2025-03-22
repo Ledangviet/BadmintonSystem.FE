@@ -4,6 +4,8 @@ export class BookModel {
     saleId: string | undefined;
     percentPrePay: number;
     yardPriceIds: string[];
+    tenant: string = '200325_KJJ2ASOJ';
+    email: string = 'ledangviet1998@gmail.com'
   
     constructor(
       fullName: string,

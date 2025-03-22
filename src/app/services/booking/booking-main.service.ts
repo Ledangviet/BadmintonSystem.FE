@@ -64,4 +64,15 @@ export class BookingMainService {
       model
     );
   }
+
+  checkOut(orderId: string, amount: string, orderInfo: string) {
+    return this.apiClient.post<BaseResponseModel>(
+      `payment`,
+      {
+        orderId: orderId,
+        amount: amount,
+        orderInfo: orderInfo
+      }
+    );
+  }
 }

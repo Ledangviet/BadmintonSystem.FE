@@ -55,6 +55,7 @@
     <div class="court-info-container">
       @if(getStatus(selectedYard) == 0){
       <div class="bill-header">
+        <div class="court-name">Sân &nbsp;&nbsp;</div>
         <div class="court-name">{{selectedYard?.yard?.name}}</div>
       </div>
       <div class="bill-content">
@@ -135,6 +136,7 @@
 
       </div>
       <div class="bill-header">
+        <div class="court-name">Sân &nbsp;&nbsp;</div>
         <div class="court-name">{{this.selectedYard?.yard?.name}}</div>
       </div>
       <div class="bill-content">
@@ -171,6 +173,7 @@
       @if(getStatus(selectedYard) == 2){
       <div id="bill-printer">
         <div class="bill-header">
+          <div class="court-name">Sân &nbsp;&nbsp;</div>
           <div class="court-name">{{this.selectedYard.yard.name}}</div>
           <div class="info">
             <div class="info-item">
