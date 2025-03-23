@@ -5,8 +5,10 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "node"
-    ]
+      "node",
+      "googlemaps"
+    ],
+    "typeRoots": ["node_modules/@types"]
   },
   "files": [
     "src/main.ts",

@@ -9,7 +9,7 @@ import ViResource from '../../../resources/vi/resource.vi';
 })
 export class ResourceService {
 
-  public lang: string = "eng";
+  public lang: string = "vi";
   public resource: any;
   constructor() { 
     this.reloadResource();

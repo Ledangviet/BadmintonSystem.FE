@@ -1,0 +1,11 @@
+<div id="map" class="map-container">
+    <google-map [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions" (mapClick)="markerClicked($event)">
+        <map-marker
+          #marker="mapMarker"
+          [position]="mapCenter"
+          [options]="markerOptions">
+        </map-marker>
+        <map-info-window>{{ markerInfoContent }}</map-info-window>
+      </google-map>
+</div>
+<button class="save-map-button" (click)="saveLocation()">Lưu Vị Trí</button>

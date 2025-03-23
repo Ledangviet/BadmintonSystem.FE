@@ -1,0 +1,241 @@
+<form [formGroup]="clubRegisterForm" class="jotform-form" (ngSubmit)="onSubmit()">
+    <div role="main" class="form-all">
+        <ul class="form-section page-section" role="presentation">
+            <li id="cid_10" class="form-input-wide" data-type="control_head">
+                <div class="form-header-group  header-large">
+                    <div class="header-text httal htvam">
+                        <h1 id="header_10" class="form-header" data-component="header">Đăng Ký Câu Lạc Bộ </h1>
+                        <div id="subHeader_10" class="form-subHeader">Điền đầy đủ thông tin để đăng ký.</div>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_fullname" id="id_35"><label
+                    class="form-label form-label-top form-label-auto" id="label_35" for="first_35" aria-hidden="false">
+                    Tên Câu Lạc Bộ </label>
+                <div id="cid_35" class="form-input-wide" data-layout="full">
+                    <div data-wrapper-react="true">
+                        <span class="form-sub-label-container" style="vertical-align:top" data-input-type="first">
+                            <input type="text" id="first_35" formControlName="clubName" name="q35_name[first]"
+                                class="form-textbox" data-defaultvalue="" autoComplete="section-input_35 given-name"
+                                size="10" data-component="first" aria-labelledby="label_35 sublabel_35_first"
+                                value="" />
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line form-line-column form-col-1" data-type="control_email" id="id_36"><label
+                    class="form-label form-label-top form-label-auto" id="label_36" for="input_36" aria-hidden="false">
+                    E-mail </label>
+                <div id="cid_36" class="form-input-wide" data-layout="half"> <input type="email" id="input_36"
+                        formControlName="email" name="q36_email36" class="form-textbox validate[Email]"
+                        data-defaultvalue="" autoComplete="section-input_36 email" style="width:32px" size="32"
+                        placeholder="ex: myname@example.com" data-component="email" aria-labelledby="label_36"
+                        value="" /> </div>
+            </li>
+            <li class="form-line form-line-column form-col-2" data-type="control_phone" id="id_11"><label
+                    class="form-label form-label-top form-label-auto" id="label_11" for="input_11_area"
+                    aria-hidden="false"> Số điện thoại </label>
+                <div id="cid_11" class="form-input-wide" data-layout="half">
+                    <div data-wrapper-react="true"><span class="form-sub-label-container" style="vertical-align:top"
+                            data-input-type="phone"><input type="tel" id="input_11_phone" formControlName="phoneNumber"
+                                name="q11_phoneNumber[phone]" class="form-textbox" data-defaultvalue=""
+                                autoComplete="section-input_11 tel-local" data-component="phone"
+                                aria-labelledby="label_11 sublabel_11_phone" value="" /></span>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line form-line-column form-col-1" data-type="control_email" id="id_36"><label
+                    class="form-label form-label-top form-label-auto" id="label_36" for="input_36" aria-hidden="false">
+                    Thời gian mở</label>
+                <div id="cid_36" class="form-input-wide" data-layout="half">
+                    <input type="time" id="input_36" formControlName="openTime" name="q36_email36" class="form-textbox"
+                        data-defaultvalue="" autoComplete="section-input_36 email" style="width:32px" size="32"
+                        aria-labelledby="label_36" value="" />
+                </div>
+            </li>
+            <li class="form-line form-line-column form-col-2" data-type="control_phone" id="id_11"><label
+                    class="form-label form-label-top form-label-auto" id="label_11" for="input_11_area"
+                    aria-hidden="false"> Thời gian đóng</label>
+                <div id="cid_11" class="form-input-wide" data-layout="half">
+                    <div data-wrapper-react="true">
+                        <span class="form-sub-label-container" style="vertical-align:top" data-input-type="phone">
+                            <input type="time" id="input_11_phone" formControlName="closeTime"
+                                name="q11_phoneNumber[phone]" class="form-textbox" data-defaultvalue=""
+                                autoComplete="section-input_11 tel-local" data-component="phone"
+                                aria-labelledby="label_11 sublabel_11_phone" value="" />
+                        </span>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_address" id="id_12"><label
+                    class="form-label form-label-top form-label-auto" id="label_12" for="input_12undefined"
+                    aria-hidden="false"> Địa chỉ </label>
+                <div id="cid_12" class="form-input-wide" data-layout="full">
+                    <div summary="" class="form-address-table jsTest-addressField">
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-street-line jsTest-address-lineField"><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_addr_line1" formControlName="addr_line1"
+                                        name="q12_address12[addr_line1]" class="form-textbox form-address-line"
+                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        data-component="address_line_1"
+                                        aria-labelledby="label_12 sublabel_12_addr_line1" value="" /><label
+                                        class="form-sub-label" for="input_12_addr_line1" id="sublabel_12_addr_line1"
+                                        style="min-height:13px">Số nhà </label></span></span></div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-street-line jsTest-address-lineField"><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_addr_line2" formControlName="addr_line2"
+                                        name="q12_address12[addr_line2]" class="form-textbox form-address-line"
+                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        data-component="address_line_2"
+                                        aria-labelledby="label_12 sublabel_12_addr_line2" value="" /><label
+                                        class="form-sub-label" for="input_12_addr_line2" id="sublabel_12_addr_line2"
+                                        style="min-height:13px">Đường </label></span></span></div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-city-line jsTest-address-lineField "><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_city" formControlName="city" name="q12_address12[city]"
+                                        class="form-textbox form-address-city" data-defaultvalue=""
+                                        autoComplete="section-input_12 off" data-component="city"
+                                        aria-labelledby="label_12 sublabel_12_city" value="" /><label
+                                        class="form-sub-label" for="input_12_city" id="sublabel_12_city"
+                                        style="min-height:13px">Huyện</label></span></span><span
+                                class="form-address-line form-address-state-line jsTest-address-lineField ">
+                                <span class="form-sub-label-container" style="vertical-align:top">
+                                    <select
+                                    formControlName="state" class="form-dropdown form-address-country"
+                                    name="q12_address12[country]" id="input_12_country" data-component="country"
+                                    required="" aria-labelledby="label_12 sublabel_12_country"
+                                    autoComplete="section-input_12 off">
+                                    <option value="">Tỉnh</option>
+                                    @for(province of provinces; track province.value){
+                                        <option value="province.value">{{province.name}}</option>
+                                    }
+                                    
+                                </select>
+                                    <label class="form-sub-label" for="input_12_state" id="sublabel_12_state"
+                                        style="min-height:13px">Tỉnh / Thành phố </label>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-zip-line jsTest-address-lineField "><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_postal" formControlName="postal" name="q12_address12[postal]"
+                                        class="form-textbox form-address-postal" data-defaultvalue=""
+                                        autoComplete="section-input_12 off" data-component="zip"
+                                        aria-labelledby="label_12 sublabel_12_postal" value="" /><label
+                                        class="form-sub-label" for="input_12_postal" id="sublabel_12_postal"
+                                        style="min-height:13px">Zip Code</label></span></span><span
+                                class="form-address-line form-address-country-line jsTest-address-lineField "><span
+                                    class="form-sub-label-container" style="vertical-align:top">
+                                    <select
+                                        formControlName="country" class="form-dropdown form-address-country"
+                                        name="q12_address12[country]" id="input_12_country" data-component="country"
+                                        required="" aria-labelledby="label_12 sublabel_12_country"
+                                        autoComplete="section-input_12 off">
+                                        <option value="">Please Select</option>
+                                        <option value="VietNam">Viet Nam</option>
+
+                                    </select>
+                                    <label class="form-sub-label" for="input_12_country"
+                                        id="sublabel_12_country" style="min-height:13px">Quốc gia </label></span></span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_address" id="id_12"><label
+                    class="form-label form-label-top form-label-auto" id="label_12" for="input_12undefined"
+                    aria-hidden="false"> Thông tin thêm </label>
+                <div id="cid_12" class="form-input-wide" data-layout="full">
+                    <div summary="" class="form-address-table jsTest-addressField">
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-street-line jsTest-address-lineField"><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_addr_line1" formControlName="facebookLink"
+                                        name="q12_address12[addr_line1]" class="form-textbox form-address-line"
+                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        data-component="address_line_1"
+                                        aria-labelledby="label_12 sublabel_12_addr_line1" value="" /><label
+                                        class="form-sub-label" for="input_12_addr_line1" id="sublabel_12_addr_line1"
+                                        style="min-height:13px">Link FaceBook</label></span></span></div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField"><span
+                                class="form-address-line form-address-street-line jsTest-address-lineField"><span
+                                    class="form-sub-label-container" style="vertical-align:top"><input type="text"
+                                        id="input_12_addr_line2" formControlName="instagramLink"
+                                        name="q12_address12[addr_line2]" class="form-textbox form-address-line"
+                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        data-component="address_line_2"
+                                        aria-labelledby="label_12 sublabel_12_addr_line2" value="" /><label
+                                        class="form-sub-label" for="input_12_addr_line2" id="sublabel_12_addr_line2"
+                                        style="min-height:13px">Link Intagram</label></span></span>
+                        </div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+                            <span class="form-address-line form-address-street-line jsTest-address-lineField">
+                                <span class="form-sub-label-container" style="vertical-align:top">
+                                    <input type="file" id="input_12_profile_image" formControlName="profileImage"
+                                        name="q12_address12[profile_image]" class="form-textbox form-address-line"
+                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        data-component="address_line_2" aria-labelledby="label_12 sublabel_12_profile_image"
+                                        accept="image/*" />
+                                    <label class="form-sub-label" for="input_12_profile_image" id="sublabel_12_profile_image"
+                                        style="min-height:13px">Hình ảnh đại diện</label>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="form-address-line-wrapper jsTest-address-line-wrapperField">
+                            <span class="form-address-line form-address-street-line jsTest-address-lineField">
+                                <span class="form-sub-label-container" style="vertical-align:top">
+                                    <button class="save-map-button" mat-button (click)="openMapDialog()">Chọn Vị trí chính xác</button>
+                                </span></span>
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="form-line" data-type="control_text" id="id_37">
+                <div id="cid_37" class="form-input-wide" data-layout="full">
+                    <div id="text_37" class="form-html" data-component="text" tabindex="-1">
+                        <p>Vui lòng đọc và tìm hiểu Chính sách bảo mật của chúng tôi để hiểu cách thông tin của bạn được
+                            sử dụng và chia sẻ, và đánh dấu vào ô bên dưới nếu bạn chấp nhận chính sách.</p>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_checkbox" id="id_33"><label class="form-label form-label-top"
+                    id="label_33" for="input_33_0" aria-hidden="true"> </label>
+                <div id="cid_33" class="form-input-wide" data-layout="full">
+                    <div class="form-single-column" role="group" aria-labelledby="label_33" data-component="checkbox">
+                        <span class="form-checkbox-item" style="clear:left"><span class="dragger-item"></span><input
+                                aria-describedby="label_33" type="checkbox" formControlName="privacyPolicy"
+                                class="form-checkbox" id="input_33_0" name="q33_input33[]"
+                                value="I have read, understood, and accepted the PRIVACY POLICY for membership." /><label
+                                id="label_input_33_0" for="input_33_0">Tôi đã đọc, hiểu và chấp nhận CHÍNH SÁCH BẢO MẬT
+                                cho thành viên.</label></span>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_text" id="id_32">
+                <div id="cid_32" class="form-input-wide" data-layout="full">
+                    <div id="text_32" class="form-html" data-component="text" tabindex="-1">
+                        <div style="border:1px solid #EDEDED;background-color:#fbfcff;">
+                            <p style="text-align:center;"><em>Một khi bạn gửi đơn đăng ký, chúng tôi sẽ liên hệ với bạn
+                                    sớm để hoàn tất đơn đăng ký câu lạc bộ của bạn.</em></p>
+                            <p style="text-align:center;"><em> <strong>Xin cảm ơn!</strong><br /></em></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="form-line" data-type="control_button" id="id_9">
+                <div id="cid_9" class="form-input-wide" data-layout="full">
+                    <div data-align="center"
+                        class="form-buttons-wrapper form-buttons-center   jsTest-button-wrapperField"><button
+                            id="input_9" type="submit"
+                            class="form-submit-button form-submit-button-none submit-button jf-form-buttons jsTest-submitField legacy-submit"
+                            data-component="button" (click)="onSubmit()" data-content="">Đăng ký</button></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</form>

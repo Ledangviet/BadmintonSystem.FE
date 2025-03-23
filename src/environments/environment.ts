@@ -14,6 +14,7 @@ export const environment = {
   // ===================== ENV SERVER ===================
   bookingHubUrl: `${urlBase}:5000/hubs/booking`,
   chatHubUrl: `${urlBase}:5000/hubs/chat`,
+  paymentHubUrl: `${urlBase}:5000/hubs/payment`,
   apiUrl: `${urlBase}/api/v1/`,
   registerHubUrl: `${urlBase}:5000/hubs/register`,
   storeKey:
