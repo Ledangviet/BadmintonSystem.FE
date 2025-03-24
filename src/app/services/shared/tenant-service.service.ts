@@ -16,4 +16,13 @@ export class TenantServiceService {
     return this.apiClient.get<BaseResponseModel>('tenants');
   }
 
+
+  createTenant(data: any){
+    return this.apiClient.post<BaseResponseModel>('tenants', data);
+  }
+
+  createClub(data: any){
+    return this.apiClient.post<BaseResponseModel>('clubs', data);
+  }
+
 }

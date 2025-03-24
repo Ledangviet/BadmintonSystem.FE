@@ -15,6 +15,11 @@ import { ErrorsComponent } from '../../shared/pop-up/errors/errors.component';
 import { LoadingComponent } from '../../shared/pop-up/loading/loading.component';
 import { MapComponent } from '../../shared/map/map.component';
 import { ClubRegisterRequestModel } from '../../../model/club.register.request.model';
+import { TenantServiceService } from '../../../services/shared/tenant-service.service';
+import BaseResponseModel from '../../../model/base.response.model';
+import { AzureBlobServiceService } from '../../../services/shared/azure-blob-service.service';
+import { environment } from '../../../../environments/environment';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-club-register',
@@ -39,6 +44,7 @@ import { ClubRegisterRequestModel } from '../../../model/club.register.request.m
 })
 export class ClubRegisterComponent {
   selectedLocation: string = '';
+  selectedImage: any;
   clubRegisterForm: FormGroup;
   provinces = [
     { name: 'An Giang', value: 'An Giang' },
@@ -108,7 +114,13 @@ export class ClubRegisterComponent {
 
   @ViewChild('map') mapComponent!: MapComponent;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private dialog: MatDialog,
+    private tenantService: TenantServiceService,
+    private azureBlobService: AzureBlobServiceService,
+    private toastr: ToastrService
+  ) {
     this.clubRegisterForm = this.fb.group({
       clubName: ['', Validators.required],
       email: ['', Validators.required, Validators.email],
@@ -133,16 +145,21 @@ export class ClubRegisterComponent {
   }
 
   onSubmit() {
-    if (this.clubRegisterForm.valid) {
+    if (!this.clubRegisterForm.invalid) {
       const formData = this.clubRegisterForm.value;
       const registerRequest = new ClubRegisterRequestModel({
         clubInformation: {
           facebookPageLink: formData.facebookLink,
           instagramLink: formData.instagramLink,
-          mapLink: '', // Assuming mapLink is not part of the form
-          clubId: '' // Assuming clubId is not part of the form
+          mapLink: this.selectedLocation, // Assuming mapLink is not part of the form
+          clubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6" // Assuming clubId is not part of the form
         },
-        clubImages: [], // Assuming clubImages is not part of the form
+        clubImages: [
+          {
+            imageLink: formData.profileImage,
+            clubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+          }
+        ], // Assuming clubImages is not part of the form
         clubAddress: {
           unit: formData.addr_line1,
           street: formData.addr_line2,
@@ -153,12 +170,54 @@ export class ClubRegisterComponent {
         },
         name: formData.clubName,
         hotline: formData.phoneNumber,
-        openingTime: formData.openTime,
-        closingTime: formData.closeTime,
+        openingTime: formData.openTime + ":00",
+        closingTime: formData.closeTime + ":00",
         code: '' // Assuming code is not part of the form
       });
-      console.log(registerRequest);
+      let createTenantModel = {
+        "name": formData.clubName,
+        "email": formData.email,
+        "hotLine": formData.phoneNumber,
+        "city": formData.city,
+        "address": formData.addr_line1,
+        "slogan": formData.clubName,
+        "description": formData.clubName,
+        "image": "#",
+        "isolated": true
+      };
+
+      this.tenantService.createTenant(createTenantModel).subscribe((res: BaseResponseModel) => {
+        if (res.isSuccess) {
+          let code = res.value.code;
+          let name = code + this.selectedImage.name;
+          registerRequest.code = code;
+          
+          this.tenantService.createClub(registerRequest).subscribe((res: BaseResponseModel) => {
+            if (res.isSuccess) {
+              this.toastr.success("Your club has been registered successfully", "Success");
+            } else {
+              this.toastr.error("Failed to register your club", "Error");
+            }
+          })
+          this.azureBlobService.uploadImage(environment.storeKey,this.selectedImage, name,() =>{
+            registerRequest.code = code;
+            this.tenantService.createClub(registerRequest).subscribe((res: BaseResponseModel) => {
+              if(res.isSuccess){
+                this.toastr.success("Your club has been registered successfully", "Success");
+              }else{
+                this.toastr.error("Failed to register your club", "Error");
+              }
+            })
+          });
+        }
+      });
+
     }
+  }
+
+  imageSelected(event: any) {
+    const file = event.target.files[0] as File;
+    this.selectedImage = file;
   }
 
   openMapDialog() {
@@ -171,5 +230,5 @@ export class ClubRegisterComponent {
 
   }
 
-  
+
 }

@@ -175,10 +175,10 @@
                             <span class="form-address-line form-address-street-line jsTest-address-lineField">
                                 <span class="form-sub-label-container" style="vertical-align:top">
                                     <input type="file" id="input_12_profile_image" formControlName="profileImage"
-                                        name="q12_address12[profile_image]" class="form-textbox form-address-line"
-                                        data-defaultvalue="" autoComplete="section-input_12 off"
+                                        name="q12_address12[profile_image]" autoComplete="section-input_12 off"
                                         data-component="address_line_2" aria-labelledby="label_12 sublabel_12_profile_image"
-                                        accept="image/*" />
+                                        accept="image/*" 
+                                        (change)="imageSelected($event)"/>
                                     <label class="form-sub-label" for="input_12_profile_image" id="sublabel_12_profile_image"
                                         style="min-height:13px">Hình ảnh đại diện</label>
                                 </span>
@@ -233,7 +233,7 @@
                         class="form-buttons-wrapper form-buttons-center   jsTest-button-wrapperField"><button
                             id="input_9" type="submit"
                             class="form-submit-button form-submit-button-none submit-button jf-form-buttons jsTest-submitField legacy-submit"
-                            data-component="button" (click)="onSubmit()" data-content="">Đăng ký</button></div>
+                            data-component="button" data-content="">Đăng ký</button></div>
                 </div>
             </li>
         </ul>

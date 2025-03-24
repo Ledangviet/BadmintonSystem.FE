@@ -24,7 +24,7 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.11",
-    "@azure/storage-blob": "^12.26.0",
+    "@azure/storage-blob": "^12.27.0",
     "@microsoft/signalr": "^8.0.7",
     "@ngbracket/ngx-layout": "^17.0.1",
     "@types/googlemaps": "^3.43.3",
