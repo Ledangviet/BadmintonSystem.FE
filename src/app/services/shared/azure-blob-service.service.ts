@@ -66,5 +66,9 @@ export class AzureBlobServiceService {
             .getContainerClient(this.picturesContainer);
   }
 
+  public getImageUrl(name: string){
+    return `https://${this.picturesAccount}.blob.core.windows.net/${this.picturesContainer}/${name}`
+  }
+
   
 }

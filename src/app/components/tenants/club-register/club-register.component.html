@@ -1,4 +1,4 @@
-<form [formGroup]="clubRegisterForm" class="jotform-form" (ngSubmit)="onSubmit()">
+<form [formGroup]="clubRegisterForm" class="jotform-form">
     <div role="main" class="form-all">
         <ul class="form-section page-section" role="presentation">
             <li id="cid_10" class="form-input-wide" data-type="control_head">
@@ -233,7 +233,7 @@
                         class="form-buttons-wrapper form-buttons-center   jsTest-button-wrapperField"><button
                             id="input_9" type="submit"
                             class="form-submit-button form-submit-button-none submit-button jf-form-buttons jsTest-submitField legacy-submit"
-                            data-component="button" data-content="">Đăng ký</button></div>
+                            data-component="button" data-content="" (click)="onSubmit()">Đăng ký</button></div>
                 </div>
             </li>
         </ul>

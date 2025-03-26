@@ -138,13 +138,13 @@
 
 .list-card {
     display: grid;
-    gap: 20px;
+    gap: 40px;
     grid-template-columns: repeat(3, 1fr);
 }
 
 .card {
     flex: 1;
-    min-width: 300px;
+    width: 600px;
     background: white;
     border-radius: 8px;
     overflow: hidden;

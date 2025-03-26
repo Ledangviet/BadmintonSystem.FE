@@ -111,6 +111,7 @@ export class BookingDetailComponent {
     this.yardList.forEach((yard) => {
       total += this.getYardTotalPrice(yard.id);
     });
+    this.bookingService.totalPrice = total;
     return total;
   }
 

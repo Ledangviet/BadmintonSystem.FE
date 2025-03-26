@@ -10,6 +10,7 @@ import { BookModel } from '../../model/book.request.model';
   providedIn: 'root',
 })
 export class BookingMainService {
+  totalPrice = 0;
   selectedDate = new Date();
   selectedYardPrice: YardPriceModel[] = [];
   selectedYardPriceChangeEmitter = new EventEmitter();

@@ -8,11 +8,15 @@
             <mat-card-content>
                 <form [formGroup]="checkoutForm" (ngSubmit)="onSubmitCheckout()">
                     <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
+                        <mat-label>Tên</mat-label>
                         <input matInput formControlName="name" required>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
-                        <mat-label>Phone Number</mat-label>
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Số điện thoại</mat-label>
                         <input matInput formControlName="phone" required>
                     </mat-form-field>
                     <mat-form-field class="none" appearance="outline">
@@ -20,13 +24,13 @@
                         <input matInput formControlName="prepay" required>
                     </mat-form-field>                  
                     <mat-form-field appearance="outline">
-                        <mat-label>Discount code</mat-label>
+                        <mat-label>Mã giảm giá(nếu có)</mat-label>
                         <input matInput formControlName="discount">
                     </mat-form-field>
-                    <button class="login-button " mat-raised-button type="submit">Check Out</button>
+                    <button class="login-button " mat-raised-button type="submit">Thanh toán</button>
                 </form>
             </mat-card-content>
         </mat-card>
     </div>
-    
+    @if(isLoading){<app-loading ></app-loading>}
 </div>

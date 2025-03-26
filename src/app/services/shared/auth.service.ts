@@ -21,6 +21,15 @@ export class AuthService {
 
   getIsAuthenticated(): boolean {
     let isAuthen = localStorage.getItem('isAuthenticated');
+    let expiredTime = localStorage.getItem('expiredTime');
+    if (isAuthen && expiredTime) {
+      let expiredTimeNumber = Number(expiredTime);
+      if (expiredTimeNumber < Date.now()) {
+        isAuthen = 'false';
+        localStorage.setItem('accessToken', '');
+        localStorage.setItem('isAuthenticated', 'false');
+      }
+    }
     return Boolean(isAuthen);
   }
 

@@ -147,6 +147,8 @@ export class AuthComponent {
               localStorage.setItem('accessToken', result.value.accessToken);
               localStorage.setItem('email', result.value.user.email);
               localStorage.setItem('isAuthenticated', 'true');
+              let expiredTime = Date.now() + 3600000;
+              localStorage.setItem('expiredTime', expiredTime.toString());
               this.router.navigate(['/home']);
               this.authService.loginStateChangeEmitter.emit(true);
             }

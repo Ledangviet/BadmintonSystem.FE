@@ -361,9 +361,8 @@ export class DashboardComponent {
     let phoneNum = this.phoneNum.toString();
   
     let percent = parseInt(this.selectedPercent.toString());
-    let saleID = undefined;
     let yardPriceIds = this.selectedTimeSlotIDs;
-    let model = new BookModel(name, phoneNum, saleID, percent, yardPriceIds);
+    let model = new BookModel(name, phoneNum, percent, yardPriceIds);
 
     this.bookingService.book(model).subscribe((result: BaseResponseModel) => {
       if (result.isSuccess) {

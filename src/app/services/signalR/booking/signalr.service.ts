@@ -8,18 +8,21 @@ import MessageResponseReserveModel from '../../../model/bookReserve.model';
   providedIn: 'root',
 })
 export class SignalRService {
-  private hubConnection!: signalR.HubConnection;
-  private messageSubject =
-    new BehaviorSubject<MessageResponseReserveModel | null>(null);
-  public message$ = this.messageSubject.asObservable();
+  private hubMessageConnection!: signalR.HubConnection;
+  private hubPaymentConnection!: signalR.HubConnection;
+  private messageSubject = new BehaviorSubject<MessageResponseReserveModel | null>(null);
 
-  constructor() {}
+  private paymentSubject = new BehaviorSubject<any>(null);
+  public message$ = this.messageSubject.asObservable();
+  public payment$ = this.paymentSubject.asObservable();
+
+  constructor() { }
 
   bookingUrl: string = environment.bookingHubUrl;
 
   startConnection(accessToken: string): Promise<MessageResponseReserveModel> {
     return new Promise((resolve, reject) => {
-      this.hubConnection = new signalR.HubConnectionBuilder()
+      this.hubMessageConnection = new signalR.HubConnectionBuilder()
         .withUrl(`${this.bookingUrl}?access_token=${accessToken}`, {
           skipNegotiation: true, // Sử dụng WebSocket trực tiếp
           transport: signalR.HttpTransportType.WebSockets,
@@ -27,13 +30,13 @@ export class SignalRService {
         .withAutomaticReconnect() // Tự động kết nối lại nếu bị mất
         .build();
 
-      this.hubConnection
+      this.hubMessageConnection
         .start()
         .then(() => {
-          console.log('WebSocket connected');
+          console.log('WebSocket connected chat hub' );
 
           // Lắng nghe sự kiện 'ReceiveMessage'
-          this.hubConnection.on(
+          this.hubMessageConnection.on(
             'ReceiveMessage',
             (message: MessageResponseReserveModel) => {
               this.messageSubject.next(message); // Cập nhật tin nhắn mới
@@ -49,6 +52,39 @@ export class SignalRService {
   }
 
   stopConnection(): void {
-    this.hubConnection.stop().then(() => console.log('WebSocket disconnected'));
+    this.hubMessageConnection.stop().then(() => console.log('WebSocket disconnected'));
+    this.hubPaymentConnection.stop().then(() => console.log('WebSocket disconnected'));
+  }
+
+
+  startPaymentConnection(accessToken: string): Promise<MessageResponseReserveModel> {
+    return new Promise((resolve, reject) => {
+      this.hubPaymentConnection = new signalR.HubConnectionBuilder()
+        .withUrl(`${environment.paymentHubUrl}?access_token=${accessToken}`, {
+          skipNegotiation: true, // Sử dụng WebSocket trực tiếp
+          transport: signalR.HttpTransportType.WebSockets,
+        })
+        .withAutomaticReconnect() // Tự động kết nối lại nếu bị mất
+        .build();
+
+      this.hubPaymentConnection
+        .start()
+        .then(() => {
+          console.log('WebSocket connected payment hub');
+
+          // Lắng nghe sự kiện 'ReceiveMessage'
+          this.hubPaymentConnection.on(
+            'ReceiveMessage',
+            (message: any) => {
+              this.messageSubject.next(message); // Cập nhật tin nhắn mới
+              resolve(message); // Resolve promise với tin nhắn nhận được
+            }
+          );
+        })
+        .catch((err) => {
+          console.error('WebSocket connection failed:', err);
+          reject(err); // Reject promise nếu có lỗi
+        });
+    });
   }
 }

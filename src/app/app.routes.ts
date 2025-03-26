@@ -14,6 +14,7 @@ import { AdminChatComponent } from './components/admin/admin-chat/admin-chat.com
 import { TenantAdminComponent } from './components/tenants/tenant-admin/tenant-admin.component';
 import { ClubComponent } from './components/tenants/club/club.component';
 import { ClubRegisterComponent } from './components/tenants/club-register/club-register.component';
+import { RegisterSuccessComponent } from './components/tenants/register-success/register-success.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,8 @@ export const routes: Routes = [
         children: [
             { path: '', component: TenantAdminComponent },
             { path: 'home', component: TenantAdminComponent },
+            { path: 'club', component: ClubComponent },
+            { path: 'clubsuccess', component: RegisterSuccessComponent },
             { path: 'register-club', component: ClubRegisterComponent },
             { path: 'booking', component: BookComponent },
             { path: 'auth', component: AuthComponent },

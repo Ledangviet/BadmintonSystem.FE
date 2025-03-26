@@ -33,25 +33,21 @@
 
         <div class="list-card">
 
-            @for(tenant of listTenant; track tenant.id){
-                <div class="card">
-                    <div class="card-image">
-                        <img src="https://vietle.blob.core.windows.net/badminton/card-img.png" alt="Sân Phương My">
-                    </div>
-                    <div class="card-content">
-                        <h2 class="card-title">{{tenant.name}}</h2>
-                        <p class="card-address">Address: KP5 - Trảng Dài - Biên Hoà - Đồng Nai</p>
-                        <div class="card-buttons">
-                            <a href="booking.html">
-                                <button class="book-now-content">Book Now</button>
-                            </a>
-                            <a href="#" class="view-more">View More</a>
-                        </div>
+            @for(club of listClub; track club.id){
+            <div class="card">
+                <div class="card-image">
+                    <img [src]=club.clubImages[0].imageLink alt="Sân Phương My">
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">{{club.name}}</h2>
+                    <p class="card-address">Address: KP5 - Trảng Dài - Biên Hoà - Đồng Nai</p>
+                    <div class="card-buttons">
+                        <button (click)="clickClub(club)" class="book-now-content">Đặt sân</button>
+                        <a href="#" class="view-more">View More</a>
                     </div>
                 </div>
-            }          
+            </div>
+            }
         </div>
     </div>
 </div>
-
-

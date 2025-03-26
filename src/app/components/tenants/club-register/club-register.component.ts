@@ -20,6 +20,8 @@ import BaseResponseModel from '../../../model/base.response.model';
 import { AzureBlobServiceService } from '../../../services/shared/azure-blob-service.service';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { RegisterSuccessComponent } from '../register-success/register-success.component';
 
 @Component({
   selector: 'app-club-register',
@@ -119,7 +121,8 @@ export class ClubRegisterComponent {
     private dialog: MatDialog,
     private tenantService: TenantServiceService,
     private azureBlobService: AzureBlobServiceService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.clubRegisterForm = this.fb.group({
       clubName: ['', Validators.required],
@@ -141,7 +144,6 @@ export class ClubRegisterComponent {
   }
 
   ngOnInit() {
-
   }
 
   onSubmit() {
@@ -151,15 +153,15 @@ export class ClubRegisterComponent {
         clubInformation: {
           facebookPageLink: formData.facebookLink,
           instagramLink: formData.instagramLink,
-          mapLink: this.selectedLocation, // Assuming mapLink is not part of the form
-          clubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6" // Assuming clubId is not part of the form
+          mapLink: this.selectedLocation,
+          clubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
         },
         clubImages: [
           {
             imageLink: formData.profileImage,
             clubId: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
           }
-        ], // Assuming clubImages is not part of the form
+        ],
         clubAddress: {
           unit: formData.addr_line1,
           street: formData.addr_line2,
@@ -191,21 +193,15 @@ export class ClubRegisterComponent {
           let code = res.value.code;
           let name = code + this.selectedImage.name;
           registerRequest.code = code;
-          
-          this.tenantService.createClub(registerRequest).subscribe((res: BaseResponseModel) => {
-            if (res.isSuccess) {
-              this.toastr.success("Your club has been registered successfully", "Success");
-            } else {
-              this.toastr.error("Failed to register your club", "Error");
-            }
-          })
           this.azureBlobService.uploadImage(environment.storeKey,this.selectedImage, name,() =>{
             registerRequest.code = code;
+            registerRequest.clubImages[0].imageLink = this.azureBlobService.getImageUrl(name);
             this.tenantService.createClub(registerRequest).subscribe((res: BaseResponseModel) => {
               if(res.isSuccess){
-                this.toastr.success("Your club has been registered successfully", "Success");
+                this.toastr.success("Đăng ký câu lạc bộ thành công!", "Thành công");
+                this.dialog.open(RegisterSuccessComponent); // Show success dialog
               }else{
-                this.toastr.error("Failed to register your club", "Error");
+                this.toastr.error("Có lỗi xảy ra!", "Error");
               }
             })
           });
@@ -227,7 +223,6 @@ export class ClubRegisterComponent {
       this.selectedLocation = JSON.stringify(location);
       dialogRef.close();
     });
-
   }
 
 

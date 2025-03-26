@@ -13,16 +13,24 @@ export class TenantServiceService {
 
 
   getAllTenants() {
-    return this.apiClient.get<BaseResponseModel>('tenants');
+    return this.apiClient.getNoHeader<BaseResponseModel>('tenants');
   }
 
 
   createTenant(data: any){
-    return this.apiClient.post<BaseResponseModel>('tenants', data);
+    return this.apiClient.postNoHeader<BaseResponseModel>('tenants', data);
   }
 
   createClub(data: any){
-    return this.apiClient.post<BaseResponseModel>('clubs', data);
+    return this.apiClient.postNoHeader<BaseResponseModel>('clubs', data);
+  }
+
+  getAllClubs() {
+    return this.apiClient.getNoHeader<BaseResponseModel>('clubs/filter-and-sort?PageIndex=0&PageSize=50');
+  }
+
+  getClubById(id: string) {
+    return this.apiClient.getNoHeader<BaseResponseModel>(`clubs/${id}`);
   }
 
 }

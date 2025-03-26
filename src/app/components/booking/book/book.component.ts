@@ -23,6 +23,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { SignalRService } from '../../../services/signalR/booking/signalr.service';
 import { ChatComponent } from '../../shared/chat/chat.component';
+import { Tenant } from '../../../model/tenant.model';
+import { TenantServiceService } from '../../../services/shared/tenant-service.service';
 
 @Component({
   selector: 'app-book',
@@ -64,7 +66,8 @@ export class BookComponent {
     private router: Router,
     private resourceService: ResourceService,
     private signalRService: SignalRService,
-    private authService: AuthService
+    private authService: AuthService,
+    private tenantService: TenantServiceService
   ) {
     this.selectedTimeform = this.fb.group({
       dateTime: [this.selectedDate],
@@ -72,10 +75,18 @@ export class BookComponent {
   }
 
   ngOnInit() {
-
+    if(localStorage.getItem('tenant') == null){
+    }
     let isAuthenticated = this.authService.getIsAuthenticated();
     if (!isAuthenticated) this.router.navigate(['/auth']);
-
+    
+    let newDate = localStorage.getItem('selectedDate');
+    if(newDate != null){
+      let localDate = new Date(newDate);
+      this.selectedDate = localDate;
+      this.selectedTimeform.get('dateTime')?.setValue(localDate);
+    }
+    
     // Handler SignalR
     if (this.accessToken) {
       this.signalRService
@@ -145,6 +156,7 @@ export class BookComponent {
       let value = this.selectedTimeform.get('dateTime')?.value;
       if (value) {
         this.selectedDate = value;
+        localStorage.setItem('selectedDate', this.selectedDate.toString());
         this.bookingService.selectedDate = this.selectedDate;
         let date = new Date(value);
         date.setHours(date.getHours() + 8);

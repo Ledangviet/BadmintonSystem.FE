@@ -22,6 +22,7 @@ export class ClubRegisterRequestModel {
     openingTime: string;
     closingTime: string;
     code: string;
+    id: string = "";
 
     constructor(data: any) {
         this.clubInformation = data.clubInformation;
