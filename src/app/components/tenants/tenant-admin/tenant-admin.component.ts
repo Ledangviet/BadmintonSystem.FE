@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { TenantServiceService } from '../../../services/shared/tenant-service.service';
 import { Tenant } from '../../../model/tenant.model';
 import { ClubRegisterRequestModel } from '../../../model/club.register.request.model';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tenant-admin',
   standalone: true,
-  imports: [],
+  imports: [
+    RouterModule
+  ],
   templateUrl: './tenant-admin.component.html',
   styleUrl: './tenant-admin.component.scss'
 })

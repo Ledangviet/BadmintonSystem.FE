@@ -23,7 +23,7 @@ export const routes: Routes = [
         children: [
             { path: '', component: TenantAdminComponent },
             { path: 'home', component: TenantAdminComponent },
-            { path: 'club', component: ClubComponent },
+            { path: 'club/:id', component: ClubComponent },
             { path: 'clubsuccess', component: RegisterSuccessComponent },
             { path: 'register-club', component: ClubRegisterComponent },
             { path: 'booking', component: BookComponent },

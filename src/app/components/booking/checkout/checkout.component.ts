@@ -58,6 +58,7 @@ export class CheckoutComponent {
       prepay: ['100', [Validators.required]],
       phone: ['', [Validators.required]],
       discount: [''],
+      email: ['ledangviet1998@gmail.com', [Validators.required, Validators.email]],
     });
   }
 
@@ -78,6 +79,7 @@ export class CheckoutComponent {
     console.log(guid.toString());
     let name = this.checkoutForm.get('name')?.value;
     let phoneNum = this.checkoutForm.get('phone')?.value;
+    let mail = this.checkoutForm.get('email')?.value;
     let saleID = this.checkoutForm.get('discount')?.value;
     let percent = this.checkoutForm.get('prepay')?.value;
     let tenant = localStorage.getItem('tenant')?.toString();
