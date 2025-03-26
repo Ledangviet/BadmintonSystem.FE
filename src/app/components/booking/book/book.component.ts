@@ -25,6 +25,8 @@ import { SignalRService } from '../../../services/signalR/booking/signalr.servic
 import { ChatComponent } from '../../shared/chat/chat.component';
 import { Tenant } from '../../../model/tenant.model';
 import { TenantServiceService } from '../../../services/shared/tenant-service.service';
+import { ClubModel } from '../../../model/club.model';
+import { ChatBotComponent } from '../../shared/chat-bot/chat-bot.component';
 
 @Component({
   selector: 'app-book',
@@ -41,11 +43,13 @@ import { TenantServiceService } from '../../../services/shared/tenant-service.se
     MatInputModule,
     BookingDetailComponent,
     MatButtonModule,
+    ChatBotComponent
   ],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
 })
 export class BookComponent {
+
   yardList: YardModel[] = [];
   timeSlots: TimeSlotModel[] = [];
   yardPriceList: any;
@@ -53,6 +57,7 @@ export class BookComponent {
   minDate = new Date();
   selectedDate: Date = new Date();
   accessToken = localStorage.getItem('accessToken')?.toString();
+  club: ClubModel | null = null;
 
   get anyPriceSelected() {
     const selected = this.bookingService.selectedYardPrice.filter(
@@ -75,6 +80,7 @@ export class BookComponent {
   }
 
   ngOnInit() {
+
     if(localStorage.getItem('tenant') == null){
     }
     let isAuthenticated = this.authService.getIsAuthenticated();
@@ -170,6 +176,17 @@ export class BookComponent {
     });
 
     this.UIResource = this.resourceService.getResource(this.UIResource);
+
+
+    // get current club
+
+    this.tenantService.getAllClubs().subscribe((res) => {
+      let code = localStorage.getItem('tenant')?.toString();
+      if(res.isSuccess && code != null){
+        this.club = res.value.items.find((x: ClubModel) => x.code === code) as ClubModel;
+      }
+    });
+    
   }
 
   public UIResource = {

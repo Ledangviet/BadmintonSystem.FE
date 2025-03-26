@@ -15,6 +15,7 @@ import { TenantAdminComponent } from './components/tenants/tenant-admin/tenant-a
 import { ClubComponent } from './components/tenants/club/club.component';
 import { ClubRegisterComponent } from './components/tenants/club-register/club-register.component';
 import { RegisterSuccessComponent } from './components/tenants/register-success/register-success.component';
+import { ClubSettingComponent } from './components/admin/club-setting/club-setting.component';
 
 export const routes: Routes = [
     {
@@ -44,6 +45,7 @@ export const routes: Routes = [
             { path: 'yard/price', component: YardPriceComponent },
             { path: 'service', component: ServicesComponent },
             { path: 'chat', component: AdminChatComponent },
+            { path: 'setting', component: ClubSettingComponent },
         ],
     }
 ];

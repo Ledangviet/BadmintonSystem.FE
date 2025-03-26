@@ -14,7 +14,7 @@
       </form>
     </div>
     <div class="fix-booking-banner">{{this.UIResource.fixBooking}}<br>
-      <div class="name-banner">{{this.UIResource.fixPhone}}</div>
+      <div class="name-banner">{{this.club?.hotline || this.UIResource.fixPhone}} </div>
     </div>
   </div>
   <div class="table-container">
@@ -57,4 +57,5 @@
 
   <!-- Add Chat Widget here -->
   <app-chat></app-chat>
+  <app-chat-bot></app-chat-bot>
 </div>
