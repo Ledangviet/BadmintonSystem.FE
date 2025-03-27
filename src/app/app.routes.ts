@@ -16,6 +16,8 @@ import { ClubComponent } from './components/tenants/club/club.component';
 import { ClubRegisterComponent } from './components/tenants/club-register/club-register.component';
 import { RegisterSuccessComponent } from './components/tenants/register-success/register-success.component';
 import { ClubSettingComponent } from './components/admin/club-setting/club-setting.component';
+import { PaymentSuccessComponent } from './components/booking/payment-success/payment-success.component';
+import { SaleReportComponent } from './components/admin/sale-report/sale-report.component';
 
 export const routes: Routes = [
     {
@@ -24,6 +26,7 @@ export const routes: Routes = [
         children: [
             { path: '', component: TenantAdminComponent },
             { path: 'home', component: TenantAdminComponent },
+            { path: 'payment/success', component: PaymentSuccessComponent },
             { path: 'club/:id', component: ClubComponent },
             { path: 'clubsuccess', component: RegisterSuccessComponent },
             { path: 'register-club', component: ClubRegisterComponent },
@@ -46,6 +49,7 @@ export const routes: Routes = [
             { path: 'service', component: ServicesComponent },
             { path: 'chat', component: AdminChatComponent },
             { path: 'setting', component: ClubSettingComponent },
+            { path: 'report', component: SaleReportComponent },
         ],
     }
 ];

@@ -93,9 +93,9 @@ export class CheckoutComponent {
     model.tenant = tenant ? tenant : '';
     let isBook = false;
     this.bookingService.checkOut(guid.toString(), this.bookingService.totalPrice.toString(), "Thanh toán cho hóa đơn số" + guid.toString()).subscribe((result: BaseResponseModel) => {
-      if (result.isSuccess) {
+      if (result.isSuccess) {      
         window.open(result.value.payUrl, "_blank");
-
+        window.self.close();
         setTimeout(() => {
           isBook = true;
           this.bookingService.book(model).pipe(
