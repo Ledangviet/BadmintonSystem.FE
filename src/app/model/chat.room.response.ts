@@ -48,9 +48,12 @@ export class ChatMessageDetailModel {
 }
 
 export class ChatRoomModel {
-  user: UserResponseModel;
-  chatMessage: ChatMessageDetailModel;
+  // user: UserResponseModel;
+  chatMessage: ChatMessageDetailModel | null;
   userId: string;
+  userName: string;
+  email: string;
+  avatar: string;
   createdDate: string;
   modifiedDate: string | null;
   createdBy: string;
@@ -60,9 +63,12 @@ export class ChatRoomModel {
   id: string;
 
   constructor(
-    user: UserResponseModel,
-    chatMessage: ChatMessageDetailModel,
+    // user: UserResponseModel,
+    chatMessage: ChatMessageDetailModel | null,
     userId: string,
+    userName: string,
+    email: string,
+    avatar: string,
     createdDate: string,
     modifiedDate: string | null,
     createdBy: string,
@@ -71,9 +77,12 @@ export class ChatRoomModel {
     deletedAt: string | null,
     id: string
   ) {
-    this.user = user;
+    // this.user = user;
     this.chatMessage = chatMessage;
     this.userId = userId;
+    this.userName = userName;
+    this.email = email;
+    this.avatar = avatar;
     this.createdDate = createdDate;
     this.modifiedDate = modifiedDate;
     this.createdBy = createdBy;

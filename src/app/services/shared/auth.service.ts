@@ -63,7 +63,7 @@ export class AuthService {
     if (!email) {
       throw new Error('Email is required');
     }
-    return this.apiClient.post<LoginResponseModel>(
+    return this.apiClient.postNoHeader<LoginResponseModel>(
       'auths/admin/email/get-authorization',
       { email: email }
     );

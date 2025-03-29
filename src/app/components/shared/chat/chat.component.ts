@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { SignalRChatService } from '../../../services/signalR/chat/signalr.service';
 import ChatModel from '../../../model/chat.message.model';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { ChatRoomRequest } from '../../../model/chat.room.request';
 
 @Component({
   selector: 'app-chat',
@@ -90,11 +91,13 @@ export class ChatComponent implements AfterViewChecked {
         .then(() => {
           this.signalRChatService.message$.subscribe((message) => {
             if (!message) return;
-            this.handleWhenChangeMessages(
-              message.content,
-              message.createdDate,
-              message.isAdmin
-            );
+            if (message.chatRoomId == this.chatRoomId) {
+              this.handleWhenChangeMessages(
+                message.content,
+                message.createdDate,
+                message.isAdmin
+              );
+            }
           });
         })
         .catch((err) => {
@@ -105,13 +108,31 @@ export class ChatComponent implements AfterViewChecked {
     this.authService
       .userDetail(this.email)
       .subscribe((result: LoginResponseModel) => {
-        this.userDetail = result.value;
+        this.userDetail = result.value.user;
+        this.handlerGetChatRoom(result.value);
+        this.handlerGetChatMessage(result.value.user.id);
       });
+  }
 
+  handlerGetChatRoom(user: any) {
+    const chatRoomRequest: ChatRoomRequest = {
+      appRoleType: 3,
+      userId: user.user.id,
+      userName: user.user.userName,
+      email: user.user.email,
+      avatar: user.user.avatar,
+    };
     this.chatService
-      .getChatMessageList(1, 30, '')
+      .getChatRoom(chatRoomRequest)
       .subscribe((result: BaseResponseModel) => {
-        this.chatRoomId = result.value.items[0].chatRoomId;
+        this.chatRoomId = result.value.items[0].id;
+      });
+  }
+
+  handlerGetChatMessage(userId: string) {
+    this.chatService
+      .getChatMessageList(1, 30, userId)
+      .subscribe((result: BaseResponseModel) => {
         this.listChatMessage = result.value.items.sort(
           (a: any, b: any) =>
             new Date(b.createdDate).getTime() -
@@ -121,7 +142,6 @@ export class ChatComponent implements AfterViewChecked {
         if (isAdmin) this.isRead = this.listChatMessage[0].isRead;
       });
   }
-
   toggleChat() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
@@ -161,12 +181,12 @@ export class ChatComponent implements AfterViewChecked {
 
   sendMessage(newMessage: string) {
     if (newMessage.trim() === '') return;
-    this.handleWhenChangeMessages(newMessage, new Date().toISOString(), false);
 
     var model: ChatModel = {
       content: newMessage,
       imageUrl: 'kh co',
-      userId: this.userDetail.user.id,
+      userId: this.userDetail.id,
+      isAdmin: false,
     };
 
     this.chatService.sendMessage(model).subscribe();
