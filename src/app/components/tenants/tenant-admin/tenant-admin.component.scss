@@ -137,14 +137,14 @@
 
 
 .list-card {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
     gap: 40px;
-    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between ;
 }
 
 .card {
-    flex: 1;
-    width: 600px;
+    width: 550px;
     background: white;
     border-radius: 8px;
     overflow: hidden;

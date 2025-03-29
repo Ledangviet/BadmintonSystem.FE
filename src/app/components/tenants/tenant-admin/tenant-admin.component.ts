@@ -3,12 +3,14 @@ import { TenantServiceService } from '../../../services/shared/tenant-service.se
 import { Tenant } from '../../../model/tenant.model';
 import { ClubRegisterRequestModel } from '../../../model/club.register.request.model';
 import { Router, RouterModule } from '@angular/router';
+import { BlogsComponent } from '../blogs/blogs.component';
 
 @Component({
   selector: 'app-tenant-admin',
   standalone: true,
   imports: [
-    RouterModule
+    RouterModule,
+    BlogsComponent
   ],
   templateUrl: './tenant-admin.component.html',
   styleUrl: './tenant-admin.component.scss'
@@ -39,4 +41,7 @@ export class TenantAdminComponent {
     this.router.navigate(['/booking']);
   }
 
+  clickBook(){
+    
+  }
 }
