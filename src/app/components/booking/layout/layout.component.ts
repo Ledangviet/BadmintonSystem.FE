@@ -91,5 +91,16 @@ export class LayoutComponent {
     this.router.navigate(['/admin']);
   }
 
+  onClickBook(){
+    this.router.navigate(['/home']);
+    this.scrollToClubList();
+  }
+
+  scrollToClubList() {
+    const element = document.getElementById('club-list-section');
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
 }

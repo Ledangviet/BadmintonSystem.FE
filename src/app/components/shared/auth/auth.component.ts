@@ -94,7 +94,8 @@ export class AuthComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private resourceService: ResourceService
   ) {
     this.loginForm = this.fb.group({
       email: ['ledangviet001@gmail.com', [Validators.required, Validators.email]],
@@ -134,6 +135,10 @@ export class AuthComponent {
       dateOfBirth: [''],
       avatarUrl: [''],
     });
+  }
+
+  ngOnInit() {
+    this.UIResource = this.resourceService.getResource(this.UIResource);
   }
   onSubmitLogin() {
     this.isLoading = true;

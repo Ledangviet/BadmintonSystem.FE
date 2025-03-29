@@ -89,8 +89,13 @@ export class BookComponent {
     let newDate = localStorage.getItem('selectedDate');
     if(newDate != null){
       let localDate = new Date(newDate);
-      this.selectedDate = localDate;
-      this.selectedTimeform.get('dateTime')?.setValue(localDate);
+      let today = new Date();
+      today.setHours(0, 0, 0, 0); // Reset time to midnight for accurate comparison
+    
+      if (localDate >= today) {
+        this.selectedDate = localDate;
+        this.selectedTimeform.get('dateTime')?.setValue(localDate);
+      }
     }
     
     // Handler SignalR

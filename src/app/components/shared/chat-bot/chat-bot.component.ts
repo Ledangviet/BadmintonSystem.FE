@@ -22,9 +22,6 @@ export class ChatBotComponent {
   toggleChat() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
-      // this.chatService.readAllMessage(this.chatRoomId).subscribe();
-      // this.isRead = true;
-      // this.focusInput();
     }
   }
 }
