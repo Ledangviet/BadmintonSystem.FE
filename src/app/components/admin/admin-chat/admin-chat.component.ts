@@ -18,6 +18,9 @@ import BaseResponseModel from '../../../model/base.response.model';
 import UserResponseModel from '../../../model/user.response.model';
 import ChatModel from '../../../model/chat.message.model';
 import { SignalRChatService } from '../../../services/signalR/chat/signalr.service';
+import { ChatRoomRequest } from '../../../model/chat.room.request';
+import { AuthService } from '../../../services/shared/auth.service';
+import LoginResponseModel from '../../../model/login.response.model';
 
 @Component({
   selector: 'app-admin-chat',
@@ -31,25 +34,32 @@ export class AdminChatComponent implements AfterViewChecked {
   @ViewChild('inputFocus') inputFocus!: ElementRef;
   @Output() messageAdded = new EventEmitter<void>();
 
+  email = localStorage.getItem('email')?.toString();
   newMessage = '';
   searchQuery = '';
   listRoomChat: ChatRoomModel[] = [];
   listMessChat: ChatMessageModel[] = [];
-  selectedUser: UserResponseModel = {
+  selectedRoomChat: ChatRoomModel = {
+    chatMessage: null,
+    userId: '',
     userName: '',
     email: '',
-    fullName: '',
-    dateOfBirth: '',
-    phoneNumber: '',
-    gender: 1,
-    avatarUrl: '',
+    avatar: '',
+    createdDate: '',
+    modifiedDate: null,
+    createdBy: '',
+    modifiedBy: null,
+    isDeleted: false,
+    deletedAt: null,
     id: '',
   };
   accessToken = localStorage.getItem('accessToken')?.toString();
   chatRoomId: string = '';
+  userDetail: any;
 
   constructor(
     private chatService: ChatService,
+    private authService: AuthService,
     private signalRChatService: SignalRChatService
   ) {}
 
@@ -67,6 +77,7 @@ export class AdminChatComponent implements AfterViewChecked {
         .startConnection(this.accessToken)
         .then(() => {
           this.signalRChatService.message$.subscribe((message) => {
+            this.handlerGetChatRoomLoad(this.userDetail);
             if (!message) return;
             if (message.chatRoomId != this.chatRoomId) return;
             this.handleWhenChangeMessages(
@@ -82,17 +93,52 @@ export class AdminChatComponent implements AfterViewChecked {
         });
     }
 
-    this.chatService.getChatRoomByAdminList(1, 10).subscribe((result) => {
-      if (result.isSuccess) {
+    this.authService
+      .userDetail(this.email)
+      .subscribe((result: LoginResponseModel) => {
+        this.userDetail = result.value.user;
+        this.handlerGetChatRoom(result.value.user);
+        // this.handlerGetChatMessage(result.value.user.id);
+      });
+  }
+
+  handlerGetChatRoomLoad(user: any) {
+    const chatRoomRequest: ChatRoomRequest = {
+      appRoleType: 1,
+      userId: user.id,
+      userName: user.userName,
+      email: user.email,
+      avatar: user.avatar,
+    };
+    this.chatService
+      .getChatRoom(chatRoomRequest)
+      .subscribe((result: BaseResponseModel) => {
         this.listRoomChat = result.value.items;
-      }
-    });
+      });
+  }
+
+  handlerGetChatRoom(user: any) {
+    const chatRoomRequest: ChatRoomRequest = {
+      appRoleType: 1,
+      userId: user.id,
+      userName: user.userName,
+      email: user.email,
+      avatar: user.avatar,
+    };
+    this.chatService
+      .getChatRoom(chatRoomRequest)
+      .subscribe((result: BaseResponseModel) => {
+        this.listRoomChat = result.value.items;
+        this.selectedRoomChat = result.value.items[0];
+        this.handleGetChatMess(result.value.items[0].userId);
+        this.chatRoomId = result.value.items[0].id;
+      });
   }
 
   selectChat(chat: ChatRoomModel) {
     if (!chat) return;
     this.chatService
-      .getChatMessageList(1, 100, chat.userId)
+      .getChatMessageList(1, 50, chat.userId)
       .subscribe((result: BaseResponseModel) => {
         this.listMessChat = result.value.items.sort(
           (a: any, b: any) =>
@@ -100,9 +146,21 @@ export class AdminChatComponent implements AfterViewChecked {
             new Date(b.createdDate).getTime()
         );
       });
-    this.selectedUser = chat.user;
-    this.chatRoomId = chat.chatMessage.chatRoomId;
-    this.focusInput(chat.chatMessage.chatRoomId);
+    this.selectedRoomChat = chat;
+    this.chatRoomId = chat.id;
+    this.focusInput(chat.id);
+  }
+
+  handleGetChatMess(userId: string) {
+    this.chatService
+      .getChatMessageList(1, 50, userId)
+      .subscribe((result: BaseResponseModel) => {
+        this.listMessChat = result.value.items.sort(
+          (a: any, b: any) =>
+            new Date(a.createdDate).getTime() -
+            new Date(b.createdDate).getTime()
+        );
+      });
   }
 
   handleWhenChangeMessages(
@@ -127,49 +185,50 @@ export class AdminChatComponent implements AfterViewChecked {
       deletedAt: null,
       id: '',
     };
-    this.changeStatusRoom(chatRoomId, isAdmin, message);
+    // this.changeStatusRoom(chatRoomId, isAdmin, message);
     if (this.listMessChat) {
       this.listMessChat.push(messages);
     }
   }
 
-  changeStatusRoom(
-    chatRoomId: string,
-    isAdmin: boolean | null,
-    content: string
-  ) {
-    const index = this.listRoomChat.findIndex(
-      (x: any) => x.chatMessage.chatRoomId === chatRoomId
-    );
+  // changeStatusRoom(
+  //   chatRoomId: string,
+  //   isAdmin: boolean | null,
+  //   content: string
+  // ) {
+  //   const index = this.listRoomChat.findIndex(
+  //     (x: any) => x.chatMessage.chatRoomId === chatRoomId
+  //   );
 
-    if (index !== -1) {
-      this.listRoomChat[index].chatMessage.isAdmin =
-        isAdmin == null
-          ? this.listRoomChat[index].chatMessage.isAdmin
-          : isAdmin;
-      this.listRoomChat[index].chatMessage.isRead =
-        isAdmin == null
-          ? !this.listRoomChat[index].chatMessage.isRead
-          : isAdmin;
-      this.listRoomChat[index].chatMessage.content =
-        content == '' ? this.listRoomChat[index].chatMessage.content : content;
-    }
-  }
+  //   if (index !== -1) {
+  //     this.listRoomChat[index].chatMessage.isAdmin =
+  //       isAdmin == null
+  //         ? this.listRoomChat[index].chatMessage.isAdmin
+  //         : isAdmin;
+  //     this.listRoomChat[index].chatMessage.isRead =
+  //       isAdmin == null
+  //         ? !this.listRoomChat[index].chatMessage.isRead
+  //         : isAdmin;
+  //     this.listRoomChat[index].chatMessage.content =
+  //       content == '' ? this.listRoomChat[index].chatMessage.content : content;
+  //   }
+  // }
 
   sendMessage(newMessage: string) {
     if (newMessage.trim() === '') return;
-    this.handleWhenChangeMessages(
-      this.chatRoomId,
-      newMessage,
-      new Date().toISOString(),
-      true
-    );
+    // this.handleWhenChangeMessages(
+    //   this.chatRoomId,
+    //   newMessage,
+    //   new Date().toISOString(),
+    //   true
+    // );
 
-    if (this.selectedUser) {
+    if (this.selectedRoomChat) {
       var model: ChatModel = {
         content: newMessage,
         imageUrl: 'kh co',
-        userId: this.selectedUser.id,
+        userId: this.selectedRoomChat.userId,
+        isAdmin: true,
       };
 
       this.chatService.sendMessage(model).subscribe();
@@ -195,7 +254,7 @@ export class AdminChatComponent implements AfterViewChecked {
   }
 
   isImage() {
-    var isImage = this.selectedUser.avatarUrl.trim() != '';
+    var isImage = this.selectedRoomChat.avatar.trim() != '';
     if (isImage) return false;
     return true;
   }
@@ -213,14 +272,15 @@ export class AdminChatComponent implements AfterViewChecked {
   }
 
   handleInputFocus() {
-    this.changeStatusRoom(this.chatRoomId, null, '');
+    // this.changeStatusRoom(this.chatRoomId, null, '');
   }
 
   focusInput(chatRoomId: string) {
     if (this.inputFocus && this.inputFocus.nativeElement) {
       this.inputFocus.nativeElement.focus();
       this.chatService.readAllMessage(chatRoomId).subscribe();
-      this.changeStatusRoom(this.chatRoomId, null, '');
+      this.handlerGetChatRoomLoad(this.userDetail);
+      // this.changeStatusRoom(this.chatRoomId, null, '');
     }
   }
 }

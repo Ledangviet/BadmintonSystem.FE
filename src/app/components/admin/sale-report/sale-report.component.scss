@@ -1,0 +1,111 @@
+.report-container {
+  font-family: "arial";
+  width: 100%;
+
+  .report-head-container {
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+    background-color: white;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+
+    .banner {
+      font-weight: bold;
+      font-size: 30px;
+    }
+  }
+
+  border-radius: 10px;
+}
+
+.content-container {
+  border-radius: 5px;
+  padding: 60px;
+  background-color: white;
+  // flex-direction: row;
+}
+
+.sale-report-container {
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+
+    @media (min-width: 576px) {
+      margin-bottom: 1.5rem;
+    }
+
+    .select-group {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      select {
+        width: auto;
+      }
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+
+        .legend-color {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 0.25rem;
+        }
+
+        .income {
+          background-color: #0d6efd; // Bootstrap primary
+        }
+
+        .outcome {
+          background-color: rgb(26, 152, 80);
+        }
+
+        .legend-text {
+          font-size: 0.875rem; // small text
+          color: #6c757d; // Bootstrap text-muted
+        }
+      }
+    }
+  }
+}
+
+.select-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem; // Tạo khoảng cách giữa 2 select
+
+  select {
+    width: auto;
+    padding: 6px 12px; // Thêm padding để to và dễ bấm hơn
+    font-size: 0.875rem; // Kích thước chữ nhỏ vừa phải
+    border-radius: 6px; // Bo góc nhẹ nhàng
+    border: 1px solid #ced4da; // Màu border trung tính
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #0d6efd; // Border đổi màu xanh dương khi hover
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #0b5ed7; // Border xanh đậm khi focus
+      box-shadow: 0 0 5px rgba(13, 110, 253, 0.5); // Hiệu ứng sáng nhẹ khi focus
+    }
+  }
+}

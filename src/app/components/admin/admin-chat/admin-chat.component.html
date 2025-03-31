@@ -1,62 +1,48 @@
 <div class="chat-container">
   <div class="sidebar">
     <div class="search-bar">
-      <input
-        type="text"
-        [(ngModel)]="searchQuery"
-        placeholder="Search users..."
-      />
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Search users..." />
       <button (click)="searchUsers()">Search</button>
     </div>
     <ul class="chat-list">
-      <li
-        *ngFor="let chat of listRoomChat"
-        (click)="selectChat(chat)"
-        [class.selected]="selectedUser.email === chat.user.email"
-      >
-        <img
-          [src]="chat.user.avatarUrl"
-          alt="User Avatar"
-          class="avatar-room"
-        />
+      <li *ngFor="let chatRoom of listRoomChat" (click)="selectChat(chatRoom)"
+        [class.selected]="selectedRoomChat.email === chatRoom.email">
+        <img [src]="chatRoom.avatar" alt="User Avatar" class="avatar-room" />
         <div class="chat-info-room">
           <div class="chat-header-room">
-            <span class="user-name-room">{{ chat.user.userName }}</span>
-            <span
-              class="unread-badge"
-              [class.hidden-chat]="
-                isNotificationForYou(
-                  chat.chatMessage.isAdmin,
-                  chat.chatMessage.isRead,
-                  chat.chatMessage.content
-                )
-              "
-            >
+            <span class="user-name-room">{{ chatRoom.userName }}</span>
+            @if(chatRoom.chatMessage != null){
+            <span class="unread-badge" [class.hidden-chat]="
+                            isNotificationForYou(
+                              chatRoom.chatMessage.isAdmin,
+                              chatRoom.chatMessage.isRead,
+                              chatRoom.chatMessage.content
+                            )
+                          ">
               1
             </span>
+            }
           </div>
+          @if(chatRoom.chatMessage != null)
+          {
           <p class="chat-content-room">
-            <span [class.hidden-chat]="isMe(chat)">Bạn: </span>
-            {{ chat.chatMessage.content }}
+            <span [class.hidden-chat]="isMe(chatRoom)">Bạn: </span>
+            {{ chatRoom.chatMessage.content }}
           </p>
+          }
         </div>
       </li>
     </ul>
   </div>
   <div class="main-chat">
     <div class="chat-header">
-      <img
-        [src]="selectedUser.avatarUrl"
-        alt="User Avatar"
-        class="avatar"
-        [class.hidden-chat]="isImage()"
-      />
-      <h2>{{ selectedUser.userName }}</h2>
+      <img [src]="selectedRoomChat.avatar" alt="User Avatar" class="avatar" [class.hidden-chat]="isImage()" />
+      <h2>{{ selectedRoomChat.userName }}</h2>
     </div>
     <div #chatContainer class="chat-messages">
       @for (message of listMessChat ; track message){
       <div class="chat-message left" [class.hidden-chat]="isAdmin(message)">
-        <img [src]="selectedUser.avatarUrl" alt="User Avatar" />
+        <img [src]="selectedRoomChat.avatar" alt="User Avatar" />
         <div class="message-content">
           <p>{{ message.content }}</p>
         </div>
@@ -70,14 +56,8 @@
       <!-- The Body -->
     </div>
     <div class="chat-input">
-      <input
-        type="text"
-        [(ngModel)]="newMessage"
-        placeholder="Type a message..."
-        (keydown.enter)="sendMessage(newMessage)"
-        (focus)="handleInputFocus()"
-        #inputFocus
-      />
+      <input type="text" [(ngModel)]="newMessage" placeholder="Type a message..."
+        (keydown.enter)="sendMessage(newMessage)" (focus)="handleInputFocus()" #inputFocus />
       <button (click)="sendMessage(newMessage)">Send</button>
     </div>
   </div>

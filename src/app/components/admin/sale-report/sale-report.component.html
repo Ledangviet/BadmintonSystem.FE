@@ -1,1 +1,42 @@
-<p>sale-report works!</p>
+<div class="report-container">
+     <div class="report-head-container">
+          <span class="banner">Báo cáo doanh số</span>
+     </div>
+     <div class="content-container">
+          <div class="sale-report-container">
+               <div class="filter-container">
+                    <div class="select-group">
+                         <select [(ngModel)]="selectedService" (change)="updateChartData()"
+                              class="form-select form-select-sm">
+                              <option value="bookingOffline">Đặt sân trực tiếp</option>
+                              <option value="bookingOnline">Đặt sân trên Website</option>
+                              <option value="service">Dịch vụ tại sân</option>
+                         </select>
+                         <select [(ngModel)]="selectedRange" (change)="updateChartData()"
+                              class="form-select form-select-sm">
+                              <option value="week">Theo Tuần</option>
+                              <option value="month">Theo Tháng</option>
+                         </select>
+                    </div>
+
+                    <div class="legend">
+                         <div class="legend-item">
+                              <span class="legend-color income"></span>
+                              <span class="legend-text">Booking</span>
+                         </div>
+                         <div class="legend-item">
+                              <span class="legend-color outcome"></span>
+                              <span class="legend-text">Services</span>
+                         </div>
+                    </div>
+               </div>
+          </div>
+
+          <div class="mt-2">
+               <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                    [dataLabels]="chartOptions.dataLabels" [stroke]="chartOptions.stroke" [xaxis]="chartOptions.xaxis"
+                    [tooltip]="chartOptions.tooltip">
+               </apx-chart>
+          </div>
+     </div>
+</div>

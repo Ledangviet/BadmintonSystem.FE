@@ -3,6 +3,7 @@ import { ApiClientService } from '../shared/api-client.service';
 import { Observable } from 'rxjs';
 import BaseResponseModel from '../../model/base.response.model';
 import ChatModel from '../../model/chat.message.model';
+import { ChatRoomRequest } from '../../model/chat.room.request';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,15 @@ import ChatModel from '../../model/chat.message.model';
 export class ChatService {
   constructor(private apiClient: ApiClientService) {}
 
-  getChatRoomByAdminList(
-    pageIndex: number,
-    pageSize: number
-  ): Observable<BaseResponseModel> {
+  getChatRoom(chatRoomRequest: ChatRoomRequest): Observable<BaseResponseModel> {
     var body = {
-      appRoleType: 0,
+      appRoleType: chatRoomRequest.appRoleType,
+      userId: chatRoomRequest.userId,
+      userName: chatRoomRequest.userName,
+      email: chatRoomRequest.email,
+      avatar: chatRoomRequest.avatar,
     };
-    let url = `chat-rooms/filter-and-sort?PageIndex=${pageIndex}&PageSize=${pageSize}`;
+    let url = `chat-rooms/filter-and-sort?PageIndex=1&PageSize=99`;
     return this.apiClient.post<BaseResponseModel>(url, body);
   }
 
@@ -38,7 +40,14 @@ export class ChatService {
   }
 
   sendMessage(model: ChatModel) {
-    return this.apiClient.post<BaseResponseModel>(`chat-messages`, model);
+    var body = {
+      imageUrl: model.imageUrl,
+      content: model.content,
+      userId: model.userId,
+      isAdmin: model.isAdmin,
+    };
+    let url = `chat-messages`;
+    return this.apiClient.post<BaseResponseModel>(url, body);
   }
 
   readAllMessage(chatRoomId: string) {
