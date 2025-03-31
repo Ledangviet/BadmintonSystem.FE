@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
+import { ChatbotService } from '../../../services/chatbot.service';
 
 @Component({
   selector: 'app-chat-bot',
@@ -18,6 +19,10 @@ export class ChatBotComponent {
   isOpen = false;
 
 
+  constructor(
+    private chatbotService: ChatbotService
+  )
+  {}
 
   toggleChat() {
     this.isOpen = !this.isOpen;
