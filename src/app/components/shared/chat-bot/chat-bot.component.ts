@@ -3,14 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ChatbotService } from '../../../services/chatbot.service';
 import { AuthService } from '../../../services/shared/auth.service';
+import { finalize } from 'rxjs';
 
 
 interface Message {
   message: string;
-  response: string;
+  response: string[];
 }
 
-interface MessageResponseModel{
+interface MessageResponseModel {
   recipient_id: string;
   text: string;
 }
@@ -25,21 +26,21 @@ interface MessageResponseModel{
   styleUrl: './chat-bot.component.scss'
 })
 export class ChatBotComponent {
-  isRead = false;
   newMessage = '';
   isOpen = false;
   listMessage: Message[] = [];
   currentMessage: Message | null = null;
+  isLoading = false;
 
 
   constructor(
     private chatbotService: ChatbotService,
     private authService: AuthService,
-  )
-  {}
+  ) { }
 
   ngOnInit() {
-    this.listMessage = [];
+    this.listMessage = [
+    ];
     this.currentMessage = null;
   }
 
@@ -49,19 +50,36 @@ export class ChatBotComponent {
     }
   }
 
-  sendMessage(){
+  sendMessage() {
+    this.isLoading = true;
     this.currentMessage = {
       message: this.newMessage,
-      response: ''
+      response: []
     };
-    console.log(this.currentMessage);
-    this.chatbotService.sendMesage(this.newMessage, 'user').subscribe((res) => {
-      if(res){
+
+    this.chatbotService.sendMesage(this.newMessage, 'user').pipe(
+      finalize(() => {
+        this.isLoading = false;
+      })
+    ).subscribe((res) => {
+      if (res) {
         let listMessage = res as MessageResponseModel[];
-        this.currentMessage!.response = listMessage[0].text;
+        this.currentMessage!.response = listMessage[0].text.split('\n');
         this.listMessage.push(this.currentMessage!);
-        console.log(this.listMessage);
+        this.newMessage = '';
+
+        setTimeout(() => {
+          this.scrollToBottom();
+        },100)
+        
       }
     });
+  }
+
+  scrollToBottom() {
+    const chatBody = document.getElementById('chat-bot-body');
+    if (chatBody) {
+      chatBody.scrollTop = chatBody.scrollHeight;
+    }
   }
 }
