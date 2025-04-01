@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiClientService } from './shared/api-client.service';
+import { environment } from '../../environments/environment';
+import { sensitiveHeaders } from 'http2';
+import BaseResponseModel from '../model/base.response.model';
 
 
 interface ChatBotResponseModel{
@@ -19,7 +22,7 @@ public chatList: ChatBotResponseModel[] = [];
     private apiClient: ApiClientService,
   ) { }
 
-  getAnswer(message: string) {
-    return this.apiClient.post('/chatbot', { message });
+  sendMesage(message: string,sender: string) {
+    return this.apiClient.postFullUrl(environment.chatBotUrl, { sender: sender, message: message });
   }
 }

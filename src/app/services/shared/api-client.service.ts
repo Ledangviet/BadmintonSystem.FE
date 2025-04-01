@@ -42,6 +42,11 @@ export class ApiClientService {
     return this.httpClient.post<T>(this.baseUrl + url,body,{headers : this.header});
   }
 
+    /**Post request */
+    postFullUrl<T>(url: string, body : any): Observable<T>{
+      return this.httpClient.post<T>(url,body,{headers : this.header});
+    }
+
   /**Put request */
   put<T>(url: string, body : any): Observable<T>{
     return this.httpClient.put<T>(this.baseUrl + url,body,{headers : this.header});

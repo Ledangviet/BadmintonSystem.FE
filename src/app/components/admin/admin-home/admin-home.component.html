@@ -5,7 +5,7 @@
 <div class="sidebar" [class.close]="isCloseMenu()">
     <div class="logo-details">
         <i class='bx bx-home'></i>
-        <span class="logo_name">Administrator</span>
+        <span class="logo_name">Admin</span>
     </div>
     <ul class="nav-links">
         <li [class.showMenu]="this.showDashboard">
@@ -61,7 +61,6 @@
 </div>
 <section class="home-section">  
     <div class="home-content">
-        <i class='bx bx-menu' (click)="onToggleMenu()"></i>
         <div class="content-container">
             <router-outlet></router-outlet>
         </div>    

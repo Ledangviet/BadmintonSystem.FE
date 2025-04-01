@@ -5,7 +5,7 @@
     </button>
 
     @if(isOpen ){
-    <div class="chat-container" [@chatOpen]>
+    <div class="chat-container">
         <section>
             <div class="container py-5">
                 <div class="row d-flex justify-content-center">
@@ -14,31 +14,32 @@
                             <div class="card-header align-items-center p-3">
                                 <h5 class="mb-0">Chat</h5>
                             </div>
+                            @for(chat of listMessage; track chat){
                             <div class="chat-body">
-                                <!-- <div class="chat-divider" [class.hidden-chat]="isReadForYou()">
-                          Đã gửi
-                        </div> -->
-
                                 <div class="chat-message left" [class.hidden-chat]="false">
                                     <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
-                                        alt="User Avatar" />
+                                    alt="User Avatar" />
                                     <div class="message-content">
-                                        <p>bb</p>
+                                        <p>{{chat.response}}</p>
                                     </div>
                                 </div>
                                 <div class="chat-message right" [class.hidden-chat]="false">
-                                    <div class="message-content">
-                                        <p>aaa</p>
-                                    </div>
-                                </div>
 
+                                    <div class="message-content">
+                                        <p>{{chat.message}}</p>
+                                    </div>
+                                    <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
+                                    alt="User Avatar" />
+                                </div>
                             </div>
+                            }
+
                             <div class="chat-footer">
                                 <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
                                     alt="User Avatar" />
                                 <input #inputMess type="text" [(ngModel)]="newMessage" placeholder="Type message..."
                                     class="chat-input" />
-                                <button class="send-button">
+                                <button class="send-button" (click)="sendMessage()">
                                     <mat-icon>send</mat-icon>
                                 </button>
                             </div>
