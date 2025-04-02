@@ -18,6 +18,7 @@ import { RegisterSuccessComponent } from './components/tenants/register-success/
 import { ClubSettingComponent } from './components/admin/club-setting/club-setting.component';
 import { PaymentSuccessComponent } from './components/booking/payment-success/payment-success.component';
 import { SaleReportComponent } from './components/admin/sale-report/sale-report.component';
+import { ServiceBoardComponent } from './components/booking/service-board/service-board.component';
 
 export const routes: Routes = [
     {
@@ -35,6 +36,7 @@ export const routes: Routes = [
             { path: 'checkout', component: CheckoutComponent },
             { path: 'verify-email', component: VerifyEmailComponent },
             { path: 'not-found', component: NotFoundComponent },
+            { path: 'service-board', component: ServiceBoardComponent },
         ],
     },
     {

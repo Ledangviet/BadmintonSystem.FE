@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-review-image">
             <div class="card-image">
-                <img [src]=clubMainImage >
+                <img [src]=clubMainImage>
 
             </div>
         </div>
@@ -11,17 +11,20 @@
             <p class="card-title">{{clubModel?.name}}</p>
             <p class="card-address">Address: KP5 - Trảng Dài - Biên Hoà - Đồng Nai</p>
             <p class="card-description">Bạn đam mê cầu lông và muốn tìm một nơi để rèn luyện kỹ năng,
-                 gặp gỡ những người bạn mới và tận hưởng những giờ phút thư giãn? Hãy đến với chúng tôi!</p>
+                gặp gỡ những người bạn mới và tận hưởng những giờ phút thư giãn? Hãy đến với chúng tôi!</p>
 
             <div class="review-pane" [style.width.px]="155.8 * reviewPercent">
                 @for (star of [1, 2, 3, 4, 5]; track star) {
-                    <span class="star-icon">&#9733;</span>
+                <span class="star-icon">&#9733;</span>
                 }
             </div>
-                 
             <div class="card-buttons">
                 <button (click)="clickClub()" class="book-now-content">Đặt sân</button>
             </div>
         </div>
+    </div>
+    <h1>Dịch vụ của chúng tôi</h1>
+    <div class="service-container">
+        <app-service-board></app-service-board>
     </div>
 </div>

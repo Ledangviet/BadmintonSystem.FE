@@ -20,6 +20,8 @@ import { InputType } from '../../../model/enum';
 import { InputField } from '../../../model/inputfield.model';
 import { AddServiceRequestModel } from '../../../model/addservice.request.model';
 import { ToastrService } from 'ngx-toastr';
+import { AzureBlobServiceService } from '../../../services/shared/azure-blob-service.service';
+import { environment } from '../../../../environments/environment';
 
 
 ModuleRegistry.registerModules([
@@ -104,7 +106,8 @@ export class ServicesComponent {
 
   constructor(
     private adminService: AdminMainService,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private azureBlobService: AzureBlobServiceService
   ) {
 
   }
@@ -145,7 +148,6 @@ export class ServicesComponent {
 
   onCatRowValueChanged(event: RowValueChangedEvent) {
     const data = event.data as CategoryModel;
-    console.log(data);
     this.updateCat(data);
   }
 
@@ -216,7 +218,6 @@ export class ServicesComponent {
     this.selectedService.forEach(s => {
       ids.push(s.id);
     })
-    console.log(JSON.stringify(ids));
     this.adminService.removeService(ids).subscribe(result => {
       if (result.isSuccess) {
         this.toaster.success("Xóa dịch vụ thành công !");
@@ -246,13 +247,40 @@ export class ServicesComponent {
     this.selectedCat.forEach(s => {
       ids.push(s.id);
     })
-    console.log(JSON.stringify(ids));
     this.adminService.removeCat(ids).subscribe(result => {
       if (result.isSuccess) {
         this.toaster.success("Xóa danh mục thành công !");
         this.getCategories();
       }
     })
+  }
+
+  addImage() {
+    if (this.selectedService.length > 0) {
+      const service = this.selectedService[0];
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (event: any) => {
+        const file = event.target.files[0];
+        if (file) {
+          let name = service.id + file.name;
+          this.azureBlobService.uploadImage(environment.storeKey,file, name,() =>{
+            service.imageLink = this.azureBlobService.getImageUrl(name);
+            service.name = service.name + "1";
+            this.adminService.updateService(service).subscribe((result: BaseResponseModel) => {
+              if (result.isSuccess) {
+                this.toaster.success("Thêm hình ảnh thành công !");
+                this.getCategories();
+              }
+            });
+          });
+        }
+      };
+      input.click();
+    } else {
+      this.toaster.warning("Vui lòng chọn một dịch vụ trước khi thêm hình ảnh!");
+    }
   }
 }
 

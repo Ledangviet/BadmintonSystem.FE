@@ -25,6 +25,7 @@ export class ServiceModel {
     isDeleted: boolean;
     deletedAt: Date | null;
     id: string;
+    imageLink: string;
 
     constructor(data: any) {
         this.name = data.name;
@@ -42,6 +43,7 @@ export class ServiceModel {
         this.isDeleted = data.isDeleted;
         this.deletedAt = data.deletedAt ? new Date(data.deletedAt) : null;
         this.id = data.id;
+        this.imageLink = data.imageLink;
     }
 }
 
