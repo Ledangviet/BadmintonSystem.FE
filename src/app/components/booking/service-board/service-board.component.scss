@@ -247,7 +247,14 @@ $input-placeholder-color: #999999;
     transition: .3s .15s;
 }
 
+.product-item .product-img{
+    background-color: white;
+    height: 570px;
+}
+
 .product-item .product-img img  {
+    position: absolute;
+    bottom:0;
     transition: .5s;
 }
 

@@ -14,6 +14,9 @@ import { BillModel, Booking } from '../../../model/bill.model';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceModel } from '../../../model/service.model';
 import { BookModel } from '../../../model/book.request.model';
+import { Guid } from 'guid-typescript';
+import { SignalRService } from '../../../services/signalR/booking/signalr.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -59,12 +62,15 @@ export class DashboardComponent {
   public isAddServicePopupVisible = false;
   public selectedService: any;
   public serivceQuantity = 0;
-
+  public checkoutUrl: string = '';
+  public isCheckoutPopupVisible: boolean = false;
   constructor(
     private adminService: AdminMainService,
     private bookingService: BookingMainService,
     private fb: FormBuilder,
-    private toater: ToastrService
+    private toater: ToastrService,
+    private signalRService: SignalRService,
+    private toaster: ToastrService,
   ) {
   }
 
@@ -106,7 +112,6 @@ export class DashboardComponent {
     this.adminService.getService().subscribe(result => {
       if (result) {
         this.listService = result.value.items as ServiceModel[];
-        console.log(this.listService)
       }
     })
   }
@@ -160,7 +165,6 @@ export class DashboardComponent {
   }
 
   onFilterChange(newTimeSlot: any) {
-    console.log('Selected Time Slot ID:', this.selectedTimeSlotID);
     // Add your logic here
   }
 
@@ -184,7 +188,6 @@ export class DashboardComponent {
     let bill = this.getBillByYard(yardPrice) as BillModel;
     if (bill) {
       this.selectedBill = bill;
-      console.log(this.listBill);
     }
   }
 
@@ -254,7 +257,7 @@ export class DashboardComponent {
     this.adminService.openBill(this.selectedBill.id).subscribe((result: BaseResponseModel) => {
       if (result.isSuccess) {
         this.toater.success("Mở sân thành công!");
-        this.ngOnInit();
+        this.refreshBill();
       }
     });
   }
@@ -324,7 +327,43 @@ export class DashboardComponent {
     return total;
   }
 
-  onCheckOut(){
+
+
+  onCheckOut() {
+    let isBook = false;
+    let guid = Guid.create();
+    this.bookingService.checkOut(guid.toString(), this.caculateTotalSerivce().toString(), "Thanh toán cho hóa đơn số" + guid.toString()).subscribe((result: BaseResponseModel) => {
+      if (result.isSuccess) {      
+        window.open(result.value.payUrl, "_blank");
+        setTimeout(() => {
+          isBook = true;
+          this.printBill();
+        }, 10000);
+
+        let accessToken = localStorage.getItem('accessToken')?.toString();
+        if (accessToken) {
+          this.signalRService
+            .startPaymentConnection(accessToken)
+            .then(() => {
+              this.signalRService.message$.subscribe((result) => {
+                this.toaster.success('Thanh toan thanh cong!');             
+                if(!isBook){
+                  this.printBill();
+
+                }
+              });
+            })
+            .catch((err) => {
+              console.error('SignalR connection failed:', err);
+            });
+        }
+
+      }
+    });
+  }
+
+  printBill(){
+
     const printContents = document.getElementById('bill-printer')!.innerHTML;
     const iframe = document.createElement('iframe');
     iframe.style.position = 'absolute';
@@ -354,6 +393,10 @@ export class DashboardComponent {
     iframe.contentWindow!.print();
 
     document.body.removeChild(iframe);
+  }
+
+  closeCheckoutPopup() {
+    this.isCheckoutPopupVisible = false;
   }
 
   onBook(){

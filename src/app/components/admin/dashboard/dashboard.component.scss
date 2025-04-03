@@ -80,6 +80,7 @@
 }
 
 .content-container {
+    max-height: 80vh;
     border-radius: 5px;
     padding-top: 20px;
     background-color: white;
@@ -88,6 +89,7 @@
     padding-bottom: 20px;
 
     .court-info-container {
+        overflow: scroll;
         padding: 20px;
         width: 28%;
         text-align: center;

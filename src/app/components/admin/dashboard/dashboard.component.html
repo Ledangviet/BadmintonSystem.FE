@@ -180,7 +180,7 @@
               Thời gian : {{this.selectedBill?.booking.bookingLines?.length}}
             </div>
             <div class="info-item">
-              Thành tiền : {{this.selectedBill?.totalPrice}} $
+              Thành tiền : Đã thanh toán!
             </div>
             <div class="info-item">
               Tên : {{this.selectedBill?.name}}
@@ -212,7 +212,7 @@
 
           <div class="bill-content-item cash-out">
             <div class="service-name">Thành Tiền :</div>
-            <div class="total"> {{this.selectedBill?.totalPrice + caculateTotalSerivce()}}</div>
+            <div class="total"> {{caculateTotalSerivce()}}</div>
           </div>
 
           @if(isAddServicePopupVisible){
