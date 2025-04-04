@@ -4,13 +4,18 @@ import { TenantServiceService } from '../../../services/shared/tenant-service.se
 import { ClubModel } from '../../../model/club.model';
 import { Router, RouterModule } from '@angular/router';
 import { ServiceBoardComponent } from '../../booking/service-board/service-board.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { MatTabsModule } from '@angular/material/tabs';
+import { ReviewBoardComponent } from '../../booking/review-board/review-board.component';
 
 @Component({
   selector: 'app-club',
   standalone: true,
   imports: [
     RouterModule,
-    ServiceBoardComponent
+    ServiceBoardComponent,
+    MatTabsModule,
+    ReviewBoardComponent
   ],
   templateUrl: './club.component.html',
   styleUrl: './club.component.scss'

@@ -23,8 +23,24 @@
             </div>
         </div>
     </div>
-    <h1>Dịch vụ của chúng tôi</h1>
-    <div class="service-container">
-        <app-service-board></app-service-board>
+
+    <div class="tab-group">
+        
+    <mat-tab-group class="review-tab">
+        <mat-tab label="Reviews">
+            <app-review-board></app-review-board>
+        </mat-tab>
+        <mat-tab label="Dịch vụ của chúng tôi">
+            <div>
+                <h1>Dịch vụ của chúng tôi</h1>
+                <div class="service-container">
+                    <app-service-board></app-service-board>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+
     </div>
+
+
 </div>

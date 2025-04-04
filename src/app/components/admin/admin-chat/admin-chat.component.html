@@ -1,13 +1,13 @@
 <div class="chat-container">
   <div class="sidebar">
     <div class="search-bar">
-      <input type="text" [(ngModel)]="searchQuery" placeholder="Search users..." />
-      <button (click)="searchUsers()">Search</button>
+      <input type="text" [(ngModel)]="searchQuery" placeholder="Tìm người dùng..." />
+      <button (click)="searchUsers()">Tìm kiếm</button>
     </div>
     <ul class="chat-list">
       <li *ngFor="let chatRoom of listRoomChat" (click)="selectChat(chatRoom)"
         [class.selected]="selectedRoomChat.email === chatRoom.email">
-        <img [src]="chatRoom.avatar" alt="User Avatar" class="avatar-room" />
+        <img [src]="'https://vietle.blob.core.windows.net/badminton/UserIcon.png'" alt="User Avatar" class="avatar-room" />
         <div class="chat-info-room">
           <div class="chat-header-room">
             <span class="user-name-room">{{ chatRoom.userName }}</span>
@@ -36,13 +36,13 @@
   </div>
   <div class="main-chat">
     <div class="chat-header">
-      <img [src]="selectedRoomChat.avatar" alt="User Avatar" class="avatar" [class.hidden-chat]="isImage()" />
+      <img [src]="selectedRoomChat.avatar !== '' ? selectedRoomChat.avatar : 'https://vietle.blob.core.windows.net/badminton/UserIcon.png'" alt="User Avatar" class="avatar" [class.hidden-chat]="isImage()" />
       <h2>{{ selectedRoomChat.userName }}</h2>
     </div>
     <div #chatContainer class="chat-messages">
       @for (message of listMessChat ; track message){
       <div class="chat-message left" [class.hidden-chat]="isAdmin(message)">
-        <img [src]="selectedRoomChat.avatar" alt="User Avatar" />
+        <img [src]="selectedRoomChat.avatar  !== '' ? selectedRoomChat.avatar : 'https://vietle.blob.core.windows.net/badminton/UserIcon.png'" alt="User Avatar" />
         <div class="message-content">
           <p>{{ message.content }}</p>
         </div>

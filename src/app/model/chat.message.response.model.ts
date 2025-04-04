@@ -3,7 +3,7 @@ import UserResponseModel from './user.response.model';
 
 export class ChatMessageModel {
   user: UserResponseModel | null;
-  imageUrl: string;
+  imageUrl: string = "https://vietle.blob.core.windows.net/badminton/UserIcon.png";
   content: string;
   isAdmin: boolean;
   isRead: boolean;

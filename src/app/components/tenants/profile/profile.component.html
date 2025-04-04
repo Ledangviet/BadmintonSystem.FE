@@ -1,0 +1,118 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png" alt="Ảnh hồ sơ" class="profile-image" />
+    <div class="profile-info">
+      <form [formGroup]="profileForm" class="form-container">
+        <mat-form-field appearance="outline">
+          <mat-label>Họ và tên</mat-label>
+          <input matInput formControlName="fullName" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Số điện thoại</mat-label>
+          <input matInput formControlName="phoneNumber" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Ngày sinh</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="selectedDate">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </form>
+      <button class="reset-password-btn">Đổi mật khẩu</button>
+    </div>
+  </div>
+  <div class="order-history">
+    <h3>Lịch sử đặt sân</h3>
+    <div class="order-grid">
+      <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>NGÀY</th>
+                    <th>SÂN</th>
+                    <th>GIÁ</th>
+                    <th>THỜI GIAN</th>
+                    <th>TRẠNG THÁI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Thứ Năm, 20 Tháng Sáu 2024, 12:00</td>
+                    <td>Sân Lớn 1</td>
+                    <td>120.000 VND</td>
+                    <td>Thứ Năm, 20 Tháng Sáu 2024, 12:00 - 13:00 (1 giờ)</td>
+                    <td><span class="status">Đã thanh toán</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Sáu, 21 Tháng Sáu 2024, 14:00</td>
+                    <td>Sân Nhỏ 2</td>
+                    <td>70.000 VND</td>
+                    <td>Thứ Sáu, 21 Tháng Sáu 2024, 14:00 - 15:00 (1 giờ)</td>
+                    <td><span class="status">Chưa thanh toán </span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Bảy, 22 Tháng Sáu 2024, 10:00</td>
+                    <td>Sân Lớn 3</td>
+                    <td>170.000 VND</td>
+                    <td>Thứ Bảy, 22 Tháng Sáu 2024, 10:00 - 11:00 (1 giờ)</td>
+                    <td><span class="status">Đã thanh toán</span></td>
+                </tr>
+                <tr>
+                    <td>Chủ Nhật, 23 Tháng Sáu 2024, 09:00</td>
+                    <td>Sân Nhỏ 1</td>
+                    <td>100.000 VND</td>
+                    <td>Chủ Nhật, 23 Tháng Sáu 2024, 09:00 - 10:00 (1 giờ)</td>
+                    <td><span class="status">Chưa thanh toán </span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Hai, 24 Tháng Sáu 2024, 11:00</td>
+                    <td>Sân Lớn 2</td>
+                    <td>140.000 VND</td>
+                    <td>Thứ Hai, 24 Tháng Sáu 2024, 11:00 - 12:00 (1 giờ)</td>
+                    <td><span class="status">Đã thanh toán</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Ba, 25 Tháng Sáu 2024, 13:00</td>
+                    <td>Sân Nhỏ 3</td>
+                    <td>60.000 VND</td>
+                    <td>Thứ Ba, 25 Tháng Sáu 2024, 13:00 - 14:00 (1 giờ)</td>
+                    <td><span class="status">Chưa thanh toán </span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Tư, 26 Tháng Sáu 2024, 15:00</td>
+                    <td>Sân Lớn 1</td>
+                    <td>130.000 VND</td>
+                    <td>Thứ Tư, 26 Tháng Sáu 2024, 15:00 - 16:00 (1 giờ)</td>
+                    <td><span class="status">Đã thanh toán</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Năm, 27 Tháng Sáu 2024, 17:00</td>
+                    <td>Sân Nhỏ 2</td>
+                    <td>80.000 VND</td>
+                    <td>Thứ Năm, 27 Tháng Sáu 2024, 17:00 - 18:00 (1 giờ)</td>
+                    <td><span class="status">Chưa thanh toán </span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Sáu, 28 Tháng Sáu 2024, 19:00</td>
+                    <td>Sân Lớn 3</td>
+                    <td>180.000 VND</td>
+                    <td>Thứ Sáu, 28 Tháng Sáu 2024, 19:00 - 20:00 (1 giờ)</td>
+                    <td><span class="status">Đã thanh toán</span></td>
+                </tr>
+                <tr>
+                    <td>Thứ Bảy, 29 Tháng Sáu 2024, 08:00</td>
+                    <td>Sân Nhỏ 1</td>
+                    <td>90.000 VND</td>
+                    <td>Thứ Bảy, 29 Tháng Sáu 2024, 08:00 - 09:00 (1 giờ)</td>
+                    <td><span class="status">Chưa thanh toán </span></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination-controls">
+            Số mục trên mỗi trang:
+            <!-- Thêm các điều khiển phân trang tại đây -->
+        </div>
+    </div>
+    </div>
+  </div>
+</div>

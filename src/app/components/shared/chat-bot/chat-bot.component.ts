@@ -4,6 +4,7 @@ import { MatIcon } from '@angular/material/icon';
 import { ChatbotService } from '../../../services/chatbot.service';
 import { AuthService } from '../../../services/shared/auth.service';
 import { finalize } from 'rxjs';
+import { ChatService } from '../../../services/chat/chat.service';
 
 
 interface Message {
@@ -36,17 +37,25 @@ export class ChatBotComponent {
   constructor(
     private chatbotService: ChatbotService,
     private authService: AuthService,
+    private chatService: ChatService
   ) { }
 
   ngOnInit() {
+    this.chatService.toggleChatEmitter.subscribe((chat) => {
+      if(chat == 'chat'){
+        this.isOpen = false;
+      }
+    })
     this.listMessage = [
     ];
     this.currentMessage = null;
   }
 
   toggleChat() {
+    
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
+      this.chatService.toggleChatEmitter.emit('chatbot');
     }
   }
 

@@ -52,7 +52,7 @@
                         <div class="logo-container" [matMenuTriggerFor]="userMenu">
                             <img class="user-logo" [src]="this.userImagePath" alt="User">
                             <mat-menu #userMenu="matMenu">
-                                <button mat-menu-item>{{this.UIResource.profileMenu}}</button>
+                                <button mat-menu-item (click)="onProfile()">{{this.UIResource.profileMenu}}</button>
                                 <button mat-menu-item>{{this.UIResource.settingMenu}}</button>
                                 <button mat-menu-item (click)="onLogout()">{{this.UIResource.logoutMenu}}</button>
                             </mat-menu>

@@ -136,8 +136,7 @@
 
       </div>
       <div class="bill-header">
-        <div class="court-name">Sân &nbsp;&nbsp;</div>
-        <div class="court-name">{{this.selectedYard?.yard?.name}}</div>
+        <div class="court-name">Sân {{this.selectedYard?.yard?.name}}</div>
       </div>
       <div class="bill-content">
         <div class="bill-content-item none-border">
@@ -173,8 +172,7 @@
       @if(getStatus(selectedYard) == 2){
       <div id="bill-printer">
         <div class="bill-header">
-          <div class="court-name">Sân &nbsp;&nbsp;</div>
-          <div class="court-name">{{this.selectedYard.yard.name}}</div>
+          <div class="court-name">{{"Sân" + " " +this.selectedYard.yard.name}}</div>
           <div class="info">
             <div class="info-item">
               Thời gian : {{this.selectedBill?.booking.bookingLines?.length}}

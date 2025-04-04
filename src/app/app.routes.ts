@@ -19,6 +19,8 @@ import { ClubSettingComponent } from './components/admin/club-setting/club-setti
 import { PaymentSuccessComponent } from './components/booking/payment-success/payment-success.component';
 import { SaleReportComponent } from './components/admin/sale-report/sale-report.component';
 import { ServiceBoardComponent } from './components/booking/service-board/service-board.component';
+import { ProfileComponent } from './components/tenants/profile/profile.component';
+import { UserComponent } from './components/admin/user/user.component';
 
 export const routes: Routes = [
     {
@@ -37,6 +39,7 @@ export const routes: Routes = [
             { path: 'verify-email', component: VerifyEmailComponent },
             { path: 'not-found', component: NotFoundComponent },
             { path: 'service-board', component: ServiceBoardComponent },
+            { path: 'profile', component: ProfileComponent },
         ],
     },
     {
@@ -52,6 +55,7 @@ export const routes: Routes = [
             { path: 'chat', component: AdminChatComponent },
             { path: 'setting', component: ClubSettingComponent },
             { path: 'report', component: SaleReportComponent },
+            { path: 'user', component: UserComponent },
         ],
     }
 ];

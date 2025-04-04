@@ -6,6 +6,7 @@ import RegisterModel from '../../model/register.model';
 import RegisterResponseModel from '../../model/register.response.model';
 import e from 'express';
 import BaseResponseModel from '../../model/base.response.model';
+import { RoleModel } from '../../model/role.model';
 
 @Injectable({
   providedIn: 'root',
@@ -47,14 +48,14 @@ export class AuthService {
   }
 
   register(registerModel: RegisterModel): Observable<RegisterResponseModel> {
-    return this.apiClient.post<RegisterResponseModel>(
+    return this.apiClient.postNoHeader<RegisterResponseModel>(
       'users/register',
       registerModel
     );
   }
 
   cancelRegister(email: string): Observable<BaseResponseModel> {
-    return this.apiClient.get<BaseResponseModel>(
+    return this.apiClient.getNoHeader<BaseResponseModel>(
       `users/cancel-verify-email?email=${email}`
     );
   }
@@ -67,5 +68,14 @@ export class AuthService {
       'auths/admin/email/get-authorization',
       { email: email }
     );
+  }
+
+  getAllRoles(){
+    return this.apiClient.get<BaseResponseModel>('auths/roles');
+  }
+
+
+  updateRole(role: any){
+    return this.apiClient.put<BaseResponseModel>('auths/roles', role);
   }
 }

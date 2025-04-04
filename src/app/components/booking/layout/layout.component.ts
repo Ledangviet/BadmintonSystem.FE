@@ -103,4 +103,8 @@ export class LayoutComponent {
     }
   }
 
+  onProfile(){
+    this.router.navigate(['/profile']);
+  }
+
 }

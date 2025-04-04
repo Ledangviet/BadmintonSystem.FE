@@ -44,7 +44,7 @@ export class AdminChatComponent implements AfterViewChecked {
     userId: '',
     userName: '',
     email: '',
-    avatar: '',
+    avatar: 'https://vietle.blob.core.windows.net/badminton/UserIcon.png',
     createdDate: '',
     modifiedDate: null,
     createdBy: '',

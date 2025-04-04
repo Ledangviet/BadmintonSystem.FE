@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ApiClientService } from '../shared/api-client.service';
 import { Observable } from 'rxjs';
 import BaseResponseModel from '../../model/base.response.model';
@@ -9,6 +9,9 @@ import { ChatRoomRequest } from '../../model/chat.room.request';
   providedIn: 'root',
 })
 export class ChatService {
+
+  toggleChatEmitter: EventEmitter<string> = new EventEmitter();
+
   constructor(private apiClient: ApiClientService) {}
 
   getChatRoom(chatRoomRequest: ChatRoomRequest): Observable<BaseResponseModel> {

@@ -1,0 +1,170 @@
+<div class="reviews-container">
+    <div class="overall-rating">
+        <span class="rating-value">4.65 out of 5</span>
+        <button class="write-review-btn">Write a review</button>
+    </div>
+
+    <!-- Rating Distribution -->
+    <div class="rating-distribution">
+        <!-- Each rating bar -->
+        <div class="rating-bar">
+            <span>5</span>
+            <div class="bar"><div class="fill" style="width: 70%;"></div></div>
+            <span>239 reviews</span>
+        </div>
+
+        <!-- Repeat for other ratings -->
+        <!-- 4 stars -->
+        <div class="rating-bar">
+            <span>4</span>
+            <div class="bar"><div class="fill" style="width: 20%;"></div></div>
+            <span>63 reviews</span>
+        </div>
+
+        <!-- 3 stars -->
+        <div class="rating-bar">
+            <span>3</span>
+            <div class="bar"><div class="fill" style="width: 6%;"></div></div>
+            <span>19 reviews</span>
+        </div>
+
+        <!-- 2 stars -->
+        <div class="rating-bar">
+            <span>2</span>
+            <div class="bar"><div class="fill" style="width: 3%;"></div></div>
+            <span>11 reviews</span>
+        </div>
+
+        <!-- 1 star -->
+        <div class="rating-bar">
+            <span>1</span>
+            <div class="bar"><div class="fill" style="width: 1%;"></div></div>
+            <span>7 reviews</span>
+        </div>
+    </div>
+
+    <!-- Individual Reviews Section -->
+    <div class="individual-reviews">
+        <div class="review">
+            <h3>Nguyễn Văn Nam</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Sản phẩm rất tốt!</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Nguyễn Văn Nam</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Chất lượng rất tốt, tôi rất hài lòng!</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Trần Thị Hoa</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Giao hàng nhanh, sản phẩm đúng như mô tả.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Phạm Minh Đức</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Giá cả hợp lý, sẽ ủng hộ lần sau.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Hoàng Thị Lan</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Rất hài lòng với dịch vụ.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Đặng Văn Hùng</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Sản phẩm tốt, đáng tiền.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Vũ Thị Hương</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Hàng đẹp, chất lượng cao.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Ngô Văn Khánh</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Rất đáng tiền, sẽ mua thêm.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Đỗ Thị Mai</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Hàng đúng như quảng cáo, rất hài lòng.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Nguyễn Văn Phúc</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Chất lượng tuyệt vời, giao hàng nhanh.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+        <div class="review">
+            <h3>Trần Thị Ngọc</h3>
+            <div class="review-pane" [style.width.px]="155.8">
+                @for (star of [1, 2, 3, 4]; track star) {
+                <span class="star-icon">&#9733;</span>
+                }
+            </div>
+            <p>Rất hài lòng, sẽ giới thiệu cho bạn bè.</p>
+            <button class="like-btn">Like</button>
+            <button class="report-btn">Report</button>
+        </div>
+    </div>
+</div>

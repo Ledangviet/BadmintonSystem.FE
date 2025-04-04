@@ -85,6 +85,12 @@ export class ChatComponent implements AfterViewChecked {
   }
 
   ngOnInit() {
+
+    this.chatService.toggleChatEmitter.subscribe((chat) => {
+      if(chat == 'chatbot'){
+        this.isOpen = false;
+      }
+    })
     if (this.accessToken) {
       this.signalRChatService
         .startConnection(this.accessToken)
@@ -145,6 +151,7 @@ export class ChatComponent implements AfterViewChecked {
   toggleChat() {
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
+      this.chatService.toggleChatEmitter.emit('chat');
       this.chatService.readAllMessage(this.chatRoomId).subscribe();
       this.isRead = true;
       this.focusInput();

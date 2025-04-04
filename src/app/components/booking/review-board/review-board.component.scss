@@ -1,0 +1,97 @@
+.reviews-container {
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+
+    h1 {
+        text-align: center;
+    }
+
+    .overall-rating {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .rating-value {
+            font-size: 1.5em;
+        }
+
+        .write-review-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+    }
+
+    .rating-distribution {
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+
+            span {
+                width: 30px;
+            }
+
+            .bar {
+                flex-grow: 1;
+                height: 10px;
+                background-color: #e0e0e0;
+                margin: 0 10px;
+                border-radius: 5px;
+
+                .fill {
+                    height: 100%;
+                    background-color: #FFD700 ;
+                    border-radius: 5px;
+                }
+            }
+        }
+    }
+
+    .individual-reviews {
+        .review {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+
+            h3 {
+                margin: 0;
+            }
+
+            p {
+                margin: 5px 0;
+            }
+
+            .like-btn, .report-btn {
+                background-color: #007bff;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: 5px;
+                margin-right: 5px;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
+}
+
+.star-icon {
+    color: gold;
+    font-size: 35px; 
+    margin-right: 2px;
+    margin-bottom: 5px;
+}

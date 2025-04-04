@@ -1,0 +1,134 @@
+.profile-container {
+  margin-top: 60px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+
+  .profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+
+    .profile-info {
+      .profile-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .profile-phone,
+      .profile-dob {
+        margin: 5px 0;
+        font-size: 16px;
+      }
+
+      .reset-password-btn {
+        margin-top: 10px;
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+    }
+  }
+
+  .order-history {
+    h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .order-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+
+      .order-item {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: center;
+        background-color: #f9f9f9;
+
+        &:hover {
+          background-color: #e9ecef;
+        }
+      }
+    }
+  }
+}
+
+.form-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.table-container {
+  width: 80vw; /* Set the width to 80% of the viewport width */
+  margin: 0 auto; /* Center the table horizontally */
+  padding: 1rem; /* Add some padding around the table */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  background-color: #fff; /* Set a white background for the container */
+  border-radius: 8px; /* Round the corners of the container */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+      background-color: #f0f0f0;
+
+      th {
+          padding: 12px; /* Increase padding for better spacing */
+          text-align: left; /* Align text to the left */
+          font-weight: bold; /* Make header text bold */
+      }
+  }
+
+  tbody {
+      tr {
+          &:nth-child(even) {
+              background-color: #f9f9f9; /* Add a subtle background color to even rows */
+          }
+
+          &:hover {
+              background-color: #f1f1f1; /* Highlight row on hover */
+          }
+      }
+
+      td {
+          padding: 12px; /* Increase padding for better spacing */
+          border-bottom: 1px solid #ddd; /* Add a bottom border to each cell */
+
+          .status {
+              color: white;
+              background-color: #00bfa5;
+              border-radius: .25rem;
+              padding: .25rem .75rem;
+              display: inline-block; /* Ensure the status is displayed as an inline block */
+          }
+      }
+  }
+}
+
+.pagination-controls {
+  margin-top: .75rem;
+  text-align: center; /* Center the pagination controls */
+  font-size: 0.9rem; /* Slightly reduce the font size */
+}

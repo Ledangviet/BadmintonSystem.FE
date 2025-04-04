@@ -1,1 +1,40 @@
-<p>user works!</p>
+<div class="container">
+    <div class="sidebar" style="position: relative;">
+      <h3>Roles</h3>
+      <ul>
+        @for(role of roleList; track role){
+            <li (click)="selectRole(role)">{{ role.roleName }}</li>
+        }
+        <!-- Add more roles as needed -->
+      </ul>
+      <button class="save-button" (click)="saveRole()">Save</button>
+    </div>
+    <div class="role-settings">
+      <h2>Thiết lập quyền - {{selectedRole?.roleName}}</h2>
+      <table class="role-table">
+        <thead>
+          <tr>
+            <th>Chức năng</th>
+            <th>Truy cập</th>
+            <th>Thêm mới</th>
+            <th>Sửa</th>
+            <th>Xóa</th>
+          </tr>
+        </thead>
+        <div>
+          
+        </div>
+        <tbody class="role-table-body"> 
+            @for(auth of selectedRole?.authorizations; track auth){
+                <tr >
+                    <td>{{ auth.functionKey }}</td>
+                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+                  </tr>
+            }               
+          </tbody>
+      </table>
+    </div>
+  </div>
