@@ -10,29 +10,20 @@
           <div class="col-md-10 col-lg-8 col-xl-6">
             <div class="card" id="chat2">
               <div class="card-header align-items-center p-3">
-                <h5 class="mb-0">Chat</h5>
-              </div>
+                <h5 class="mb-0">Trao đổi với quản lí sân!</h5>
+              </div>          
               <div class="chat-body">
                 <!-- <div class="chat-divider" [class.hidden-chat]="isReadForYou()">
                   Đã gửi
                 </div> -->
                 @for (message of listChatMessage ; track message){
-                <div
-                  class="chat-message left"
-                  [class.hidden-chat]="!isAdmin(message)"
-                >
-                  <img
-                    src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
-                    alt="User Avatar"
-                  />
+                <div class="chat-message left" [class.hidden-chat]="!isAdmin(message)">
+                  <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png" alt="User Avatar" />
                   <div class="message-content">
                     <p>{{ message.content }}</p>
                   </div>
                 </div>
-                <div
-                  class="chat-message right"
-                  [class.hidden-chat]="isAdmin(message)"
-                >
+                <div class="chat-message right" [class.hidden-chat]="isAdmin(message)">
                   <div class="message-content">
                     <p>{{ message.content }}</p>
                   </div>
@@ -40,18 +31,9 @@
                 }
               </div>
               <div class="chat-footer">
-                <img
-                  src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
-                  alt="User Avatar"
-                />
-                <input
-                  #inputMess
-                  type="text"
-                  [(ngModel)]="newMessage"
-                  placeholder="Type message..."
-                  class="chat-input"
-                  (keydown.enter)="sendMessage(newMessage)"
-                />
+                <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png" alt="User Avatar" />
+                <input #inputMess type="text" [(ngModel)]="newMessage" placeholder="Type message..." class="chat-input"
+                  (keydown.enter)="sendMessage(newMessage)" />
                 <button class="send-button" (click)="sendMessage(newMessage)">
                   <mat-icon>send</mat-icon>
                 </button>

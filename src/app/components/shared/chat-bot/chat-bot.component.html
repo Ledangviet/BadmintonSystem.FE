@@ -4,11 +4,11 @@
     </button>
 
     @if(isOpen ){
-    <div class="chat-container">
+    <div class="chat-container" [@chatOpen]>
         <section>
-            <div class="container py-5">
+            <div class="">
                 <div class="row d-flex justify-content-center">
-                    <div  class="col-md-10 col-lg-8 col-xl-6 main-chat">
+                    <div  class="main-chat">
                         <div class="card-header align-items-center">
                             <h5 class="mb-0">Trợ lí AI</h5>
                         </div>
@@ -24,14 +24,17 @@
                                         }                                       
                                     </div>
                                 </div>
-                                <div class="chat-message right" [class.hidden-chat]="false">
+                                @if(chat.message != ""){
 
-                                    <div class="message-content">
-                                        <div>{{chat.message}}</div>
+                                    <div class="chat-message right" [class.hidden-chat]="false">
+
+                                        <div class="message-content">
+                                            <div>{{chat.message}}</div>
+                                        </div>
+                                        <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
+                                        alt="User Avatar" />
                                     </div>
-                                    <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
-                                    alt="User Avatar" />
-                                </div>
+                                }
                             </div>
                             }                            
                         </div>

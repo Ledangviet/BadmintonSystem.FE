@@ -12,6 +12,7 @@ import { RoleModel } from '../../model/role.model';
   providedIn: 'root',
 })
 export class AuthService {
+  public userRole: string = 'Customer';
   public token: string = '';
   public isAuthenticated = false;
   public loginStateChangeEmitter: EventEmitter<boolean> = new EventEmitter();

@@ -5,6 +5,7 @@ import { ChatbotService } from '../../../services/chatbot.service';
 import { AuthService } from '../../../services/shared/auth.service';
 import { finalize } from 'rxjs';
 import { ChatService } from '../../../services/chat/chat.service';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 interface Message {
@@ -24,7 +25,33 @@ interface MessageResponseModel {
     FormsModule
   ],
   templateUrl: './chat-bot.component.html',
-  styleUrl: './chat-bot.component.scss'
+  styleUrl: './chat-bot.component.scss',
+  animations: [
+      trigger('chatOpen', [
+        transition(':enter', [
+          style({
+            opacity: 0,
+            transform: 'translate(100%, 100%) scale(0.5)',
+          }),
+          animate(
+            '300ms ease-out',
+            style({
+              opacity: 1,
+              transform: 'translate(0, 0) scale(1)',
+            })
+          ),
+        ]),
+        transition(':leave', [
+          animate(
+            '300ms ease-in',
+            style({
+              opacity: 0,
+              transform: 'translate(100%, 100%) scale(0.5)',
+            })
+          ),
+        ]),
+      ]),
+    ],
 })
 export class ChatBotComponent {
   newMessage = '';
@@ -47,6 +74,10 @@ export class ChatBotComponent {
       }
     })
     this.listMessage = [
+      {
+        message: "",
+        response: ["Xin chào, tôi là trợ lí AI của bạn. Tôi có thể giúp gì cho bạn?"]
+      }
     ];
     this.currentMessage = null;
   }

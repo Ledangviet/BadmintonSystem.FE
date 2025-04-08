@@ -37,7 +37,7 @@
                         </ul>
                     </div>
                     <div fxFlex fxLayout fxLayoutAlign="end">
-                        @if (this.isAuthenticated){
+                        @if (this.isAdmin){
                         <div class="lang-button" (click)="onAdminClick()">
                             <p>Admin</p>
                         </div>
@@ -95,4 +95,5 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 
+    <app-chat-bot></app-chat-bot>
 </div>

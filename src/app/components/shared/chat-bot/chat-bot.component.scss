@@ -2,6 +2,7 @@
     position: fixed;
     bottom: 160px;
     right: 42px;
+    z-index: 100000;
 }
 
 .chat-button {
@@ -62,7 +63,7 @@
     position: absolute;
     bottom: 35px;
     right: 77px;
-    width: 55vh;
+    width: 450px;
     background: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 0;

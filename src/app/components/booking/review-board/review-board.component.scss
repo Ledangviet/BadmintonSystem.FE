@@ -59,7 +59,7 @@
 
     .individual-reviews {
         .review {
-            border: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
@@ -95,3 +95,101 @@
     margin-right: 2px;
     margin-bottom: 5px;
 }
+
+
+
+.review-container {
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 100%;
+    margin: auto;
+  
+    h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  
+    .rating {
+      display: flex;
+      align-items: center;
+  
+      span:first-child {
+        font-size: 20px; /* Điều chỉnh kích thước sao */
+        color: #FFD700; /* Màu vàng cho sao */
+        margin-right: 5px;
+      }
+  
+      span:last-child {
+        font-size: 16px; /* Điều chỉnh kích thước văn bản */
+        color: #333; /* Màu văn bản */
+      }
+    }
+  
+    form {
+      display: flex;
+      flex-direction: column;
+  
+      label {
+        font-weight: bold;
+        margin-top: 15px;
+      }
+  
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+      }
+  
+      .problem-report {
+        margin-top: 15px;
+        a {
+          color: #007BFF;
+          text-decoration: none;
+        }
+      }
+  
+      .upload-photo {
+        border: 2px dashed #ccc;
+        padding: 20px;
+        text-align: center;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+  
+      .recommend-product {
+        margin-top: 15px;
+        display: flex;
+        align-items: center;
+  
+        input {
+          margin-left: 5px;
+          margin-right: 10px;
+        }
+      }
+  
+      button {
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007BFF;
+        color: #fff;
+        cursor: pointer;
+  
+        &:hover {
+          background-color: #0056b3;
+        }
+      }
+  
+      button[type="reset"] {
+        background-color: #6c757d;
+  
+        &:hover {
+          background-color: #5a6268;
+        }
+      }
+    }
+  }

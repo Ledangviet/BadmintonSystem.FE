@@ -11,6 +11,7 @@ import { BlobService } from '../../../services/shared/blob.service';
 import { AuthService } from '../../../services/shared/auth.service';
 import { ResourceService } from '../../../services/shared/resource.service';
 import { MatMenuModule } from '@angular/material/menu';
+import { ChatBotComponent } from '../../shared/chat-bot/chat-bot.component';
 
 @Component({
   selector: 'app-layout',
@@ -26,13 +27,15 @@ import { MatMenuModule } from '@angular/material/menu';
     FlexLayoutModule,
     RouterLink,
     RouterLinkWithHref,
-    MatMenuModule
+    MatMenuModule,
+    ChatBotComponent
   ],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss'
 })
 export class LayoutComponent {
 
+  public isAdmin: boolean = false;
   public userImagePath: string = '';
   public phoneImagePath: string = '';
   public adressImagePath: string = '';
@@ -70,6 +73,7 @@ export class LayoutComponent {
     this.UIResource = this.resourceService.getResource(this.UIResource);
     this.authService.loginStateChangeEmitter.subscribe(value => {
       this.isAuthenticated = value;
+      this.isAdmin = this.isAuthenticated && this.authService.userRole == 'Admin';
     });
   }
 

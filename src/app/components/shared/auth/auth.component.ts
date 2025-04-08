@@ -156,6 +156,16 @@ export class AuthComponent {
               localStorage.setItem('expiredTime', expiredTime.toString());
               this.router.navigate(['/home']);
               this.authService.loginStateChangeEmitter.emit(true);
+
+              this.authService.userDetail(email).subscribe((res) => {
+                if(res.isSuccess){
+                  let role = res.value.roles[0];
+                  localStorage.setItem('role', role);
+                  this.authService.userRole = role;
+                  this.authService.loginStateChangeEmitter.emit(true);
+                }
+              })
+
             }
             this.isLoading = false;
           },
