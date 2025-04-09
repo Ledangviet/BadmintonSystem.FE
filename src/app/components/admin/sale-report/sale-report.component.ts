@@ -10,6 +10,8 @@ import {
   ApexTooltip,
   NgApexchartsModule,
 } from 'ng-apexcharts';
+import {danhSachDonHang , serviceRevenue , courtBookingRevenue} from '../../../../resources/selldata';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-sale-report',
@@ -26,6 +28,8 @@ export class SaleReportComponent implements OnInit {
   ngOnInit() {
     this.updateChartData();
   }
+
+
 
   updateChartData() {
     const isWeek = this.selectedRange === 'week';
@@ -86,5 +90,42 @@ export class SaleReportComponent implements OnInit {
     return Array.from({ length: points }, () =>
       Math.floor(Math.random() * (max - min + 1) + min)
     );
+  }
+
+  exportExcel(){
+    if(this.selectedService === "bookingOffline"){
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(danhSachDonHang);
+      const fileName = 'SaleReport_' + new Date().toISOString().split('T')[0];
+  
+      // Generate a workbook and add the worksheet
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    
+      // Save to file
+      XLSX.writeFile(wb, `${fileName}.xlsx`);
+    }
+    else if(this.selectedService === "bookingOnline"){
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(courtBookingRevenue);
+      const fileName = 'BookReport_' + new Date().toISOString().split('T')[0];
+  
+      // Generate a workbook and add the worksheet
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    
+      // Save to file
+      XLSX.writeFile(wb, `${fileName}.xlsx`);
+    }
+    else{
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(serviceRevenue);
+      const fileName = 'ServiceReport_' + new Date().toISOString().split('T')[0];
+  
+      // Generate a workbook and add the worksheet
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    
+      // Save to file
+      XLSX.writeFile(wb, `${fileName}.xlsx`);
+    }
+
   }
 }

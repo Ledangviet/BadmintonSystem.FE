@@ -96,8 +96,8 @@ export class ChatBotComponent {
       message: this.newMessage,
       response: []
     };
-
-    this.chatbotService.sendMesage(this.newMessage, 'user').pipe(
+    this.newMessage = '';
+    this.chatbotService.sendMesage(this.currentMessage.message, 'user').pipe(
       finalize(() => {
         this.isLoading = false;
       })
@@ -106,7 +106,6 @@ export class ChatBotComponent {
         let listMessage = res as MessageResponseModel[];
         this.currentMessage!.response = listMessage[0].text.split('\n');
         this.listMessage.push(this.currentMessage!);
-        this.newMessage = '';
 
         setTimeout(() => {
           this.scrollToBottom();

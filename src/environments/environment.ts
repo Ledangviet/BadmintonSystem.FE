@@ -21,5 +21,5 @@ export const environment = {
     'sp=racwdl&st=2025-03-23T14:40:24Z&se=2025-04-30T22:40:24Z&spr=https&sv=2024-11-04&sr=c&sig=tB2g0aJAH16rfuI82ZNwfVofNiBR0E7kA%2Frcs3ZIVbM%3D',
   storeAccount: 'vietle',
   storeContainer: 'badminton',
-  chatBotUrl: "http://bookingweb.shop:5005/webhooks/rest/webhook",
+  chatBotUrl: "https://bookingweb.shop/webhooks/rest/webhook",
 };

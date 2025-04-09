@@ -8,8 +8,8 @@
                     <div class="select-group">
                          <select [(ngModel)]="selectedService" (change)="updateChartData()"
                               class="form-select form-select-sm">
-                              <option value="bookingOffline">Đặt sân trực tiếp</option>
-                              <option value="bookingOnline">Đặt sân trên Website</option>
+                              <option value="bookingOffline">Tổng hóa đơn</option>
+                              <option value="bookingOnline">Doanh thu đặt sân</option>
                               <option value="service">Dịch vụ tại sân</option>
                          </select>
                          <select [(ngModel)]="selectedRange" (change)="updateChartData()"
@@ -17,6 +17,7 @@
                               <option value="week">Theo Tuần</option>
                               <option value="month">Theo Tháng</option>
                          </select>
+                         <button (click)="exportExcel()" class="form-select form-select-sm">Xuất Excel</button>
                     </div>
 
                     <div class="legend">
