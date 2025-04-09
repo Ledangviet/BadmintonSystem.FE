@@ -1,9 +1,6 @@
 .example-card {
     width: 250px;
-    height: 250px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    padding: 16px;
+    height: 180px;
     position: relative;
     margin-right: 20px;
     background-color: #F0F0F0;
@@ -29,7 +26,7 @@
 }
 
 .schedule {
-    max-height: 100px;
+    max-height: 50px;
     overflow-y: auto;
     margin-bottom: 8px;
 }
@@ -52,7 +49,7 @@
 }
 
 .booking-detail-container {
-    min-height: 350px;
+    min-height: 200px;
 
 }
 

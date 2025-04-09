@@ -267,7 +267,6 @@ export class ServicesComponent {
           let name = service.id + file.name;
           this.azureBlobService.uploadImage(environment.storeKey,file, name,() =>{
             service.imageLink = this.azureBlobService.getImageUrl(name);
-            service.name = service.name + "1";
             this.adminService.updateService(service).subscribe((result: BaseResponseModel) => {
               if (result.isSuccess) {
                 this.toaster.success("Thêm hình ảnh thành công !");

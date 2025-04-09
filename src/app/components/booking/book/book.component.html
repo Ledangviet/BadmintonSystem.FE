@@ -1,7 +1,7 @@
 <div class="booking-container">
   <div class="head-container">
     <div class="booking-banner">{{this.UIResource.bookBanner}}<br>
-      <div class="name-banner">Chill Batminton</div>
+      <div class="name-banner">{{this.club?.name}}</div>
     </div>
     <div class="date-picking">
       <div class="select-datedate-banner"> {{this.UIResource.selectDate}}</div>
@@ -48,13 +48,12 @@
   </div>
   <div class="clear-container">
     <button mat-raised-button (click)="onClearAll()" class="default-button">{{this.UIResource.clearAll}}</button>
+    @if(this.anyPriceSelected){
+      <button class="default-button mrgl-5px" mat-raised-button (click)="onCheckOut()">{{this.UIResource.checkOut}}</button>
+      }
   </div>
   <h3>{{this.UIResource.yourSelected}}</h3>
   <app-booking-detail [selectedDate]="this.selectedDate"></app-booking-detail>
-  @if(this.anyPriceSelected){
-  <button class="login-button " mat-raised-button (click)="onCheckOut()">{{this.UIResource.checkOut}}</button>
-  }
-
   <!-- Add Chat Widget here -->
   <app-chat></app-chat>
 </div>

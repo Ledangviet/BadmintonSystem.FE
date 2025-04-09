@@ -132,7 +132,7 @@
 
 
       @if(getStatus(selectedYard) == 1){
-      <div id="bill-printer">
+      <div>
 
       </div>
       <div class="bill-header">
@@ -159,7 +159,7 @@
         </div>
         <div class="bill-content-item cash-out">
           <div class="service-name">Còn lại :</div>
-          <div class="total"> {{this.selectedBill?.totalPrice}}</div>
+          <div class="total"> 0</div>
         </div>
 
         <div class="checkout-button-container">
@@ -184,6 +184,9 @@
               Tên : {{this.selectedBill?.name}}
             </div>
           </div>
+        </div>
+        <div class="bill-content-item solid">
+          <div class="service-name"> {{this.club?.clubAddress?.unit}}</div>
         </div>
         <div class="bill-content">
           <div class="bill-content-item solid">
@@ -241,7 +244,7 @@
       </div>
       <div class="checkout-button-container">
         <button class="checkout-button" (click)="openAddServicePopup()">Thêm dịch vụ </button>
-        <button class="checkout-button" (click)="onCheckOut()">Thanh Toán</button>
+        <button class="checkout-button" (disable)="isCheckoutDisable()" (click)="onCheckOut()">Thanh Toán</button>
       </div>
       }
     </div>

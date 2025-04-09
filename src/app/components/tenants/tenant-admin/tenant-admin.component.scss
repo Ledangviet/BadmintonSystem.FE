@@ -1,5 +1,4 @@
-.tenant-container {
-}
+.tenant-container {}
 
 
 .slider {
@@ -66,7 +65,7 @@
 
 .slide-text .title {
     font-size: 50px;
-    font-weight:500;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 
@@ -138,7 +137,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
-    justify-content: space-between ;
+    justify-content: space-between;
 }
 
 .card {
@@ -212,28 +211,25 @@
 }
 
 @media (max-width: 768px) {
-    .card {
-        flex: 100%;
+    .slide-text .title {
+        font-size: 18px;
+    }
+
+    .slide-text .slogan,
+    .slide-text .subtitle {
+        font-size: 12px;
+    }
+
+    .card-title {
+        font-size: 16px;
+    }
+
+    .card-address {
+        font-size: 12px;
     }
 }
 
-@media (max-width: 1024px) {
-    .list-card {
-        display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 640px) {
-    .list-card {
-        display: grid;
-        gap: 20px;
-        grid-template-columns: repeat(1, 1fr);
-    }
-}
-
-.book-link{
+.book-link {
     font-style: italic;
     text-decoration: underline;
     cursor: pointer;

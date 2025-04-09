@@ -104,7 +104,10 @@ export class ChatBotComponent {
     ).subscribe((res) => {
       if (res) {
         let listMessage = res as MessageResponseModel[];
-        this.currentMessage!.response = listMessage[0].text.split('\n');
+        let listMsg = listMessage.flatMap((item) => {
+          return item.text.split('\n');
+        });
+        this.currentMessage!.response = listMsg;
         this.listMessage.push(this.currentMessage!);
 
         setTimeout(() => {

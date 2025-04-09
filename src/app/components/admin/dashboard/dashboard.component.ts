@@ -17,6 +17,8 @@ import { BookModel } from '../../../model/book.request.model';
 import { Guid } from 'guid-typescript';
 import { SignalRService } from '../../../services/signalR/booking/signalr.service';
 import { finalize } from 'rxjs';
+import { ClubModel } from '../../../model/club.model';
+import { TenantServiceService } from '../../../services/shared/tenant-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -64,6 +66,8 @@ export class DashboardComponent {
   public serivceQuantity = 0;
   public checkoutUrl: string = '';
   public isCheckoutPopupVisible: boolean = false;
+  club: ClubModel | null = null;
+
   constructor(
     private adminService: AdminMainService,
     private bookingService: BookingMainService,
@@ -71,6 +75,7 @@ export class DashboardComponent {
     private toater: ToastrService,
     private signalRService: SignalRService,
     private toaster: ToastrService,
+    private tenantService: TenantServiceService,
   ) {
   }
 
@@ -114,6 +119,16 @@ export class DashboardComponent {
         this.listService = result.value.items as ServiceModel[];
       }
     })
+
+
+    //get current club 
+    this.tenantService.getAllClubs().subscribe((res) => {
+      let code = localStorage.getItem('tenant')?.toString();
+      if(res.isSuccess && code != null){
+        this.club = res.value.items.find((x: ClubModel) => x.code === code) as ClubModel;
+        console.log(this.club);
+      }
+    });
   }
 
   getBillList() {
@@ -413,5 +428,12 @@ export class DashboardComponent {
         this.refreshBill();
       }
     });
+  }
+
+  isCheckoutDisable(){
+    if(this.caculateTotalSerivce() <= 0){
+      return true;
+    }
+    return false;
   }
 }

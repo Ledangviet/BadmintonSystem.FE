@@ -73,7 +73,7 @@ th {
 
 .head-container {
   background-color: var(--main-bg-color);
-  min-height: 200px;
+  min-height: 150px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -129,7 +129,6 @@ th {
 }
 
 .login-button {
-  width: 100%;
   margin-top: 10px;
   background-color: var(--main-ctrl-background-color) !important;
   color: white !important;
@@ -141,7 +140,8 @@ th {
 }
 
 .clear-container {
-  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
 }
 
 .yard-name {
@@ -176,3 +176,7 @@ th {
 //     right: 20px;
 //   }
 // }
+
+.mrgl-5px{
+  margin-left: 5px;
+}

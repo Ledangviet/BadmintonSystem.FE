@@ -2,7 +2,7 @@
   <div class="selected-price">
     @for (yard of yardList; track yard){ @if(yard.yardPriceList.length > 0){
     <mat-card class="example-card">
-      <mat-card-title class="title">{{ yard.name }}</mat-card-title>
+      <mat-card-title class="title">Sân {{ yard.name }}</mat-card-title>
       <mat-card-content>
         <p class="date">
           {{ UIResource.bookingDetailDate }}
@@ -27,12 +27,13 @@
       <mat-card-actions> </mat-card-actions>
     </mat-card>
     } }
+   
   </div>
   @if(anyPriceSelected){
-  <h4 class="total-price">
-    {{ UIResource.bookingDetailTotal }}{{ formatPrice(this.getTotalprice()) }}
-  </h4>
-  } @else {
-  <h2 class="total-price">{{ UIResource.bookingDetailNotSelected }}</h2>
-  }
+    <h4 class="total-price">
+      {{ UIResource.bookingDetailTotal }}{{ formatPrice(this.getTotalprice()) }}
+    </h4>
+    } @else {
+    <h2 class="total-price">{{ UIResource.bookingDetailNotSelected }}</h2>
+    }
 </div>
