@@ -22,6 +22,7 @@ import { AddServiceRequestModel } from '../../../model/addservice.request.model'
 import { ToastrService } from 'ngx-toastr';
 import { AzureBlobServiceService } from '../../../services/shared/azure-blob-service.service';
 import { environment } from '../../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 
 ModuleRegistry.registerModules([
@@ -37,7 +38,8 @@ ModuleRegistry.registerModules([
   standalone: true,
   imports: [
     AgGridAngular,
-    DynamicInputComponent
+    DynamicInputComponent,
+    FormsModule
   ],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss'
@@ -48,6 +50,8 @@ export class ServicesComponent {
   listService: ServiceModel[] = [];
   selectedService: ServiceModel[] = [];
   selectedCat: CategoryModel[] = [];
+  selectedCatFilter = "all";
+  listServiceFilter: ServiceModel[] = [];
 
   editType: "fullRow" = "fullRow";
   defaultColDef: ColDef = {
@@ -128,6 +132,7 @@ export class ServicesComponent {
         this.adminService.getService().subscribe((result: BaseResponseModel) => {
           if (result.isSuccess) {
             this.listService = result.value.items as ServiceModel[];
+            this.listServiceFilter = this.listService;
             this.listCategories.forEach(c => {
               this.categoryOptions.push(c.name);
               let listService = this.listService.filter(s => c.id == s.categoryId);
@@ -271,6 +276,7 @@ export class ServicesComponent {
               if (result.isSuccess) {
                 this.toaster.success("Thêm hình ảnh thành công !");
                 this.getCategories();
+                this.selectedCatFilter = "all";
               }
             });
           });
@@ -279,6 +285,14 @@ export class ServicesComponent {
       input.click();
     } else {
       this.toaster.warning("Vui lòng chọn một dịch vụ trước khi thêm hình ảnh!");
+    }
+  }
+
+  selectCatFilter(){
+    if(this.selectedCatFilter == "all"){
+      this.listServiceFilter = this.listService;
+    } else {
+      this.listServiceFilter = this.listService.filter(s => s.categoryId == this.selectedCatFilter);
     }
   }
 }

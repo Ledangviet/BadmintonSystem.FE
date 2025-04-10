@@ -58,3 +58,16 @@
 .group-service{
     margin:20px;
 }
+
+.form-select { 
+    margin-left: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 150px;
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+  }

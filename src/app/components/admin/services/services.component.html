@@ -6,10 +6,16 @@
       <button [disabled]="this.selectedService.length < 1" (click)="removeService()" class="add-service-button">Xóa Dịch
         Vụ </button>
         <button [disabled]="this.selectedService.length != 1" (click)="addImage()" class="add-service-button">Sửa hình ảnh </button>
-    </div>
+        <select [(ngModel)]="selectedCatFilter" (change)="selectCatFilter()" class="form-select">
+                              <option value="all">Tất cả</option>
+                              @for(category of listCategories; track category.id) {
+                              <option [value]="category.id">{{category.name}}</option>
+                              }
+        </select>
+      </div>
     <app-dynamic-input [title]="inputTitle" [inputFields]="fields" (saveEvent)="handleSave($event)"
       #popup></app-dynamic-input>
-    <ag-grid-angular class="service-grid" [defaultColDef]="defaultColDef" [rowData]="this.listService"
+    <ag-grid-angular class="service-grid" [defaultColDef]="defaultColDef" [rowData]="this.listServiceFilter"
       [columnDefs]="columnDefs" [rowSelection]="rowSelection" [editType]="editType" (gridReady)="onGridReady($event)"
       (rowValueChanged)="onRowValueChanged($event)" (selectionChanged)="onSelectionChanged($event)" />
   </div>
