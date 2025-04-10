@@ -92,8 +92,9 @@
 }
 
 
-.role-settings{
-  overflow: scroll;;
+.role-settings {
+  overflow: scroll;
+  ;
 }
 
 .save-button {
@@ -109,5 +110,38 @@
 
   &:hover {
     background-color: #0056b3;
+  }
+}
+
+.user-info {
+  width: 300px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: 5px;
+}
+
+.user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 400px;
+  margin: auto;
+}
+
+
+.form-select {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.input-field{
+  p {
+    margin: 0px;
   }
 }

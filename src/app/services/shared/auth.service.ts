@@ -72,11 +72,20 @@ export class AuthService {
   }
 
   getAllRoles(){
-    return this.apiClient.get<BaseResponseModel>('auths/roles');
+    return this.apiClient.getNoHeader<BaseResponseModel>('auths/roles');
   }
 
 
   updateRole(role: any){
-    return this.apiClient.put<BaseResponseModel>('auths/roles', role);
+    return this.apiClient.putNoHeader<BaseResponseModel>('auths/roles', role);
+  }
+
+  getAllUsers(){
+    return this.apiClient.getNoHeader<BaseResponseModel>('users/all-users?PageIndex=0&PageSize=50');
+  }
+
+  updateUserRole(email: string, roleList: string[]){
+    return this.apiClient.putNoHeader<BaseResponseModel>('auths/admin/role-multiple-for-user', {email: email, roles: roleList});
+
   }
 }

@@ -1,40 +1,86 @@
 <div class="container">
-    <div class="sidebar" style="position: relative;">
-      <h3>Roles</h3>
-      <ul>
-        @for(role of roleList; track role){
-            <li (click)="selectRole(role)">{{ role.roleName }}</li>
-        }
-        <!-- Add more roles as needed -->
-      </ul>
-      <button class="save-button" (click)="saveRole()">Save</button>
-    </div>
-    <div class="role-settings">
-      <h2>Thiết lập quyền - {{selectedRole?.roleName}}</h2>
-      <table class="role-table">
-        <thead>
-          <tr>
-            <th>Chức năng</th>
-            <th>Truy cập</th>
-            <th>Thêm mới</th>
-            <th>Sửa</th>
-            <th>Xóa</th>
-          </tr>
-        </thead>
-        <div>
-          
-        </div>
-        <tbody class="role-table-body"> 
-            @for(auth of selectedRole?.authorizations; track auth){
-                <tr >
-                    <td>{{ auth.functionKey }}</td>
-                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
-                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
-                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
-                    <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
-                  </tr>
-            }               
-          </tbody>
-      </table>
-    </div>
+  <div class="sidebar" style="position: relative;">
+    <h3>Roles</h3>
+    <ul>
+      @for(role of roleList; track role){
+      <li (click)="selectRole(role)">{{ role.roleName }}</li>
+      }
+      <!-- Add more roles as needed -->
+      @for(user of userList; track user){
+      <li (click)="selectUser(user)">{{ user.userName }}</li>
+      }
+    </ul>
+
+    <button class="save-button" (click)="saveUserRole()">Lưu</button>
   </div>
+  <div class="user-info">
+    <form [formGroup]="userForm" class="user-form">
+
+      <div class="input-field">
+        <p for="userName">Tên đăng nhập</p>
+        <input class="form-select " formControlName="userName">
+      </div>
+
+
+      <div class="input-field">
+        <p for="email">Email</p>
+        <input class="form-select" formControlName="email">
+      </div>
+
+      <div class="input-field">
+        <p for="fullName">Họ và tên</p>
+        <input class="form-select" formControlName="fullName">
+      </div>
+
+      <div class="input-field">
+        <p for="dateOfBirth">Ngày sinh</p>
+        <input class="form-select" formControlName="dateOfBirth" type="date">
+      </div>
+
+      <div class="input-field">
+        <p for="phoneNumber">Số điện thoại</p>
+        <input class="form-select" formControlName="phoneNumber">
+      </div>
+
+      <div class="input-field">
+        <p for="role">Quyền</p>
+        <div class="checkbox-group">
+          @for(role of roleList; track role){
+          <div class="checkbox-item">
+            <input type="checkbox" [value]="role.roleName" (change)="roleSelectedChange(role)" [checked]="isRoleSelected(role)">
+            <label>{{ role.roleName }}</label>
+          </div>
+          }
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="role-settings">
+    <h2>Thiết lập quyền - {{selectedRole?.roleName}}</h2>
+    <table class="role-table">
+      <thead>
+        <tr>
+          <th>Chức năng</th>
+          <th>Truy cập</th>
+          <th>Thêm mới</th>
+          <th>Sửa</th>
+          <th>Xóa</th>
+        </tr>
+      </thead>
+      <div>
+
+      </div>
+      <tbody class="role-table-body">
+        @for(auth of selectedRole?.authorizations; track auth){
+        <tr>
+          <td>{{ auth.functionKey }}</td>
+          <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+          <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+          <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+          <td><input type="checkbox" [checked]="getDeleteAccess(auth)"></td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

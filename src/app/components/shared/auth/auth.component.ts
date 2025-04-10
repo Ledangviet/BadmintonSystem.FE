@@ -98,8 +98,8 @@ export class AuthComponent {
     private resourceService: ResourceService
   ) {
     this.loginForm = this.fb.group({
-      email: ['ledangviet001@gmail.com', [Validators.required, Validators.email]],
-      password: ['Viet1998@', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
       rememberme: [false, Validators.required],
     });
 
