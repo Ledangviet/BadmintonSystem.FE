@@ -5,11 +5,13 @@ import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { AdminMainService } from '../../../services/admin/admin-main.service';
 import BaseResponseModel from '../../../model/base.response.model';
 import { CategoryModel, ServiceModel } from '../../../model/service.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-service-board',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     FormsModule,
     MatSelectModule

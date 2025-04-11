@@ -32,7 +32,7 @@ export class AuthService {
         localStorage.setItem('isAuthenticated', 'false');
       }
     }
-    return Boolean(isAuthen);
+    return isAuthen == 'true' ? true : false;
   }
 
   login(email: string, passWord: string) {

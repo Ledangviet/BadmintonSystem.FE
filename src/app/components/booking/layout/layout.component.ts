@@ -86,7 +86,7 @@ export class LayoutComponent {
     this.router.navigate(['/home']);
   }
   onChangeLanguage() {
-    this.resourceService.setResource(this.lang == 'ENG' ? 'vi' : 'eng');
+    this.resourceService.setResource('vi');
     window.location.reload();
   }
   

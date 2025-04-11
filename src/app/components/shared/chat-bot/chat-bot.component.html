@@ -15,15 +15,6 @@
                         <div class="card" id="chat-bot-body">
                             @for(chat of listMessage; track chat){
                             <div class="chat-body">
-                                <div class="chat-message left" [class.hidden-chat]="false">
-                                    <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
-                                    alt="User Avatar" />
-                                    <div class="message-content">
-                                        @for(response of chat.response; track response){
-                                            <div>{{response}}</div>
-                                        }                                       
-                                    </div>
-                                </div>
                                 @if(chat.message != ""){
 
                                     <div class="chat-message right" [class.hidden-chat]="false">
@@ -35,6 +26,19 @@
                                         alt="User Avatar" />
                                     </div>
                                 }
+                                <div class="chat-message left" [class.hidden-chat]="false">
+                                    <img src="https://vietle.blob.core.windows.net/badminton/UserIcon.png"
+                                    alt="User Avatar" />
+                                    <div class="message-content">
+                                        @for(response of chat.response; track response){
+                                            <div>{{response}}</div>
+                                        }
+                                        @if(chat.link){
+                                            <a [href]="chat.link" target="_blank">Mã thanh toán</a>
+                                        }                                     
+                                    </div>
+                                </div>
+                                
                             </div>
                             }                            
                         </div>

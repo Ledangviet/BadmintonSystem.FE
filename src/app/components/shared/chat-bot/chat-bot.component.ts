@@ -11,6 +11,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 interface Message {
   message: string;
   response: string[];
+  link?: string;
 }
 
 interface MessageResponseModel {
@@ -27,31 +28,31 @@ interface MessageResponseModel {
   templateUrl: './chat-bot.component.html',
   styleUrl: './chat-bot.component.scss',
   animations: [
-      trigger('chatOpen', [
-        transition(':enter', [
+    trigger('chatOpen', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translate(100%, 100%) scale(0.5)',
+        }),
+        animate(
+          '300ms ease-out',
+          style({
+            opacity: 1,
+            transform: 'translate(0, 0) scale(1)',
+          })
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '300ms ease-in',
           style({
             opacity: 0,
             transform: 'translate(100%, 100%) scale(0.5)',
-          }),
-          animate(
-            '300ms ease-out',
-            style({
-              opacity: 1,
-              transform: 'translate(0, 0) scale(1)',
-            })
-          ),
-        ]),
-        transition(':leave', [
-          animate(
-            '300ms ease-in',
-            style({
-              opacity: 0,
-              transform: 'translate(100%, 100%) scale(0.5)',
-            })
-          ),
-        ]),
+          })
+        ),
       ]),
-    ],
+    ]),
+  ],
 })
 export class ChatBotComponent {
   newMessage = '';
@@ -69,21 +70,21 @@ export class ChatBotComponent {
 
   ngOnInit() {
     this.chatService.toggleChatEmitter.subscribe((chat) => {
-      if(chat == 'chat'){
+      if (chat == 'chat') {
         this.isOpen = false;
       }
     })
     this.listMessage = [
       {
         message: "",
-        response: ["Xin chào, tôi là trợ lí AI của bạn. Tôi có thể giúp gì cho bạn?"]
+        response: ["Tôi là ttrợ lý ảo của bạn, tôi có thể giúp gì cho bạn?"],
       }
     ];
     this.currentMessage = null;
   }
 
   toggleChat() {
-    
+
     this.isOpen = !this.isOpen;
     if (this.isOpen) {
       this.chatService.toggleChatEmitter.emit('chatbot');
@@ -97,7 +98,27 @@ export class ChatBotComponent {
       response: []
     };
     this.newMessage = '';
-    this.chatbotService.sendMesage(this.currentMessage.message, 'user').pipe(
+    this.listMessage.push(this.currentMessage!);
+
+    let sentMessage = this.currentMessage.message;
+    if (this.currentMessage.message.startsWith('Tôi muốn đặt sân')) {
+      if (this.authService.getIsAuthenticated() == false) {
+        this.listMessage[this.listMessage.length - 1].response.push('Vui lòng đăng nhập để đặt sân !');
+        setTimeout(() => {
+          this.scrollToBottom();
+        }, 100)
+        return;
+      }
+      else {
+        let email = localStorage.getItem('email')?.toString();
+        if (email == null || email == "") {
+          email = "ledangviet001@gmail.com";
+        }
+        sentMessage = sentMessage + ` Email: ${email}`;
+      }
+    }
+
+    this.chatbotService.sendMesage(sentMessage, 'user').pipe(
       finalize(() => {
         this.isLoading = false;
       })
@@ -107,15 +128,26 @@ export class ChatBotComponent {
         let listMsg = listMessage.flatMap((item) => {
           return item.text.split('\n');
         });
-        this.currentMessage!.response = listMsg;
-        this.listMessage.push(this.currentMessage!);
 
+        listMsg = listMsg.map((msg) => {
+          const match = msg.match(/Vui lòng thanh toán qua QRCode\. Url = (https?:\/\/[^\s]+)/);
+          if (match) {
+            this.currentMessage!.link = match[1]; // Extract the link
+            return `Vui lòng thanh toán qua QRCode:`;
+          }
+          return msg;
+        });
+
+        this.currentMessage!.response = listMsg;
+        this.listMessage[this.listMessage.length - 1].response = listMsg;
+        this.currentMessage = null;
         setTimeout(() => {
           this.scrollToBottom();
-        },100)
-        
+        }, 100)
+
       }
     });
+
   }
 
   scrollToBottom() {
